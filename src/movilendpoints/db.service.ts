@@ -12,7 +12,7 @@ export class DataService {
   }
 
   /* A function that is called when the user makes a GET request to the endpoint /data/empresas. */
-  async empresas(object) {
+  async general(object, query) {
     try {
       /* Creating a connection to the database. */
       const config: sql.config ={
@@ -36,7 +36,7 @@ export class DataService {
   
       const request = pool.request();
   
-      const result = await request.query('select * from [dbo].[V_BI_EMPRESAS] where Multiempresa= \'Si\'');
+      const result = await request.query(query);
   
       console.log(result.recordset);
   
@@ -48,58 +48,66 @@ export class DataService {
 
       }catch(err){
         console.log(err);
-        return [];
-      }
-         
-      
-    } catch (err) {
-      console.error(err);
-      return [];
-    }
-  }
-  async login(object, password, username) {
-    try {
-      /* Creating a connection to the database. */
-      const config: sql.config ={
-        user: object[0].UserID,
-        password: object[0].UserPwd,
-        server: object[0].Server,
-        port: parseInt(object[0].Port),
-        database: object[0].Database,
-        options: {
-          enableArithAbort: true,
-          trustServerCertificate: true,
-        },
-      };
-        try{
-        
-      const pool = new sql.ConnectionPool(config);
-
-      await pool.connect();
-  
-      console.log('Connected to the database');
-  
-      const request = pool.request();
-  
-      const result = await request.query(`Exec [dbo].[SP_INS_SESION_LOGIN] ${0}, ${username}, ${password}, ${1}, ${null}`);
-  
-      console.log(result.recordset);
-  
-      await pool.close();
-  
-      console.log('Disconnected from the database');
-
-      return result.recordset;
-
-      }catch(err){
-        console.log(err.message);
         return err.message;
       }
          
       
     } catch (err) {
-      console.error(err.message);
+      console.error(err);
       return err.message;
     }
+  }
+  async empresas(object){
+    const query = 'select * from [dbo].[V_BI_EMPRESAS] where Multiempresa= \'Si\'';
+    let result = await this.general(object, query);
+    return result;
+  }
+  async login(object, password, username, idEmpresa) {
+    const query = `Exec [dbo].[SP_INS_SESION_LOGIN] ${0}, ${username}, ${password}, ${idEmpresa}, ${null}`;
+    let result = await this.general(object, query);
+    return result;
+  }
+  async logout(object, idEmpresa) {
+    const date = new Date();
+    const sqlDate = date.toISOString().replace('T', ' ').replace('Z', '');
+    const query = `Exec [dbo].[SP_INS_SESION_LOGOUT] ${idEmpresa}, ${null}, '${sqlDate}'`;
+    console.log(sqlDate);
+    let result = await this.general(object, query);
+    return result;
+  }
+  async vehiculos(object){
+    const query = 'select * from [dbo].[V_BI_VEHICULOS]';
+    let result = await this.general(object, query);
+    return result;
+  }
+  async kilometraje(object, 
+    id_vehiculo, 
+    kilometros, 
+    observaciones, 
+    horas, 
+    observaciones_horas, 
+    usuario_mod,
+    tipo,
+    manual,
+    id_viaje,
+    act_cascada_cavas) {
+    const date = new Date();
+    const sqlDate = date.toISOString().replace('T', ' ').replace('Z', '');
+    const query = `Exec [dbo].[SP_UPD_VEHICULO_KILOMETRAJE_HORA] 
+    ${id_vehiculo}, 
+    ${kilometros}, 
+    '${observaciones}', 
+    ${horas}, 
+    '${observaciones_horas}',
+    '${usuario_mod}',
+    '${sqlDate}',
+    '${tipo}',
+    ${manual},
+    ${id_viaje},
+    ${act_cascada_cavas},
+    '${sqlDate}',
+    '${sqlDate}'`;
+    let result = await this.general(object, query);
+    return result;
   }
 }

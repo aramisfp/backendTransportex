@@ -70,6 +70,14 @@ export class DataController {
     act_cascada_cavas);
   return result;  
  }
+ @Post('permisos')
+   async consultaPermisos(@Query('client') userName: string, 
+   @Body(){idUser, columna}: {idUser: number, columna:string}) { 
+    console.log(idUser, columna);  
+    const filteredArray = myArray.filter((obj) => obj.name === userName);        
+    let result = this.dataService.permisos(filteredArray, idUser, columna);
+   return result;  
+  }
   
   
     

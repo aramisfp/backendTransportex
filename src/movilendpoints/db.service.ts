@@ -110,4 +110,9 @@ export class DataService {
     let result = await this.general(object, query);
     return result;
   }
+  async permisos(object, idUser, columna){
+    const query = `select dbo.F_SESION_USUARIO_PERMISO(${idUser}, '${columna}')`;
+    let result = await this.general(object, query);
+    return result;
+  }
 }

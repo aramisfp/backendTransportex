@@ -14,5 +14,5 @@ export const myArray = [
         Database:'DB_TRANSPORTEX',
         UserID:'oscar',
         UserPwd:'12345678',
-    },    
+    },       
 ]

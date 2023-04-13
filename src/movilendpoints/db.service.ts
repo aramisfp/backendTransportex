@@ -67,16 +67,26 @@ export class DataService {
     let result = await this.general(object, query);
     return result;
   }
-  async logout(object, idEmpresa) {
+  async configuracion(object, idEmpresa, campo) {
+    const query = `Exec [dbo].[F_GETCONFIGVALUE]  ${campo}, ${idEmpresa}`;
+    let result = await this.general(object, query);
+    return result;
+  }
+  async logout(object, idEmpresa, ID_Conexion, Fecha_Sesion) {
     const date = new Date();
     const sqlDate = date.toISOString().replace('T', ' ').replace('Z', '');
-    const query = `Exec [dbo].[SP_INS_SESION_LOGOUT] ${idEmpresa}, ${null}, '${sqlDate}'`;
+    const query = `Exec [dbo].[SP_INS_SESION_LOGOUT] ${idEmpresa}, ${ID_Conexion}, '${Fecha_Sesion}'`;
     console.log(sqlDate);
     let result = await this.general(object, query);
     return result;
   }
   async vehiculos(object){
     const query = 'select * from [dbo].[V_BI_VEHICULOS]';
+    let result = await this.general(object, query);
+    return result;
+  }
+  async usuarios(object){
+    const query = 'select * from [dbo].[V_USUARIO]';
     let result = await this.general(object, query);
     return result;
   }

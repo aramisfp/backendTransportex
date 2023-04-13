@@ -28,10 +28,10 @@ export class DataController {
   /* A function that is called when the user makes a POST request to the endpoint /data/logout. */
   @Post('logout')
    async consultaLogout(@Query('client') userName: string, 
-   @Body(){idEmpresa}: {idEmpresa: number}) { 
+   @Body(){idEmpresa, ID_Conexion, Fecha_Sesion}: {idEmpresa: number, ID_Conexion: number, Fecha_Sesion: string}) { 
     console.log(userName);  
     const filteredArray = myArray.filter((obj) => obj.name === userName);        
-    let result = this.dataService.logout(filteredArray, idEmpresa);
+    let result = this.dataService.logout(filteredArray, idEmpresa, ID_Conexion, Fecha_Sesion);
    return result;  
   }
 
@@ -39,6 +39,12 @@ export class DataController {
     async consultaVehiculos(@Query('client') userName: string) {   
         const filteredArray = myArray.filter((obj) => obj.name === userName);        
         let result = this.dataService.vehiculos(filteredArray);
+    return result;
+  }
+  @Get('usuarios')
+    async consultaUsuarios(@Query('client') userName: string) {   
+        const filteredArray = myArray.filter((obj) => obj.name === userName);        
+        let result = this.dataService.usuarios(filteredArray);
     return result;
   }
   @Post('kilometraje')
@@ -76,6 +82,14 @@ export class DataController {
     console.log(idUser, columna);  
     const filteredArray = myArray.filter((obj) => obj.name === userName);        
     let result = this.dataService.permisos(filteredArray, idUser, columna);
+   return result;  
+  }
+  @Post('configuracion')
+   async consultaConfiguracion(@Query('client') userName: string, 
+   @Body(){idEmpresa, campo}: {idEmpresa: number, campo:string}) { 
+    console.log(idEmpresa, campo);  
+    const filteredArray = myArray.filter((obj) => obj.name === userName);        
+    let result = this.dataService.configuracion(filteredArray, idEmpresa, campo);
    return result;  
   }
   

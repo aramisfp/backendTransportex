@@ -68,7 +68,7 @@ export class DataService {
     return result;
   }
   async configuracion(object, idEmpresa, campo) {
-    const query = `Exec [dbo].[F_GETCONFIGVALUE]  ${campo}, ${idEmpresa}`;
+    const query = `select [dbo].[F_GETCONFIGVALUE]  ${campo}, ${idEmpresa}`;
     let result = await this.general(object, query);
     return result;
   }
@@ -106,9 +106,9 @@ export class DataService {
     const query = `Exec [dbo].[SP_UPD_VEHICULO_KILOMETRAJE_HORA] 
     ${id_vehiculo}, 
     ${kilometros}, 
-    '${observaciones}', 
+    'Actualizacion del kilometraje via movil', 
     ${horas}, 
-    '${observaciones_horas}',
+    'Actualizacion de las horas de uso via movil',
     '${usuario_mod}',
     '${sqlDate}',
     '${tipo}',

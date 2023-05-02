@@ -66,14 +66,10 @@ export class DataController {
    let result = this.dataService.kilometraje(filteredArray, 
     id_vehiculo, 
     kilometros, 
-    observaciones, 
     horas, 
-    observaciones_horas,
     usuario_mod,
     tipo,
-    manual,
-    id_viaje,
-    act_cascada_cavas);
+    manual);
   return result;  
  }
  @Post('permisos')

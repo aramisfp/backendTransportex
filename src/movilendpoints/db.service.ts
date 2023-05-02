@@ -92,32 +92,40 @@ export class DataService {
   }
   async kilometraje(object, 
     id_vehiculo, 
-    kilometros, 
-    observaciones, 
-    horas, 
-    observaciones_horas, 
+    kilometros,     
+    horas,      
     usuario_mod,
     tipo,
     manual,
-    id_viaje,
-    act_cascada_cavas) {
+    ) {
     const date = new Date();
+    console.log(date);
     const sqlDate = date.toISOString().replace('T', ' ').replace('Z', '');
+    console.log(sqlDate);
+    let tipofinal;
+    if (kilometros > 0 && horas > 0){
+      tipofinal = 'KH'
+    }else if (horas > 0){
+      tipofinal = 'H'
+    }else if( kilometros > 0 ){
+      tipofinal = 'K'
+    }
     const query = `Exec [dbo].[SP_UPD_VEHICULO_KILOMETRAJE_HORA] 
     ${id_vehiculo}, 
     ${kilometros}, 
     'Actualizacion del kilometraje via movil', 
-    ${horas}, 
+    ${horas},
     'Actualizacion de las horas de uso via movil',
-    '${usuario_mod}',
-    '${sqlDate}',
-    '${tipo}',
-    ${manual},
-    ${id_viaje},
-    ${act_cascada_cavas},
-    '${sqlDate}',
-    '${sqlDate}'`;
+    ${usuario_mod},
+    ${null},
+    ${tipofinal},            
+    ${1},
+    ${0},
+    ${1},
+    ${null},
+    ${null}`;
     let result = await this.general(object, query);
+    console.log(query)
     return result;
   }
   async permisos(object, idUser, columna){

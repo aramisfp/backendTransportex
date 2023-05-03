@@ -98,10 +98,8 @@ export class DataService {
     tipo,
     manual,
     ) {
-    const date = new Date();
-    console.log(date);
+    const date = new Date();    
     const sqlDate = date.toISOString().replace('T', ' ').replace('Z', '');
-    console.log(sqlDate);
     let tipofinal;
     if (kilometros > 0 && horas > 0){
       tipofinal = 'KH'
@@ -118,14 +116,13 @@ export class DataService {
     'Actualizacion de las horas de uso via movil',
     ${usuario_mod},
     ${null},
-    ${tipofinal},            
+    '',            
     ${1},
     ${0},
     ${1},
     ${null},
     ${null}`;
     let result = await this.general(object, query);
-    console.log(query)
     return result;
   }
   async permisos(object, idUser, columna){

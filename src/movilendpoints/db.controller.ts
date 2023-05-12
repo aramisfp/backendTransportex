@@ -18,10 +18,10 @@ export class DataController {
   /* A function that is called when the user makes a POST request to the endpoint /data/login. */
   @Post('login')
    async consultaLogin(@Query('client') userName: string, 
-   @Body(){password, username, idEmpresa}: {password: string, username: string, idEmpresa: number}) { 
+   @Body(){password, username, idEmpresa, id}: {password: string, username: string, idEmpresa: number, id:number}) { 
     console.log(userName, username, password);  
     const filteredArray = myArray.filter((obj) => obj.name === userName);        
-    let result = this.dataService.login(filteredArray, password, username, idEmpresa);
+    let result = this.dataService.login(filteredArray, password, username, idEmpresa, id);
    return result;  
   }
 

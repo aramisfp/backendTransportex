@@ -62,8 +62,8 @@ export class DataService {
     let result = await this.general(object, query);
     return result;
   }
-  async login(object, password, username, idEmpresa) {
-    const query = `Exec [dbo].[SP_INS_SESION_LOGIN] ${0}, ${username}, ${password}, ${idEmpresa}, ${null}`;
+  async login(object, password, username, idEmpresa, id) {
+    const query = `Exec [dbo].[SP_INS_SESION_LOGIN] ${id}, ${'_BLANK_'}, ${password}, ${idEmpresa}, ${null}`;
     let result = await this.general(object, query);
     return result;
   }

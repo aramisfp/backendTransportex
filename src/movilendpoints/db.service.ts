@@ -68,14 +68,15 @@ export class DataService {
     return result;
   }
   async configuracion(object, idEmpresa, campo) {
-    const query = `select [dbo].[F_GETCONFIGVALUE]  ${campo}, ${idEmpresa}`;
+    console.log(campo, idEmpresa)
+    const query = `select [dbo].[F_GETCONFIGVALUE]('${campo}', ${idEmpresa})`;
     let result = await this.general(object, query);
     return result;
   }
   async logout(object, idEmpresa, ID_Conexion, Fecha_Sesion) {
     const date = new Date();
     const sqlDate = date.toISOString().replace('T', ' ').replace('Z', '');
-    const query = `Exec [dbo].[SP_INS_SESION_LOGOUT] ${idEmpresa}, ${ID_Conexion}, '${Fecha_Sesion}'`;
+    const query = `Exec [dbo].[SP_INS_SESION_LOGOUT] ${ID_Conexion}, '_BLANK_', '${Fecha_Sesion}'`;
     console.log(sqlDate);
     let result = await this.general(object, query);
     return result;

@@ -2,6 +2,7 @@ import { Injectable, Scope } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PrismaService } from './prisma.service';
 import * as sql from 'mssql';
+import { Console } from 'console';
 
 @Injectable({ scope: Scope.REQUEST })
 export class DataService {
@@ -63,7 +64,8 @@ export class DataService {
     return result;
   }
   async login(object, password, username, idEmpresa, id) {
-    const query = `Exec [dbo].[SP_INS_SESION_LOGIN] ${id}, ${'_BLANK_'}, ${password}, ${idEmpresa}, ${null}`;
+    const query = `Exec [dbo].[SP_INS_SESION_LOGIN] ${id}, ${'_BLANK_'}, '${password}', ${idEmpresa}, ${null}`;
+    console.log(query)
     let result = await this.general(object, query);
     return result;
   }

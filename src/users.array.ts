@@ -22,5 +22,13 @@ export const myArray = [
         Database:'DB_TRANSPORTEX',
         UserID:'oscar',
         UserPwd:'12345678',
-    },      
+    },  
+    {
+        name:'EJEMPLO1',
+        Server:'transportexdemo.cdswhzyeho3j.us-east-2.rds.amazonaws.com',
+        Port:'1433',
+        Database:'DB_TRANSPORTEX',
+        UserID:'oscar',
+        UserPwd:'12345678',
+    },     
 ]

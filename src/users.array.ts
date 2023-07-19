@@ -4,8 +4,8 @@ export const myArray = [
         Server:'test.cnqn7uorvp97.us-east-2.rds.amazonaws.com',
         Port:'1433',
         Database:'DB_TRANSPORTEX',
-        UserID:'usuariomovil',
-        UserPwd:'Tran5p0rt3x_2008tlf',
+        UserID:'usr_movil',
+        UserPwd:'Tran5p0rt3X_2008tlf',
     },
     {
         name:'DEMO',

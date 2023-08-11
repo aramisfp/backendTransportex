@@ -59,7 +59,7 @@ export class DataService {
     }
   }
   async empresas(object){
-    const query = 'select * from [dbo].[V_BI_EMPRESAS] where Multiempresa= \'Si\'';
+    const query = 'select Nombre, Tipo, Multiempresa, Activa, ID_Empresa from dbo.V_BI_EMPRESAS where Multiempresa= \'Si\'';
     let result = await this.general(object, query);
     return result;
   }
@@ -84,12 +84,12 @@ export class DataService {
     return result;
   }
   async vehiculos(object){
-    const query = 'select * from [dbo].[V_BI_VEHICULOS]';
+    const query = 'select ID_Vehiculo, Identificador_Vehiculo, Identificador_Secundario, Marca, Modelo, Anio, Propietario, Afiliado_o_Propio, Tipo_de_Vehiculo, Uso_de_Vehiculo, Automotor, Conductor, Conductor_Secundario, Centro_de_Costo, Unidad_de_Negocio, Contrato, Sede, VIN, Serial_Motor, Estado, Kilometraje, Ultima_Fecha_Act_Kilometraje, Horas_de_Uso, Ultima_Fecha_Act_Horas, Remolques_Asignados, Tipo_de_Combustible, Empresa_Ambiente, ID_Empleado, ID_Empleado_2 from dbo.V_BI_VEHICULOS';
     let result = await this.general(object, query);
     return result;
   }
   async usuarios(object){
-    const query = 'select * from [dbo].[V_USUARIO]';
+    const query = 'select ID_Usuario, Nombre_Usuario, Administrador from dbo.V_USUARIO';
     let result = await this.general(object, query);
     return result;
   }
@@ -130,6 +130,16 @@ export class DataService {
   }
   async permisos(object, idUser, columna){
     const query = `select dbo.F_SESION_USUARIO_PERMISO(${idUser}, '${columna}')`;
+    let result = await this.general(object, query);
+    return result;
+  }
+  async actividadtipo(object){
+    const query = 'select ID_Actividad_Tipo, Descripcion from dbo.V_ACTIVIDAD_TIPO';
+    let result = await this.general(object, query);
+    return result;
+  }
+  async empleados(object){
+    const query = 'select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario from dbo.V_EMPLEADO';
     let result = await this.general(object, query);
     return result;
   }

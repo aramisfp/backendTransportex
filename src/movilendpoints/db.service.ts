@@ -125,4 +125,14 @@ export class DataService {
     let result = await this.general(object, query);
     return result;
   }
+  async actividadtipo(object){
+    const query = 'select ID_Actividad_Tipo, Descripcion from dbo.V_ACTIVIDAD_TIPO';
+    let result = await this.general(object, query);
+    return result;
+  }
+  async empleados(object){
+    const query = 'select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario from dbo.V_EMPLEADO';
+    let result = await this.general(object, query);
+    return result;
+  }
 }

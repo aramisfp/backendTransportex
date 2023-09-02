@@ -191,4 +191,12 @@ export const myArray = [
         UserID:'usr_movil',
         UserPwd:'Tran5p0rt3X_2008tlf',
     },     	  	
+    {
+        name:'TRANSVIZA_PER',
+        Server:'transvizaperu.cxmdx8nbbnul.us-east-1.rds.amazonaws.com',
+        Port:'1433',
+        Database:'DB_TRANSPORTEX',
+        UserID:'usr_movil',
+        UserPwd:'Tran5p0rt3X_2008tlf',
+    },     	  	    
 ]

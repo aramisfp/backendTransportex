@@ -89,6 +89,23 @@ export class DataController {
    return result;  
   }
   
-  
+  @Get('actividadtipo')
+    async consultaActividadtipo(@Query('client') userName: string) {   
+        const filteredArray = myArray.filter((obj) => obj.name === userName);        
+        let result = this.dataService.actividadtipo(filteredArray);
+    return result;
+  }
+  @Get('empleados')
+    async consultaEmpleados(@Query('client') userName: string) {   
+        const filteredArray = myArray.filter((obj) => obj.name === userName);        
+        let result = this.dataService.empleados(filteredArray);
+    return result;
+  }  
+  @Get('novedades')
+    async consultaNovedades(@Query('client') userName: string) {   
+        const filteredArray = myArray.filter((obj) => obj.name === userName);        
+        let result = this.dataService.novedades(filteredArray);
+    return result;
+  }  
     
 }

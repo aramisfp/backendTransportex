@@ -148,7 +148,7 @@ export class DataService {
     let result = await this.general(object, query);
     return result;
   }  
-  async novedadinput(object, id_actividad_solicitud, id_vehiculo, id_actividad_grupo, id_empleado_solicitud, fecha_solicitud, urgente, descripcion, usuario_str, id_empresa_sesion) {
+  async novedadinput(object, id_actividad_solicitud, id_vehiculo, id_actividad_grupo, id_empleado_solicitud, urgente, descripcion, usuario_str, id_empresa_sesion) {
     const query = `Exec dbo.[SP_UPD_SYNC_ACTIVIDAD_SOLICITUD] 
     ${id_actividad_solicitud}, 
     ${id_vehiculo}, 
@@ -157,7 +157,7 @@ export class DataService {
     '_BLANK_',
     ${id_empleado_solicitud},
     '_BLANK_',
-    ${fecha_solicitud},            
+    ${null},            
     ${urgente},
     ${descripcion},
     ${usuario_str},

@@ -59,7 +59,7 @@ export class DataService {
     }
   }
   async empresas(object){
-    const query = 'select Nombre, Tipo, Multiempresa, Activa, ID_Empresa from dbo.V_BI_EMPRESAS where Multiempresa= \'Si\'';
+    const query = 'select Nombre, Tipo, Multiempresa, Activa, ID_Empresa from dbo.V_BI_EMPRESAS where substring(Multiempresa,1,1) = \'S\' and substring(Activa,1,1) = \'S\' order by Nombre';
     let result = await this.general(object, query);
     return result;
   }
@@ -89,7 +89,7 @@ export class DataService {
     return result;
   }
   async usuarios(object){
-    const query = 'select ID_Usuario, Nombre_Usuario, Administrador from dbo.V_USUARIO';
+    const query = 'select ID_Usuario, Nombre_Usuario, Administrador from dbo.V_USUARIO order by Nombre_Usuario';
     let result = await this.general(object, query);
     return result;
   }
@@ -124,17 +124,25 @@ export class DataService {
     return result;
   }
   async actividadtipo(object){
-    const query = 'select ID_Actividad_Tipo, Descripcion from dbo.V_ACTIVIDAD_TIPO';
+    const query = 'select ID_Actividad_Tipo, Descripcion from dbo.V_ACTIVIDAD_TIPO order by Descripcion';
     let result = await this.general(object, query);
     return result;
   }
   async empleados(object, ID_Empleado){
-    const query = `select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario from dbo.V_EMPLEADO order by case when ID_Empleado = ${ID_Empleado} then 0 else 1 end asc, Nombre_Empleado asc`;
+    const query = `select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario 
+    from dbo.V_EMPLEADO 
+    order by case when ID_Empleado = ${ID_Empleado} then 0 else 1 end asc, Nombre_Empleado asc`;
     let result = await this.general(object, query);
     return result;
   }
   async novedades(object, ID_Empleado, todas){
-    const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Usuario_Solicitud, ID_Actividad_Grupo, Actividades_Asociadas, Empresa_Ambiente from dbo.F_SEL_ACTIVIDAD_SOLICITUD(${ID_Empleado},${todas})`;
+    const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Usuario_Solicitud, ID_Actividad_Grupo, Actividades_Asociadas, Empresa_Ambiente 
+    from dbo.F_SEL_ACTIVIDAD_SOLICITUD(${ID_Empleado},${todas}) 
+     order by 
+     case Estatus when 'N' then 1 when 'Q' then 2 else 99 end asc,
+     case urgente when 'S' then 1 else 0 end desc,
+     isnull(prioridad, 99) asc, 
+     ID_Actividad_Novedad desc`;
     let result = await this.general(object, query);
     return result;
   }  

@@ -125,7 +125,7 @@ export class DataService {
     let result = await this.general(object, query);
     return result;
   }
-  async actividadtipo(object){
+ async actividadtipo(object){
     const query = 'select ID_Actividad_Tipo, Descripcion from dbo.V_ACTIVIDAD_TIPO';
     let result = await this.general(object, query);
     return result;
@@ -139,5 +139,22 @@ export class DataService {
     const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Usuario_Solicitud, ID_Actividad_Grupo, Actividades_Asociadas, Empresa_Ambiente from dbo.F_SEL_ACTIVIDAD_SOLICITUD(${ID_Empleado},${todas})`;
     let result = await this.general(object, query);
     return result;
-  }   
+  }  
+  async novedadinput(object, id_actividad_solicitud, id_vehiculo, id_actividad_grupo, id_empleado_solicitud, fecha_solicitud, urgente, descripcion, usuario_str, id_empresa_sesion) {
+    const query = `Exec dbo.[SP_UPD_SYNC_ACTIVIDAD_SOLICITUD] 
+    ${id_actividad_solicitud}, 
+    ${id_vehiculo}, 
+    '_BLANK_', 
+    ${id_actividad_grupo},
+    '_BLANK_',
+    ${id_empleado_solicitud},
+    '_BLANK_',
+    ${fecha_solicitud},            
+    ${urgente},
+    ${descripcion},
+    ${usuario_str},
+    ${id_empresa_sesion}`;
+    let result = await this.general(object, query);
+    return result;
+  }  
 }

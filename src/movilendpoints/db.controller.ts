@@ -101,13 +101,14 @@ export class DataController {
         let result = this.dataService.empleados(filteredArray);
     return result;
   }  
-  @Get('novedades')
-    async consultaNovedades(@Query('client') userName: string) {   
-        const filteredArray = myArray.filter((obj) => obj.name === userName);        
-        let result = this.dataService.novedades(filteredArray);
-    return result;
+  @Post('novedades')
+   async consultaNovedades(@Query('client') userName: string, 
+   @Body(){ID_Empleado, todas}: {ID_Empleado: number, todas:number}) { 
+    console.log(ID_Empleado, todas);  
+    const filteredArray = myArray.filter((obj) => obj.name === userName);        
+    let result = this.dataService.novedades(filteredArray, ID_Empleado, todas);
+   return result;  
   }  
-  
   @Post('novedadinput')
   async consultaNovedadinput(@Query('client') userName: string, 
   @Body(){id_actividad_solicitud, id_vehiculo, id_actividad_grupo, 

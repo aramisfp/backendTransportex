@@ -128,8 +128,8 @@ export class DataService {
     let result = await this.general(object, query);
     return result;
   }
-  async empleados(object){
-    const query = 'select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario from dbo.V_EMPLEADO';
+  async empleados(object, ID_Empleado){
+    const query = `select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario from dbo.V_EMPLEADO order by case when ID_Empleado = ${ID_Empleado} then 0 else 1 end asc, Nombre_Empleado asc`;
     let result = await this.general(object, query);
     return result;
   }

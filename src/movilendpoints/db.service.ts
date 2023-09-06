@@ -101,16 +101,6 @@ export class DataService {
     tipo,
     manual,
     ) {
-    const date = new Date();    
-    const sqlDate = date.toISOString().replace('T', ' ').replace('Z', '');
-    let tipofinal;
-    if (kilometros > 0 && horas > 0){
-      tipofinal = 'KH'
-    }else if (horas > 0){
-      tipofinal = 'H'
-    }else if( kilometros > 0 ){
-      tipofinal = 'K'
-    }
     const query = `Exec [dbo].[SP_UPD_VEHICULO_KILOMETRAJE_HORA] 
     ${id_vehiculo}, 
     ${kilometros}, 

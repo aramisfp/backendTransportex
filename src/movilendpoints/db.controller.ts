@@ -107,5 +107,30 @@ export class DataController {
         let result = this.dataService.novedades(filteredArray);
     return result;
   }  
-    
+  
+  @Post('novedadinput')
+  async consultaNovedadinput(@Query('client') userName: string, 
+  @Body(){id_actividad_solicitud, id_vehiculo, id_actividad_grupo, 
+    id_empleado_solicitud, urgente, descripcion, usuario_str, id_empresa_sesion}: 
+  {id_actividad_solicitud: number, 
+    id_vehiculo: number,
+    id_actividad_grupo: number,
+    id_empleado_solicitud: number,	
+    urgente: number, 	
+    descripcion: string,
+    usuario_str: string,
+    id_empresa_sesion: number}) { 
+   console.log(userName);  
+   const filteredArray = myArray.filter((obj) => obj.name === userName);        
+   let result = this.dataService.novedadinput(filteredArray, 
+    id_actividad_solicitud,
+    id_vehiculo, 
+    id_actividad_grupo, 
+    id_empleado_solicitud, 
+	  urgente, 
+	  descripcion, 
+	  usuario_str, 
+	  id_empresa_sesion);
+  return result;  
+ }    
 }

@@ -135,5 +135,18 @@ export class DataController {
 	  usuario_str, 
 	  id_empresa_sesion);
   return result;  
- }    
+ }  
+  @Post('archivoinput')
+  async consultaArchivoinput(@Query('client') userName: string, 
+  @Body(){id_archivo, id_key_modulo, modulo, nombre_archivo, usuario_str}: 
+  {id_archivo: number, 
+    id_key_modulo: number,
+    modulo: string,
+    nombre_archivo: string,
+    usuario_str: string}) { 
+   console.log(userName);  
+   const filteredArray = myArray.filter((obj) => obj.name === userName);        
+   let result = this.dataService.archivoinput(filteredArray, id_archivo, id_key_modulo, modulo, nombre_archivo, usuario_str);
+  return result;  
+ }    	
 }

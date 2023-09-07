@@ -34,13 +34,20 @@ export class DataController {
     let result = this.dataService.logout(filteredArray, idEmpresa, ID_Conexion, Fecha_Sesion);
    return result;  
   }
-
-  @Get('vehiculos')
+ @Get('vehiculos')
     async consultaVehiculos(@Query('client') userName: string) {   
         const filteredArray = myArray.filter((obj) => obj.name === userName);        
-        let result = this.dataService.vehiculos(filteredArray);
+        let result = this.dataService.vehiculos(filteredArray, 0);
     return result;
   }
+ @Post('vehiculos')
+   async consultaVehiculosAsig(@Query('client') userName: string, 
+   @Body(){ID_Empleado}: {ID_Empleado: number}) { 
+    console.log(ID_Empleado);  
+    const filteredArray = myArray.filter((obj) => obj.name === userName);        
+    let result = this.dataService.vehiculos(filteredArray, ID_Empleado);
+   return result;  
+  }  
   @Get('usuarios')
     async consultaUsuarios(@Query('client') userName: string) {   
         const filteredArray = myArray.filter((obj) => obj.name === userName);        

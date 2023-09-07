@@ -163,4 +163,14 @@ export class DataService {
     let result = await this.general(object, query);
     return result;
   }  
+ async archivoinput(object, id_archivo, id_key_modulo, modulo, nombre_archivo, usuario_str) {
+    const query = `Exec dbo.[SP_INS_SYNC_ARCHIVO] 
+    ${id_archivo}, 
+    ${id_key_modulo}, 
+    ${modulo},
+    ${nombre_archivo},
+    ${usuario_str}`;
+    let result = await this.general(object, query);
+    return result;
+  }    
 }

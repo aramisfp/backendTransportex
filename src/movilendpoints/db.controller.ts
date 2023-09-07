@@ -95,9 +95,9 @@ export class DataController {
         let result = this.dataService.actividadtipo(filteredArray);
     return result;
   }
-  @Post('empleados')
+ @Post('empleados')
    async consultaEmpleados(@Query('client') userName: string, 
-   @Body(){ID_Empleado}: {ID_Empleado: number) { 
+   @Body(){ID_Empleado}: {ID_Empleado: number}) { 
     console.log(ID_Empleado);  
     const filteredArray = myArray.filter((obj) => obj.name === userName);        
     let result = this.dataService.empleados(filteredArray, ID_Empleado);

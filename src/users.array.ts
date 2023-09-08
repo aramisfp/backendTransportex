@@ -57,7 +57,7 @@ export const myArray = [
     },     	
     {
         name:'AKASHA_VEN',
-        Server:'akasha.c8vx9utwsq3i.us-east-2.rds.amazonaws.com',
+        Server:'akasha.cjvfhz6dewso.us-east-2.rds.amazonaws.com',
         Port:'1433',
         Database:'DB_TRANSPORTEX',
         UserID:'usr_movil',

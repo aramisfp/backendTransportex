@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateNoveltyInputDto {
   @IsNotEmpty()
@@ -18,12 +18,47 @@ export class CreateNoveltyInputDto {
   id_empleado_solicitud: number;
 
   @IsNotEmpty()
-  @IsBoolean()
-  urgente: boolean;
+  @IsNumber()
+  urgente: number;
 
   @IsNotEmpty()
   @IsString()
   descripcion: string;
+
+  @IsNotEmpty()
+  @IsString()
+  usuario_str: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  id_empresa_sesion: number;
+}
+export class EditNoveltyInputDto {
+  @IsNotEmpty()
+  @IsNumber()
+  id_actividad_solicitud: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  urgente: number;
+
+  @IsNotEmpty()
+  @IsString()
+  descripcion: string;
+
+  @IsNotEmpty()
+  @IsString()
+  usuario_str: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  id_empresa_sesion: number;
+}
+
+export class DeleteNoveltyInputDto {
+  @IsNotEmpty()
+  @IsNumber()
+  id_actividad_solicitud: number;
 
   @IsNotEmpty()
   @IsString()

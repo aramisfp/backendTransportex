@@ -1,8 +1,12 @@
 import { Controller, Get, Post, Query } from '@nestjs/common';
-import { Body } from '@nestjs/common/decorators';
+import { Body, Delete, Put } from '@nestjs/common/decorators';
 import { myArray } from 'src/users.array';
 import { DataService } from './db.service';
-import { CreateNoveltyInputDto } from './dto/noveltyInput.dto';
+import {
+  CreateNoveltyInputDto,
+  DeleteNoveltyInputDto,
+  EditNoveltyInputDto,
+} from './dto/noveltyInput.dto';
 
 @Controller('data')
 export class DataController {
@@ -167,7 +171,6 @@ export class DataController {
       usuario_str,
       id_empresa_sesion,
     } = body;
-    const booleanUrgent = urgente === true ? 1 : 0;
     const date = new Date();
     const fecha_solicitud = date
       .toISOString()
@@ -180,7 +183,77 @@ export class DataController {
       id_actividad_grupo,
       id_empleado_solicitud,
       fecha_solicitud,
-      booleanUrgent,
+      urgente,
+      descripcion,
+      usuario_str,
+      id_empresa_sesion,
+    );
+    return result;
+  }
+  @Put('editNovedades')
+  async editNovelty(
+    @Query('client') userName: string,
+    @Body() body: EditNoveltyInputDto,
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const {
+      id_actividad_solicitud,
+      urgente,
+      descripcion,
+      usuario_str,
+      id_empresa_sesion,
+    } = body;
+    const defaultValue = 0;
+    const id_vehiculo = defaultValue;
+    const id_actividad_grupo = defaultValue;
+    const id_empleado_solicitud = defaultValue;
+    const date = new Date();
+    const fecha_solicitud = date
+      .toISOString()
+      .replace('T', ' ')
+      .replace('Z', '');
+
+    const result = this.dataService.novedadinput(
+      filteredArray,
+      id_actividad_solicitud,
+      id_vehiculo,
+      id_actividad_grupo,
+      id_empleado_solicitud,
+      fecha_solicitud,
+      urgente,
+      descripcion,
+      usuario_str,
+      id_empresa_sesion,
+    );
+    return result;
+  }
+  @Delete('deleteNovedades')
+  async deleteNovelty(
+    @Query('client') userName: string,
+    @Body() body: DeleteNoveltyInputDto,
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const { id_actividad_solicitud, usuario_str, id_empresa_sesion } = body;
+    const defaultValue = 0;
+    const id_vehiculo = defaultValue;
+    const id_actividad_grupo = defaultValue;
+    const id_empleado_solicitud = defaultValue;
+    const urgente = defaultValue;
+    const descripcion = '_BLANK_';
+    const date = new Date();
+    const fecha_solicitud = date
+      .toISOString()
+      .replace('T', ' ')
+      .replace('Z', '');
+
+    const result = this.dataService.novedadinput(
+      filteredArray,
+      id_actividad_solicitud,
+      id_vehiculo,
+      id_actividad_grupo,
+      id_empleado_solicitud,
+      fecha_solicitud,
+      urgente,
       descripcion,
       usuario_str,
       id_empresa_sesion,

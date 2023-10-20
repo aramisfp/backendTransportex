@@ -766,7 +766,7 @@ model CIUDAD_X_EMPRESA {
   ID_CIUDAD_X_EMPRESA Decimal @id(map: "PK_CIUDAD_X_EMPRESA") @db.Decimal(18, 0)
   ID_CIUDAD           Decimal @db.Decimal(18, 0)
   ID_EMPRESA          Decimal @db.Decimal(18, 0)
-  CIUDAD              CIUDAD  @relation(fields: [ID_CIUDAD], references: [ID_CIUDAD], onDelete: Cascade, onUpdate: NoAction, map: "FK_CXE_REF_CIUDAD")
+  CIUDAD              CIUDAD  @relation(fields: [ID_CIUDAD], references: [ID_CIUDAD], onDelete: NoAction, onUpdate: NoAction, map: "FK_CXE_REF_CIUDAD")
   EMPRESA             EMPRESA @relation(fields: [ID_EMPRESA], references: [ID_EMPRESA], onUpdate: NoAction, map: "FK_CXE_REF_EMPRESA")
 
   @@unique([ID_CIUDAD, ID_EMPRESA], map: "AK_KEY_CXE_CIUDAD_EMPRESA")

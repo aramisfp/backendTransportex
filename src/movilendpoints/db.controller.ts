@@ -27,7 +27,8 @@ export class DataController {
       password,
       username,
       idEmpresa,
-    }: { password: string; username: string; idEmpresa: number },
+      id,
+    }: { password: string; username: string; idEmpresa: number; id: number },
   ) {
     console.log(userName, username, password);
     const filteredArray = myArray.filter((obj) => obj.name === userName);
@@ -36,6 +37,7 @@ export class DataController {
       password,
       username,
       idEmpresa,
+      id,
     );
     return result;
   }
@@ -61,11 +63,20 @@ export class DataController {
     );
     return result;
   }
-
   @Get('vehiculos')
   async consultaVehiculos(@Query('client') userName: string) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.vehiculos(filteredArray);
+    const result = this.dataService.vehiculos(filteredArray, 0);
+    return result;
+  }
+  @Post('vehiculos')
+  async consultaVehiculosAsig(
+    @Query('client') userName: string,
+    @Body() { ID_Empleado }: { ID_Empleado: number },
+  ) {
+    console.log(ID_Empleado);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.vehiculos(filteredArray, ID_Empleado);
     return result;
   }
   @Get('usuarios')
@@ -108,14 +119,10 @@ export class DataController {
       filteredArray,
       id_vehiculo,
       kilometros,
-      observaciones,
       horas,
-      observaciones_horas,
       usuario_mod,
       tipo,
       manual,
-      id_viaje,
-      act_cascada_cavas,
     );
     return result;
   }
@@ -182,7 +189,6 @@ export class DataController {
       id_vehiculo,
       id_actividad_grupo,
       id_empleado_solicitud,
-      fecha_solicitud,
       urgente,
       descripcion,
       usuario_str,
@@ -219,7 +225,6 @@ export class DataController {
       id_vehiculo,
       id_actividad_grupo,
       id_empleado_solicitud,
-      fecha_solicitud,
       urgente,
       descripcion,
       usuario_str,
@@ -252,11 +257,110 @@ export class DataController {
       id_vehiculo,
       id_actividad_grupo,
       id_empleado_solicitud,
-      fecha_solicitud,
       urgente,
       descripcion,
       usuario_str,
       id_empresa_sesion,
+    );
+    return result;
+  }
+
+  @Get('actividadtipo')
+  async consultaActividadtipo(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.actividadtipo(filteredArray);
+    return result;
+  }
+  @Post('empleados')
+  async consultaEmpleados(
+    @Query('client') userName: string,
+    @Body() { ID_Empleado }: { ID_Empleado: number },
+  ) {
+    console.log(ID_Empleado);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.empleados(filteredArray, ID_Empleado);
+    return result;
+  }
+  @Post('novedades')
+  async consultaNovedades(
+    @Query('client') userName: string,
+    @Body() { ID_Empleado, todas }: { ID_Empleado: number; todas: number },
+  ) {
+    console.log(ID_Empleado, todas);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.novedades(
+      filteredArray,
+      ID_Empleado,
+      todas,
+    );
+    return result;
+  }
+  @Post('novedadinput')
+  async consultaNovedadinput(
+    @Query('client') userName: string,
+    @Body()
+    {
+      id_actividad_solicitud,
+      id_vehiculo,
+      id_actividad_grupo,
+      id_empleado_solicitud,
+      urgente,
+      descripcion,
+      usuario_str,
+      id_empresa_sesion,
+    }: {
+      id_actividad_solicitud: number;
+      id_vehiculo: number;
+      id_actividad_grupo: number;
+      id_empleado_solicitud: number;
+      urgente: number;
+      descripcion: string;
+      usuario_str: string;
+      id_empresa_sesion: number;
+    },
+  ) {
+    console.log(userName);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.novedadinput(
+      filteredArray,
+      id_actividad_solicitud,
+      id_vehiculo,
+      id_actividad_grupo,
+      id_empleado_solicitud,
+      urgente,
+      descripcion,
+      usuario_str,
+      id_empresa_sesion,
+    );
+    return result;
+  }
+  @Post('archivoinput')
+  async consultaArchivoinput(
+    @Query('client') userName: string,
+    @Body()
+    {
+      id_archivo,
+      id_key_modulo,
+      modulo,
+      nombre_archivo,
+      usuario_str,
+    }: {
+      id_archivo: number;
+      id_key_modulo: number;
+      modulo: string;
+      nombre_archivo: string;
+      usuario_str: string;
+    },
+  ) {
+    console.log(userName);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.archivoinput(
+      filteredArray,
+      id_archivo,
+      id_key_modulo,
+      modulo,
+      nombre_archivo,
+      usuario_str,
     );
     return result;
   }

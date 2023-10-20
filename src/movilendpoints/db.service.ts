@@ -1,7 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { PrismaService } from './prisma.service';
 import * as sql from 'mssql';
+import { PrismaService } from './prisma.service';
 
 @Injectable({ scope: Scope.REQUEST })
 export class DataService {
@@ -15,7 +15,7 @@ export class DataService {
   async general(object, query) {
     try {
       /* Creating a connection to the database. */
-      const config: sql.config ={
+      const config: sql.config = {
         user: object[0].UserID,
         password: object[0].UserPwd,
         server: object[0].Server,
@@ -26,121 +26,137 @@ export class DataService {
           trustServerCertificate: true,
         },
       };
-        try{
-        
-      const pool = new sql.ConnectionPool(config);
+      try {
+        const pool = new sql.ConnectionPool(config);
 
-      await pool.connect();
-  
-      console.log('Connected to the database');
-  
-      const request = pool.request();
-  
-      const result = await request.query(query);
-  
-      console.log(result.recordset);
-  
-      await pool.close();
-  
-      console.log('Disconnected from the database');
+        await pool.connect();
 
-      return result.recordset;
+        console.log('Connected to the database');
 
-      }catch(err){
+        const request = pool.request();
+
+        const result = await request.query(query);
+
+        console.log(result.recordset);
+
+        await pool.close();
+
+        console.log('Disconnected from the database');
+
+        return result.recordset;
+      } catch (err) {
         console.log(err);
         return err.message;
       }
-         
-      
     } catch (err) {
       console.error(err);
       return err.message;
     }
   }
-  async empresas(object){
-    const query = 'select Nombre, Tipo, Multiempresa, Activa, ID_Empresa from dbo.V_BI_EMPRESAS where Multiempresa= \'Si\'';
-    let result = await this.general(object, query);
+  async empresas(object) {
+    const query =
+      "select Nombre, Tipo, Multiempresa, Activa, ID_Empresa from dbo.V_BI_EMPRESAS where substring(Multiempresa,1,1) = 'S' and substring(Activa,1,1) = 'S' order by Nombre";
+    const result = await this.general(object, query);
     return result;
   }
-  async login(object, password, username, idEmpresa) {
-    const query = `Exec [dbo].[SP_INS_SESION_LOGIN] ${0}, ${username}, ${password}, ${idEmpresa}, ${null}`;
-    let result = await this.general(object, query);
+  async login(object, password, username, idEmpresa, id) {
+    const query = `Exec [dbo].[SP_INS_SESION_LOGIN] ${id}, ${'_BLANK_'}, '${password}', ${idEmpresa}, ${null}`;
+    console.log(query);
+    const result = await this.general(object, query);
     return result;
   }
   async configuracion(object, idEmpresa, campo) {
-    const query = `Exec [dbo].[F_GETCONFIGVALUE]  ${campo}, ${idEmpresa}`;
-    let result = await this.general(object, query);
+    console.log(campo, idEmpresa);
+    const query = `select [dbo].[F_GETCONFIGVALUE]('${campo}', ${idEmpresa})`;
+    const result = await this.general(object, query);
     return result;
   }
   async logout(object, idEmpresa, ID_Conexion, Fecha_Sesion) {
     const date = new Date();
     const sqlDate = date.toISOString().replace('T', ' ').replace('Z', '');
-    const query = `Exec [dbo].[SP_INS_SESION_LOGOUT] ${idEmpresa}, ${ID_Conexion}, '${Fecha_Sesion}'`;
+    const query = `Exec [dbo].[SP_INS_SESION_LOGOUT] ${ID_Conexion}, '_BLANK_', '${Fecha_Sesion}'`;
     console.log(sqlDate);
-    let result = await this.general(object, query);
+    const result = await this.general(object, query);
     return result;
   }
-  async vehiculos(object){
-    const query = 'select ID_Vehiculo, Identificador_Vehiculo, Identificador_Secundario, Marca, Modelo, Anio, Propietario, Afiliado_o_Propio, Tipo_de_Vehiculo, Uso_de_Vehiculo, Automotor, Conductor, Conductor_Secundario, Centro_de_Costo, Unidad_de_Negocio, Contrato, Sede, VIN, Serial_Motor, Estado, Kilometraje, Ultima_Fecha_Act_Kilometraje, Horas_de_Uso, Ultima_Fecha_Act_Horas, Remolques_Asignados, Tipo_de_Combustible, Empresa_Ambiente, ID_Empleado, ID_Empleado_2 from dbo.V_BI_VEHICULOS';
-    let result = await this.general(object, query);
+  async vehiculos(object, ID_Empleado) {
+    const query = `select ID_Vehiculo, Identificador_Vehiculo, Identificador_Secundario, Marca, Modelo, Anio, Propietario, Afiliado_o_Propio, Tipo_de_Vehiculo, Uso_de_Vehiculo, Automotor, Conductor, Conductor_Secundario, Centro_de_Costo, Unidad_de_Negocio, Contrato, Sede, VIN, Serial_Motor, Estado, Kilometraje, Ultima_Fecha_Act_Kilometraje, Horas_de_Uso, Ultima_Fecha_Act_Horas, Remolques_Asignados, Tipo_de_Combustible, Empresa_Ambiente, ID_Empleado, ID_Empleado_2 from dbo.V_BI_VEHICULOS order by case when isnull(ID_Empleado,-1) = ${ID_Empleado} then 0 else 1 end asc, case when isnull(ID_Empleado_2,-1) = ${ID_Empleado} then 0 else 1 end asc, Identificador_Vehiculo`;
+    const result = await this.general(object, query);
     return result;
   }
-  async usuarios(object){
-    const query = 'select ID_Usuario, Nombre_Usuario, Administrador from dbo.V_USUARIO';
-    let result = await this.general(object, query);
+
+  async usuarios(object) {
+    const query =
+      'select ID_Usuario, Nombre_Usuario, Administrador from dbo.V_USUARIO order by Nombre_Usuario';
+    const result = await this.general(object, query);
     return result;
   }
-  async kilometraje(object, 
-    id_vehiculo, 
-    kilometros, 
-    observaciones, 
-    horas, 
-    observaciones_horas, 
+  async kilometraje(
+    object,
+    id_vehiculo,
+    kilometros,
+    horas,
     usuario_mod,
     tipo,
     manual,
-    id_viaje,
-    act_cascada_cavas) {
-    const date = new Date();
-    const sqlDate = date.toISOString().replace('T', ' ').replace('Z', '');
+  ) {
     const query = `Exec [dbo].[SP_UPD_VEHICULO_KILOMETRAJE_HORA] 
     ${id_vehiculo}, 
     ${kilometros}, 
-    '${observaciones}', 
-    ${horas}, 
-    '${observaciones_horas}',
-    '${usuario_mod}',
-    '${sqlDate}',
-    '${tipo}',
-    ${manual},
-    ${id_viaje},
-    ${act_cascada_cavas},
-    '${sqlDate}',
-    '${sqlDate}'`;
-    let result = await this.general(object, query);
+    'Actualizacion del kilometraje via movil', 
+    ${horas},
+    'Actualizacion de las horas de uso via movil',
+    ${usuario_mod},
+    ${null},
+    '',            
+    ${1},
+    ${0},
+    ${1},
+    ${null},
+    ${null}`;
+    const result = await this.general(object, query);
     return result;
   }
-  async permisos(object, idUser, columna){
+  async permisos(object, idUser, columna) {
     const query = `select dbo.F_SESION_USUARIO_PERMISO(${idUser}, '${columna}')`;
-    let result = await this.general(object, query);
+    const result = await this.general(object, query);
     return result;
   }
- async actividadtipo(object){
-    const query = 'select ID_Actividad_Tipo, Descripcion from dbo.V_ACTIVIDAD_TIPO';
-    let result = await this.general(object, query);
+  async actividadtipo(object) {
+    const query =
+      'select ID_Actividad_Tipo, Descripcion from dbo.V_ACTIVIDAD_TIPO order by Descripcion';
+    const result = await this.general(object, query);
     return result;
   }
-  async empleados(object){
-    const query = 'select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario from dbo.V_EMPLEADO';
-    let result = await this.general(object, query);
+  async empleados(object, ID_Empleado) {
+    const query = `select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario 
+    from dbo.V_EMPLEADO 
+    order by case when ID_Empleado = ${ID_Empleado} then 0 else 1 end asc, Nombre_Empleado asc`;
+    const result = await this.general(object, query);
     return result;
   }
-  async novedades(object, ID_Empleado, todas){
-    const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Usuario_Solicitud, ID_Actividad_Grupo, Actividades_Asociadas, Archivos_Adjuntos_Cantidad, Empresa_Ambiente from dbo.F_SEL_ACTIVIDAD_SOLICITUD(${ID_Empleado},${todas})`;
-    let result = await this.general(object, query);
+  async novedades(object, ID_Empleado, todas) {
+    const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Usuario_Solicitud, ID_Actividad_Grupo, Actividades_Asociadas, Archivos_Adjuntos_Cantidad, Empresa_Ambiente 
+    from dbo.F_SEL_ACTIVIDAD_SOLICITUD(${ID_Empleado},${todas}) 
+     order by 
+     case Estatus when 'N' then 1 when 'Q' then 2 else 99 end asc,
+     case urgente when 'S' then 1 else 0 end desc,
+     isnull(prioridad, 99) asc, 
+     ID_Actividad_Novedad desc`;
+    const result = await this.general(object, query);
     return result;
-  }  
-  async novedadinput(object, id_actividad_solicitud, id_vehiculo, id_actividad_grupo, id_empleado_solicitud, fecha_solicitud, urgente, descripcion, usuario_str, id_empresa_sesion) {
+  }
+  async novedadinput(
+    object,
+    id_actividad_solicitud,
+    id_vehiculo,
+    id_actividad_grupo,
+    id_empleado_solicitud,
+    urgente,
+    descripcion,
+    usuario_str,
+    id_empresa_sesion,
+  ) {
     const query = `Exec dbo.[SP_UPD_SYNC_ACTIVIDAD_SOLICITUD] 
     ${id_actividad_solicitud}, 
     ${id_vehiculo}, 
@@ -149,12 +165,29 @@ export class DataService {
     '_BLANK_',
     ${id_empleado_solicitud},
     '_BLANK_',
-    ${fecha_solicitud},            
+    ${null},            
     ${urgente},
     ${descripcion},
     ${usuario_str},
     ${id_empresa_sesion}`;
-    let result = await this.general(object, query);
+    const result = await this.general(object, query);
     return result;
-  }  
+  }
+  async archivoinput(
+    object,
+    id_archivo,
+    id_key_modulo,
+    modulo,
+    nombre_archivo,
+    usuario_str,
+  ) {
+    const query = `Exec dbo.[SP_INS_SYNC_ARCHIVO] 
+    ${id_archivo}, 
+    ${id_key_modulo}, 
+    ${modulo},
+    ${nombre_archivo},
+    ${usuario_str}`;
+    const result = await this.general(object, query);
+    return result;
+  }
 }

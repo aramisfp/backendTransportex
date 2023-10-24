@@ -364,4 +364,14 @@ export class DataController {
     );
     return result;
   }
+  @Post('archivos')
+   async consultaArchivos(
+    @Query('client') userName: string,
+    @Body() { ID_Key, Modulo_Letras }: { ID_Key: number; Modulo_Letras: string },
+  ) {
+    console.log(ID_Key, Modulo_Letras);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.archivos(filteredArray, ID_Key, Modulo_Letras);
+    return result;
+  }
 }

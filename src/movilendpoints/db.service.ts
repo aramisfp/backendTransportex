@@ -171,6 +171,7 @@ export class DataService {
     '${usuario_str}',
     ${id_empresa_sesion}`;
     const result = await this.general(object, query);
+    console.log('respuesta del store:', result);
     return result;
   }
   async archivoinput(

@@ -178,11 +178,6 @@ export class DataController {
       usuario_str,
       id_empresa_sesion,
     } = body;
-    const date = new Date();
-    const fecha_solicitud = date
-      .toISOString()
-      .replace('T', ' ')
-      .replace('Z', '');
     const result = this.dataService.novedadinput(
       filteredArray,
       id_actividad_solicitud,
@@ -213,11 +208,7 @@ export class DataController {
     const id_vehiculo = defaultValue;
     const id_actividad_grupo = defaultValue;
     const id_empleado_solicitud = defaultValue;
-    const date = new Date();
-    const fecha_solicitud = date
-      .toISOString()
-      .replace('T', ' ')
-      .replace('Z', '');
+    console.log(typeof urgente);
 
     const result = this.dataService.novedadinput(
       filteredArray,
@@ -245,11 +236,6 @@ export class DataController {
     const id_empleado_solicitud = defaultValue;
     const urgente = defaultValue;
     const descripcion = '_BLANK_';
-    const date = new Date();
-    const fecha_solicitud = date
-      .toISOString()
-      .replace('T', ' ')
-      .replace('Z', '');
 
     const result = this.dataService.novedadinput(
       filteredArray,
@@ -295,45 +281,45 @@ export class DataController {
     );
     return result;
   }
-  @Post('novedadinput')
-  async consultaNovedadinput(
-    @Query('client') userName: string,
-    @Body()
-    {
-      id_actividad_solicitud,
-      id_vehiculo,
-      id_actividad_grupo,
-      id_empleado_solicitud,
-      urgente,
-      descripcion,
-      usuario_str,
-      id_empresa_sesion,
-    }: {
-      id_actividad_solicitud: number;
-      id_vehiculo: number;
-      id_actividad_grupo: number;
-      id_empleado_solicitud: number;
-      urgente: number;
-      descripcion: string;
-      usuario_str: string;
-      id_empresa_sesion: number;
-    },
-  ) {
-    console.log(userName);
-    const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.novedadinput(
-      filteredArray,
-      id_actividad_solicitud,
-      id_vehiculo,
-      id_actividad_grupo,
-      id_empleado_solicitud,
-      urgente,
-      descripcion,
-      usuario_str,
-      id_empresa_sesion,
-    );
-    return result;
-  }
+  // @Post('novedadinput')
+  // async consultaNovedadinput(
+  //   @Query('client') userName: string,
+  //   @Body()
+  //   {
+  //     id_actividad_solicitud,
+  //     id_vehiculo,
+  //     id_actividad_grupo,
+  //     id_empleado_solicitud,
+  //     urgente,
+  //     descripcion,
+  //     usuario_str,
+  //     id_empresa_sesion,
+  //   }: {
+  //     id_actividad_solicitud: number;
+  //     id_vehiculo: number;
+  //     id_actividad_grupo: number;
+  //     id_empleado_solicitud: number;
+  //     urgente: number;
+  //     descripcion: string;
+  //     usuario_str: string;
+  //     id_empresa_sesion: number;
+  //   },
+  // ) {
+  //   console.log(userName);
+  //   const filteredArray = myArray.filter((obj) => obj.name === userName);
+  //   const result = this.dataService.novedadinput(
+  //     filteredArray,
+  //     id_actividad_solicitud,
+  //     id_vehiculo,
+  //     id_actividad_grupo,
+  //     id_empleado_solicitud,
+  //     urgente,
+  //     descripcion,
+  //     usuario_str,
+  //     id_empresa_sesion,
+  //   );
+  //   return result;
+  // }
   @Post('archivoinput')
   async consultaArchivoinput(
     @Query('client') userName: string,

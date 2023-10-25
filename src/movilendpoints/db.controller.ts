@@ -1,11 +1,19 @@
 import { Controller, Get, Post, Query } from '@nestjs/common';
-import { Body, Delete, Put } from '@nestjs/common/decorators';
+import {
+  Body,
+  Delete,
+  Put,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common/decorators';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { myArray } from 'src/users.array';
 import { DataService } from './db.service';
 import {
   CreateNoveltyInputDto,
   DeleteNoveltyInputDto,
   EditNoveltyInputDto,
+  UploadedItemDto,
 } from './dto/noveltyInput.dto';
 
 @Controller('data')
@@ -69,10 +77,20 @@ export class DataController {
     const result = this.dataService.vehiculos(filteredArray, 0);
     return result;
   }
-  @Post('vehiculos')
+  // @Post('vehiculos')
+  // async consultaVehiculosAsig(
+  //   @Query('client') userName: string,
+  //   @Body() { ID_Empleado }: { ID_Empleado: number },
+  // ) {
+  //   console.log(ID_Empleado);
+  //   const filteredArray = myArray.filter((obj) => obj.name === userName);
+  //   const result = this.dataService.vehiculos(filteredArray, ID_Empleado);
+  //   return result;
+  // }
+  @Get('vehiculosAsignados')
   async consultaVehiculosAsig(
     @Query('client') userName: string,
-    @Body() { ID_Empleado }: { ID_Empleado: number },
+    @Query('ID_Empleado') ID_Empleado: number,
   ) {
     console.log(ID_Empleado);
     const filteredArray = myArray.filter((obj) => obj.name === userName);
@@ -281,6 +299,41 @@ export class DataController {
     );
     return result;
   }
+  @Post('uploadedFile')
+  @UseInterceptors(FileInterceptor('file')) // 'file' es el nombre del campo de archivo en la solicitud
+  async uploadedFile(
+    @Query('client') userName: string,
+    @UploadedFile() file,
+    @Body() body: UploadedItemDto,
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const dataToSend = {
+      id_archivo: 0,
+      id_key_modulo: body.id_key_modulo,
+      modulo: 'ACS',
+      nombre_archivo: body.name,
+      usuario_str: body.usuario_str,
+    };
+    const saveData = await this.dataService.archivoinput(
+      filteredArray,
+      dataToSend.id_archivo,
+      dataToSend.id_key_modulo,
+      dataToSend.modulo,
+      dataToSend.nombre_archivo,
+      dataToSend.usuario_str,
+    );
+    if (Array.isArray(saveData) && saveData.length > 0) {
+      // const blob = new Blob(file.buffer);
+      const result = this.dataService.archivoUpdate(
+        filteredArray,
+        saveData[0].ID_Archivo,
+        file.buffer,
+      );
+      return result;
+    } else {
+      return saveData;
+    }
+  }
   // @Post('novedadinput')
   // async consultaNovedadinput(
   //   @Query('client') userName: string,
@@ -320,34 +373,35 @@ export class DataController {
   //   );
   //   return result;
   // }
-  @Post('archivoinput')
-  async consultaArchivoinput(
-    @Query('client') userName: string,
-    @Body()
-    {
-      id_archivo,
-      id_key_modulo,
-      modulo,
-      nombre_archivo,
-      usuario_str,
-    }: {
-      id_archivo: number;
-      id_key_modulo: number;
-      modulo: string;
-      nombre_archivo: string;
-      usuario_str: string;
-    },
-  ) {
-    console.log(userName);
-    const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.archivoinput(
-      filteredArray,
-      id_archivo,
-      id_key_modulo,
-      modulo,
-      nombre_archivo,
-      usuario_str,
-    );
-    return result;
-  }
+
+  // @Post('archivoinput')
+  // async consultaArchivoinput(
+  //   @Query('client') userName: string,
+  //   @Body()
+  //   {
+  //     id_archivo,
+  //     id_key_modulo,
+  //     modulo,
+  //     nombre_archivo,
+  //     usuario_str,
+  //   }: {
+  //     id_archivo: number;
+  //     id_key_modulo: number;
+  //     modulo: string;
+  //     nombre_archivo: string;
+  //     usuario_str: string;
+  //   },
+  // ) {
+  //   console.log(userName);
+  //   const filteredArray = myArray.filter((obj) => obj.name === userName);
+  //   const result = this.dataService.archivoinput(
+  //     filteredArray,
+  //     id_archivo,
+  //     id_key_modulo,
+  //     modulo,
+  //     nombre_archivo,
+  //     usuario_str,
+  //   );
+  //   return result;
+  // }
 }

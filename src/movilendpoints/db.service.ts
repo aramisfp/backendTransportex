@@ -171,7 +171,6 @@ export class DataService {
     '${usuario_str}',
     ${id_empresa_sesion}`;
     const result = await this.general(object, query);
-    console.log('respuesta del store:', result);
     return result;
   }
   async archivoinput(
@@ -188,6 +187,15 @@ export class DataService {
     ${modulo},
     ${nombre_archivo},
     ${usuario_str}`;
+    const result = await this.general(object, query);
+    return result;
+  }
+  async archivoUpdate(object, id_archivo, nuevoContenido) {
+    const query = `
+    UPDATE dbo.ARCHIVO
+    SET CONTENIDO =  0x${nuevoContenido.toString('hex')}
+    WHERE id_archivo = ${id_archivo}
+  `;
     const result = await this.general(object, query);
     return result;
   }

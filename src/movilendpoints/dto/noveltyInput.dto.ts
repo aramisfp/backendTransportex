@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateNoveltyInputDto {
@@ -67,4 +68,16 @@ export class DeleteNoveltyInputDto {
   @IsNotEmpty()
   @IsNumber()
   id_empresa_sesion: number;
+}
+
+export class UploadedItemDto {
+  @IsString()
+  name: string;
+  @IsString()
+  id_key_modulo: number;
+  @IsString()
+  usuario_str: string;
+
+  @Type(() => String)
+  file: string;
 }

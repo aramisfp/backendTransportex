@@ -136,7 +136,7 @@ export class DataService {
     return result;
   }
   async novedades(object, ID_Empleado, todas) {
-    const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Usuario_Solicitud, ID_Actividad_Grupo, Actividades_Asociadas, Archivos_Adjuntos_Cantidad, Empresa_Ambiente 
+    const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Usuario_Solicitud, ID_Actividad_Grupo, Actividades_Asociadas, Archivos_Adjuntos_Cantidad, Empresa_Ambiente, Vehiculo_Modelo 
     from dbo.F_SEL_ACTIVIDAD_SOLICITUD(${ID_Empleado},${todas}) 
      order by 
      case Estatus when 'N' then 1 when 'Q' then 2 else 99 end asc,
@@ -196,6 +196,11 @@ export class DataService {
     SET CONTENIDO =  0x${nuevoContenido.toString('hex')}
     WHERE id_archivo = ${id_archivo}
   `;
+    const result = await this.general(object, query);
+    return result;
+  }
+  async archivos(object, ID_Key, Modulo_Letras) {
+    const query = `select id_archivo, nombre, fecha_ins, usuario_ins from archivo where id_key_modulo = ${ID_Key} and modulo = '${Modulo_Letras}' order by fecha_ins desc`;
     const result = await this.general(object, query);
     return result;
   }

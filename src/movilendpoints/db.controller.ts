@@ -285,20 +285,20 @@ export class DataController {
     const result = this.dataService.empleados(filteredArray, ID_Empleado);
     return result;
   }
-  @Post('novedades')
-  async consultaNovedades(
-    @Query('client') userName: string,
-    @Body() { ID_Empleado, todas }: { ID_Empleado: number; todas: number },
-  ) {
-    console.log(ID_Empleado, todas);
-    const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.novedades(
-      filteredArray,
-      ID_Empleado,
-      todas,
-    );
-    return result;
-  }
+  // @Post('novedades')
+  // async consultaNovedades(
+  //   @Query('client') userName: string,
+  //   @Body() { ID_Empleado, todas }: { ID_Empleado: number; todas: number },
+  // ) {
+  //   console.log(ID_Empleado, todas);
+  //   const filteredArray = myArray.filter((obj) => obj.name === userName);
+  //   const result = this.dataService.novedades(
+  //     filteredArray,
+  //     ID_Empleado,
+  //     todas,
+  //   );
+  //   return result;
+  // }
   @Post('uploadedFile')
   @UseInterceptors(FileInterceptor('file')) // 'file' es el nombre del campo de archivo en la solicitud
   async uploadedFile(

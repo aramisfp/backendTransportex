@@ -185,8 +185,8 @@ export class DataService {
     ${id_archivo}, 
     ${id_key_modulo}, 
     ${modulo},
-    ${nombre_archivo},
-    ${usuario_str}`;
+    '${nombre_archivo}',
+    '${usuario_str}'`;
     const result = await this.general(object, query);
     return result;
   }

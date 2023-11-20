@@ -175,9 +175,13 @@ export class DataController {
     return result;
   }
   @Get('novedades')
-  async getNoveltyList(@Query('client') userName: string) {
+  async getNoveltyList(
+    @Query('client') userName: string,
+    @Query('idEmployer') idEmployer: string,
+    @Query('order') order: string,
+  ) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.novedades(filteredArray, 1, 0);
+    const result = this.dataService.novedades(filteredArray, idEmployer, order);
     return result;
   }
   @Post('novedades')
@@ -285,20 +289,6 @@ export class DataController {
     const result = this.dataService.empleados(filteredArray, ID_Empleado);
     return result;
   }
-  // @Post('novedades')
-  // async consultaNovedades(
-  //   @Query('client') userName: string,
-  //   @Body() { ID_Empleado, todas }: { ID_Empleado: number; todas: number },
-  // ) {
-  //   console.log(ID_Empleado, todas);
-  //   const filteredArray = myArray.filter((obj) => obj.name === userName);
-  //   const result = this.dataService.novedades(
-  //     filteredArray,
-  //     ID_Empleado,
-  //     todas,
-  //   );
-  //   return result;
-  // }
   @Post('uploadedFile')
   @UseInterceptors(FileInterceptor('file')) // 'file' es el nombre del campo de archivo en la solicitud
   async uploadedFile(
@@ -334,76 +324,7 @@ export class DataController {
       return saveData;
     }
   }
-  // @Post('novedadinput')
-  // async consultaNovedadinput(
-  //   @Query('client') userName: string,
-  //   @Body()
-  //   {
-  //     id_actividad_solicitud,
-  //     id_vehiculo,
-  //     id_actividad_grupo,
-  //     id_empleado_solicitud,
-  //     urgente,
-  //     descripcion,
-  //     usuario_str,
-  //     id_empresa_sesion,
-  //   }: {
-  //     id_actividad_solicitud: number;
-  //     id_vehiculo: number;
-  //     id_actividad_grupo: number;
-  //     id_empleado_solicitud: number;
-  //     urgente: number;
-  //     descripcion: string;
-  //     usuario_str: string;
-  //     id_empresa_sesion: number;
-  //   },
-  // ) {
-  //   console.log(userName);
-  //   const filteredArray = myArray.filter((obj) => obj.name === userName);
-  //   const result = this.dataService.novedadinput(
-  //     filteredArray,
-  //     id_actividad_solicitud,
-  //     id_vehiculo,
-  //     id_actividad_grupo,
-  //     id_empleado_solicitud,
-  //     urgente,
-  //     descripcion,
-  //     usuario_str,
-  //     id_empresa_sesion,
-  //   );
-  //   return result;
-  // }
 
-  // @Post('archivoinput')
-  // async consultaArchivoinput(
-  //   @Query('client') userName: string,
-  //   @Body()
-  //   {
-  //     id_archivo,
-  //     id_key_modulo,
-  //     modulo,
-  //     nombre_archivo,
-  //     usuario_str,
-  //   }: {
-  //     id_archivo: number;
-  //     id_key_modulo: number;
-  //     modulo: string;
-  //     nombre_archivo: string;
-  //     usuario_str: string;
-  //   },
-  // ) {
-  //   console.log(userName);
-  //   const filteredArray = myArray.filter((obj) => obj.name === userName);
-  //   const result = this.dataService.archivoinput(
-  //     filteredArray,
-  //     id_archivo,
-  //     id_key_modulo,
-  //     modulo,
-  //     nombre_archivo,
-  //     usuario_str,
-  //   );
-  //   return result;
-  // }
   @Post('archivos')
   async consultaArchivos(
     @Query('client') userName: string,

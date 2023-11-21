@@ -11,6 +11,7 @@ import { myArray } from 'src/users.array';
 import { DataService } from './db.service';
 import {
   CreateNoveltyInputDto,
+  DeleteFileInputDto,
   DeleteNoveltyInputDto,
   EditNoveltyInputDto,
   UploadedItemDto,
@@ -331,12 +332,27 @@ export class DataController {
     @Body()
     { ID_Key, Modulo_Letras }: { ID_Key: number; Modulo_Letras: string },
   ) {
-    console.log(ID_Key, Modulo_Letras);
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.archivos(
       filteredArray,
       ID_Key,
       Modulo_Letras,
+    );
+    return result;
+  }
+  @Delete('deleteFile')
+  async deleteFile(
+    @Query('client') userName: string,
+    @Body() body: DeleteFileInputDto,
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = await this.dataService.archivoinput(
+      filteredArray,
+      body.id_archivo,
+      0,
+      null,
+      null,
+      null,
     );
     return result;
   }

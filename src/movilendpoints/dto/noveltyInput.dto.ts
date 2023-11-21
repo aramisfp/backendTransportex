@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNegative, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateNoveltyInputDto {
   @IsNotEmpty()
@@ -58,7 +58,7 @@ export class EditNoveltyInputDto {
 
 export class DeleteNoveltyInputDto {
   @IsNotEmpty()
-  @IsNumber()
+  @IsNegative()
   id_actividad_solicitud: number;
 
   @IsNotEmpty()
@@ -80,4 +80,10 @@ export class UploadedItemDto {
 
   @Type(() => String)
   file: string;
+}
+
+export class DeleteFileInputDto {
+  @IsNotEmpty()
+  @IsNegative()
+  id_archivo: number;
 }

@@ -142,7 +142,7 @@ export class DataService {
   }
   async novedades(object, ID_Empleado, todas) {
     const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Usuario_Solicitud, ID_Actividad_Grupo, Actividades_Asociadas, Archivos_Adjuntos_Cantidad, Empresa_Ambiente, Vehiculo_Modelo 
-    from dbo.F_SEL_ACTIVIDAD_SOLICITUD(${ID_Empleado},${todas}) 
+    from dbo.F_SEL_ACTIVIDAD_SOLICITUD(0, ${ID_Empleado},1) 
     where isnull((select emp.ID_EMPRESA_REGISTRO from EMPLEADO as emp where emp.ID_EMPLEADO = ${ID_Empleado}),0) in (ID_Empresa_Registro, 0)
      order by 
      case Estatus when 'N' then 1 when 'Q' then 2  when 'T' then 3 when 'A' then 4 when 'C' then 5 else 99 end asc,
@@ -154,7 +154,7 @@ export class DataService {
   }
   async novedadestotal(object, ID_Empleado, todas, ID_Empresa_Sesion) {
     const query = `select count(*) as TotalNovedades
-    from dbo.F_SEL_ACTIVIDAD_SOLICITUD(${ID_Empleado},${todas}) 
+    from dbo.F_SEL_ACTIVIDAD_SOLICITUD(0, ${ID_Empleado},1) 
     where isnull(${ID_Empresa_Sesion},0) in (ID_Empresa_Registro, 0)`;
     const result = await this.general(object, query);
     return result;

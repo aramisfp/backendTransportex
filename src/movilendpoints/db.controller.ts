@@ -185,6 +185,15 @@ export class DataController {
     const result = this.dataService.novedades(filteredArray, idEmployer, order);
     return result;
   }
+  @Post('novedadestotal')
+  async consultaNovedadestotal(
+    @Query('client') userName: string,
+    @Body() { ID_Empleado, todas, ID_Empresa_Sesion}: { ID_Empleado: number; todas: number; ID_Empresa_Sesion: number},
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.novedadestotal(filteredArray, ID_Empleado, todas, ID_Empresa_Sesion);
+    return result;
+  }  
   @Post('novedades')
   async createNovelty(
     @Query('client') userName: string,

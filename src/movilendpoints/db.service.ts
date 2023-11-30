@@ -153,7 +153,7 @@ export class DataService {
     return result;
   }
   async novedadestotal(object, ID_Empleado, todas, ID_Empresa_Sesion) {
-    const query = `select count(*) 
+    const query = `select count(*) as TotalNovedades
     from dbo.F_SEL_ACTIVIDAD_SOLICITUD(${ID_Empleado},${todas}) 
     where isnull(${ID_Empresa_Sesion},0) in (ID_Empresa_Registro, 0)`;
     const result = await this.general(object, query);

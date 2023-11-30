@@ -80,7 +80,11 @@ export class DataService {
     return result;
   }
   async vehiculos(object, ID_Empleado) {
-    const query = `select ID_Vehiculo, Identificador_Vehiculo, Identificador_Secundario, Marca, Modelo, Anio, Propietario, Afiliado_o_Propio, Tipo_de_Vehiculo, Uso_de_Vehiculo, Automotor, Conductor, Conductor_Secundario, Centro_de_Costo, Unidad_de_Negocio, Contrato, Sede, VIN, Serial_Motor, Estado, Kilometraje, Ultima_Fecha_Act_Kilometraje, Horas_de_Uso, Ultima_Fecha_Act_Horas, Remolques_Asignados, Tipo_de_Combustible, Empresa_Ambiente, ID_Empleado, ID_Empleado_2 from dbo.V_BI_VEHICULOS order by case when isnull(ID_Empleado,-1) = ${ID_Empleado} then 0 else 1 end asc, case when isnull(ID_Empleado_2,-1) = ${ID_Empleado} then 0 else 1 end asc, Identificador_Vehiculo`;
+    const query = `select ID_Vehiculo, Identificador_Vehiculo, Identificador_Secundario, Marca, Modelo, Anio, Propietario, Afiliado_o_Propio, Tipo_de_Vehiculo, Uso_de_Vehiculo, Automotor, Conductor, Conductor_Secundario, Centro_de_Costo, Unidad_de_Negocio, Contrato, Sede, VIN, Serial_Motor, Estado, Kilometraje, Ultima_Fecha_Act_Kilometraje, Horas_de_Uso, Ultima_Fecha_Act_Horas, Remolques_Asignados, Tipo_de_Combustible, Empresa_Ambiente, ID_Empleado, ID_Empleado_2 
+    from dbo.V_BI_VEHICULOS 
+    where isnull((select emp.ID_EMPRESA_REGISTRO from EMPLEADO as emp where emp.ID_EMPLEADO = ${ID_Empleado}),0) in (ID_Empresa_Registro, 0)
+    order by case when isnull(ID_Empleado,-1) = ${ID_Empleado} then 0 else 1 end asc, case when isnull(ID_Empleado_2,-1) = ${ID_Empleado} then 0 else 1 end asc, 
+    Identificador_Vehiculo`;
     const result = await this.general(object, query);
     return result;
   }
@@ -131,6 +135,7 @@ export class DataService {
   async empleados(object, ID_Empleado) {
     const query = `select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario 
     from dbo.V_EMPLEADO 
+    where isnull((select emp.ID_EMPRESA_REGISTRO from EMPLEADO as emp where emp.ID_EMPLEADO = ${ID_Empleado}),0) in (ID_Empresa_Registro, 0)
     order by case when ID_Empleado = ${ID_Empleado} then 0 else 1 end asc, Nombre_Empleado asc`;
     const result = await this.general(object, query);
     return result;
@@ -138,11 +143,19 @@ export class DataService {
   async novedades(object, ID_Empleado, todas) {
     const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Usuario_Solicitud, ID_Actividad_Grupo, Actividades_Asociadas, Archivos_Adjuntos_Cantidad, Empresa_Ambiente, Vehiculo_Modelo 
     from dbo.F_SEL_ACTIVIDAD_SOLICITUD(${ID_Empleado},${todas}) 
+    where isnull((select emp.ID_EMPRESA_REGISTRO from EMPLEADO as emp where emp.ID_EMPLEADO = ${ID_Empleado}),0) in (ID_Empresa_Registro, 0)
      order by 
-     case Estatus when 'N' then 1 when 'Q' then 2 else 99 end asc,
+     case Estatus when 'N' then 1 when 'Q' then 2  when 'T' then 3 when 'A' then 4 when 'C' then 5 else 99 end asc,
      case urgente when 'S' then 1 else 0 end desc,
      isnull(prioridad, 99) asc, 
      ID_Actividad_Novedad desc`;
+    const result = await this.general(object, query);
+    return result;
+  }
+  async novedadestotal(object, ID_Empleado, todas, ID_Empresa_Sesion) {
+    const query = `select count(*) 
+    from dbo.F_SEL_ACTIVIDAD_SOLICITUD(${ID_Empleado},${todas}) 
+    where isnull(${ID_Empresa_Sesion},0) in (ID_Empresa_Registro, 0)`;
     const result = await this.general(object, query);
     return result;
   }

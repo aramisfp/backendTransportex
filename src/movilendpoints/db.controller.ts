@@ -92,8 +92,10 @@ export class DataController {
   async consultaVehiculosAsig(
     @Query('client') userName: string,
     @Query('ID_Empleado') ID_Empleado: number,
+    @Query('ID_Empresa_Session') ID_Empresa_Session: number,
   ) {
     console.log(ID_Empleado);
+    console.log('ID de la empresa', ID_Empresa_Session);
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.vehiculos(filteredArray, ID_Empleado);
     return result;
@@ -180,7 +182,9 @@ export class DataController {
     @Query('client') userName: string,
     @Query('idEmployer') idEmployer: string,
     @Query('order') order: string,
+    @Query('ID_Empresa_Session') ID_Empresa_Session: number,
   ) {
+    console.log('ID de la empresa', ID_Empresa_Session);
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.novedades(filteredArray, idEmployer, order);
     return result;
@@ -188,12 +192,22 @@ export class DataController {
   @Post('novedadestotal')
   async consultaNovedadestotal(
     @Query('client') userName: string,
-    @Body() { ID_Empleado, todas, ID_Empresa_Sesion}: { ID_Empleado: number; todas: number; ID_Empresa_Sesion: number},
+    @Body()
+    {
+      ID_Empleado,
+      todas,
+      ID_Empresa_Sesion,
+    }: { ID_Empleado: number; todas: number; ID_Empresa_Sesion: number },
   ) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.novedadestotal(filteredArray, ID_Empleado, todas, ID_Empresa_Sesion);
+    const result = this.dataService.novedadestotal(
+      filteredArray,
+      ID_Empleado,
+      todas,
+      ID_Empresa_Sesion,
+    );
     return result;
-  }  
+  }
   @Post('novedades')
   async createNovelty(
     @Query('client') userName: string,
@@ -300,7 +314,7 @@ export class DataController {
     return result;
   }
   @Post('uploadedFile')
-  @UseInterceptors(FileInterceptor('file')) // 'file' es el nombre del campo de archivo en la solicitud
+  @UseInterceptors(FileInterceptor('file'))
   async uploadedFile(
     @Query('client') userName: string,
     @UploadedFile() file,
@@ -364,5 +378,23 @@ export class DataController {
       null,
     );
     return result;
+  }
+  //endpoint de prueba
+  @Get('test')
+  async getTets(
+    @Query('client') userName: string,
+    @Query('idEmployer') idEmployer: string,
+    @Query('ID_Empleado') ID_Empleado: string,
+    @Query('order') order: string,
+    @Query('ID_Empresa_Session') ID_Empresa_Session: number,
+  ) {
+    console.group('Querys:');
+    console.log('client:', userName);
+    console.log('idEmployer:', idEmployer); // esto es lo mismo que ID_Empleado solo que otro query
+    console.log('ID_Empleado:', ID_Empleado); // esto es lo mismo que idEmployer solo que otro query
+    console.log('order:', order);
+    console.log('ID_Empresa_Session:', ID_Empresa_Session);
+    console.groupEnd();
+    return { message: 'este es un endpoint de prueba' };
   }
 }

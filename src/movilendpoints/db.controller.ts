@@ -97,7 +97,7 @@ export class DataController {
     console.log(ID_Empleado);
     console.log('ID de la empresa', ID_Empresa_Session);
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.vehiculos(filteredArray, ID_Empleado);
+    const result = this.dataService.vehiculos(filteredArray, ID_Empleado, ID_Empresa_Session);
     return result;
   }
   @Get('usuarios')
@@ -186,7 +186,7 @@ export class DataController {
   ) {
     console.log('ID de la empresa', ID_Empresa_Session);
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.novedades(filteredArray, idEmployer, order);
+    const result = this.dataService.novedades(filteredArray, idEmployer, order, ID_Empresa_Session);
     return result;
   }
   @Post('novedadestotal')
@@ -307,10 +307,11 @@ export class DataController {
   async consultaEmpleados(
     @Query('client') userName: string,
     @Body() { ID_Empleado }: { ID_Empleado: number },
+    @Body() { ID_Empresa_Sesion }: { ID_Empresa_Sesion: number },
   ) {
     console.log(ID_Empleado);
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.empleados(filteredArray, ID_Empleado);
+    const result = this.dataService.empleados(filteredArray, ID_Empleado, ID_Empresa_Sesion);
     return result;
   }
   @Post('uploadedFile')

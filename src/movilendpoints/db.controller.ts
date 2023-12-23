@@ -75,7 +75,7 @@ export class DataController {
   @Get('vehiculos')
   async consultaVehiculos(@Query('client') userName: string) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.vehiculos(filteredArray, 0);
+    const result = this.dataService.vehiculos(filteredArray, 0, 0);
     return result;
   }
   // @Post('vehiculos')

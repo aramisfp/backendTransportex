@@ -20,7 +20,7 @@ export const myArray = [
     Server: 'madeco.cxwcckmgw667.us-east-2.rds.amazonaws.com',
     Port: '1433',
     Database: 'DB_TRANSPORTEX',
-    UserID: 'usr_movil',
+    UserID: 'usr_movil2',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },  
 ];

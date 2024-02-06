@@ -23,4 +23,12 @@ export const myArray = [
     UserID: 'usr_movil2',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },  
+  {
+    name: 'SETRAMEX',
+    Server: 'setramex.c52kcaa0u2fy.us-east-2.rds.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },    
 ];

@@ -30,5 +30,13 @@ export const myArray = [
     Database: 'DB_TRANSPORTEX',
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
-  },    
+  },   
+ {
+    name: 'EMDOM_VEN',
+    Server: 'emdom.cfwui4ig0dne.us-east-2.rds.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },      
 ];

@@ -1,19 +1,11 @@
 export const myArray = [
   {
-    name: 'TEST',
-    Server: 'test.cnqn7uorvp97.us-east-2.rds.amazonaws.com',
+    name: 'DEMO',
+    Server: 'ec2-3-144-160-231.us-east-2.compute.amazonaws.com',
     Port: '1433',
-    Database: 'DB_TRANSPORTEX',
+    Database: 'DB_TRANSPORTEX_DEMO',
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
-  },
-  {
-    name: 'DEMO',
-    Server: 'transportexdemo.cdswhzyeho3j.us-east-2.rds.amazonaws.com',
-    Port: '1433',
-    Database: 'DB_TRANSPORTEX',
-    UserID: 'oscar',
-    UserPwd: '12345678',
   },
   {
     name: 'MADECO_MEX',
@@ -23,14 +15,6 @@ export const myArray = [
     UserID: 'usr_movil2',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },  
-  {
-    name: 'SETRAMEX',
-    Server: 'setramex.c52kcaa0u2fy.us-east-2.rds.amazonaws.com',
-    Port: '1433',
-    Database: 'DB_TRANSPORTEX',
-    UserID: 'usr_movil',
-    UserPwd: 'Tran5p0rt3X_2008tlf',
-  },   
  {
     name: 'EMDOM_VEN',
     Server: 'emdom.cfwui4ig0dne.us-east-2.rds.amazonaws.com',
@@ -38,15 +22,7 @@ export const myArray = [
     Database: 'DB_TRANSPORTEX',
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
-  },      
- {
-    name: 'BERALDI2_ARG',
-    Server: 'ec2-18-222-97-179.us-east-2.compute.amazonaws.com',
-    Port: '1433',
-    Database: 'DB_TRANSPORTEX',
-    UserID: 'usr_movil',
-    UserPwd: 'Tran5p0rt3X_2008tlf',
-  },        
+  },             
  {
     name: 'CPS_PAN',
     Server: 'cps.ccysvfpsgntm.us-east-2.rds.amazonaws.com',

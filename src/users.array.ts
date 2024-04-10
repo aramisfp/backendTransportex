@@ -17,7 +17,7 @@ export const myArray = [
   },  
  {
     name: 'EMDOM_VEN',
-    Server: 'emdom.cfwui4ig0dne.us-east-2.rds.amazonaws.com',
+    Server: 'ec2-3-138-157-245.us-east-2.compute.amazonaws.com',
     Port: '1433',
     Database: 'DB_TRANSPORTEX',
     UserID: 'usr_movil',

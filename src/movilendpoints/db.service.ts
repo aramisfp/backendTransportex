@@ -80,11 +80,50 @@ export class DataService {
     return result;
   }
   async vehiculos(object, ID_Empleado, ID_Empresa_Sesion) {
-    const query = `select ID_Vehiculo, Identificador_Vehiculo, Identificador_Secundario, Marca, Modelo, Anio, Propietario, Afiliado_o_Propio, Tipo_de_Vehiculo, Uso_de_Vehiculo, Automotor, Conductor, Conductor_Secundario, Centro_de_Costo, Unidad_de_Negocio, Contrato, Sede, VIN, Serial_Motor, Estado, Kilometraje, Ultima_Fecha_Act_Kilometraje, Horas_de_Uso, Ultima_Fecha_Act_Horas, Remolques_Asignados, Tipo_de_Combustible, Empresa_Ambiente, ID_Empleado, ID_Empleado_2 
-    from dbo.V_BI_VEHICULOS 
+   const query = `select ID_Vehiculo, Identificador_Vehiculo, Identificador_Secundario, Marca, Modelo, Anio, Propietario, Afiliado_o_Propio, Tipo_de_Vehiculo, Uso_de_Vehiculo, Automotor, Conductor, Conductor_Secundario, Centro_de_Costo, Unidad_de_Negocio, Contrato, Sede, VIN, Serial_Motor, Estado, Kilometraje, Ultima_Fecha_Act_Kilometraje, Horas_de_Uso, Ultima_Fecha_Act_Horas, Remolques_Asignados, Tipo_de_Combustible, Empresa_Ambiente, ID_Empleado, ID_Empleado_2 
+    from dbo.V_BI_VEHICULOS,
+	(select min(usuario.ID_USUARIO) as ID_Usuario from usuario, usuario_x_empleado 
+	where ${ID_Empleado} > 0 and usuario_x_empleado.id_empleado = ${ID_Empleado} 
+   and usuario_x_empleado.id_usuario = usuario.id_usuario and usuario.activo = 1
+	union all
+	select 0 as ID_Usuario where isnull(${ID_Empleado},0) in (0, -1)
+	) as usuario_rel
     where ${ID_Empresa_Sesion} in (ID_Empresa_Registro, 0)
-    order by case when isnull(ID_Empleado,-1) = ${ID_Empleado} then 0 else 1 end asc, case when isnull(ID_Empleado_2,-1) = ${ID_Empleado} then 0 else 1 end asc, 
-    Identificador_Vehiculo`;
+and (V_BI_VEHICULOS.ID_Sede is null or V_BI_VEHICULOS.ID_Sede in ( 
+select esede.ID_SEDE 
+from USUARIO_X_EMPLEADO as uxe, empleado as esede, USUARIO as usede, CONFIGURACION as config_filtro
+where config_filtro.CAMPO = 'VEH_EMPSEDE_FILTRO'
+and config_filtro.VALOR = 'S'
+and esede.ID_EMPLEADO = uxe.ID_EMPLEADO
+and uxe.ID_EMPRESA = ${ID_Empresa_Sesion}
+and uxe.ID_USUARIO = usede.ID_USUARIO
+and uxe.ID_USUARIO = usuario_rel.ID_Usuario
+union all
+select emsede.ID_CIUDAD
+from EMPRESA_SEDE as emsede, USUARIO as usede, CONFIGURACION as config_filtro
+where config_filtro.CAMPO = 'VEH_EMPSEDE_FILTRO'
+and config_filtro.VALOR in ('N', case usede.ADMINISTRADOR when 1 then 'S' else CASE WHEN isnull(
+	  (select esede.ID_SEDE from USUARIO_X_EMPLEADO as uxe, empleado as esede where esede.ID_EMPLEADO = uxe.ID_EMPLEADO
+		and uxe.ID_EMPRESA = emsede.ID_EMPRESA
+		and uxe.ID_USUARIO = usede.ID_USUARIO
+		), 0) = 0 THEN 'S' ELSE 'N' END end)
+and emsede.ID_EMPRESA = ${ID_Empresa_Sesion}
+and usede.ID_USUARIO = usuario_rel.ID_Usuario
+union all
+select emsede.ID_CIUDAD
+from EMPRESA as emsede, USUARIO as usede, CONFIGURACION as config_filtro
+where config_filtro.CAMPO = 'VEH_EMPSEDE_FILTRO'
+and config_filtro.VALOR in ('N', case usede.ADMINISTRADOR when 1 then 'S' else CASE WHEN isnull(
+	  (select esede.ID_SEDE from USUARIO_X_EMPLEADO as uxe, empleado as esede where esede.ID_EMPLEADO = uxe.ID_EMPLEADO
+		and uxe.ID_EMPRESA = emsede.ID_EMPRESA
+		and uxe.ID_USUARIO = usede.ID_USUARIO
+		), 0) = 0 THEN 'S' ELSE 'N' END end)
+and emsede.ID_EMPRESA = ${ID_Empresa_Sesion}
+and usede.ID_USUARIO = usuario_rel.ID_Usuario
+)
+)
+order by case when isnull(ID_Empleado,-1) = ${ID_Empleado} then 0 else 1 end asc, case when isnull(ID_Empleado_2,-1) = ${ID_Empleado} then 0 else 1 end asc, 
+Identificador_Vehiculo`;
     const result = await this.general(object, query);
     return result;
   }

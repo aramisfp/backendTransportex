@@ -3,7 +3,7 @@ export const myArray = [
     name: 'DEMO',
     Server: 'ec2-3-144-160-231.us-east-2.compute.amazonaws.com',
     Port: '1433',
-    Database: 'DB_TRANSPORTEX_DEMO',
+    Database: 'DB_TRANSPORTEX',
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },

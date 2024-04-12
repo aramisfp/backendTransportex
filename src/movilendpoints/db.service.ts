@@ -28,21 +28,13 @@ export class DataService {
       };
       try {
         const pool = new sql.ConnectionPool(config);
-
         await pool.connect();
-
         console.log('Connected to the database');
-
         const request = pool.request();
-
         const result = await request.query(query);
-
         console.log(result.recordset);
-
         await pool.close();
-
         console.log('Disconnected from the database');
-
         return result.recordset;
       } catch (err) {
         console.log(err);
@@ -82,12 +74,13 @@ export class DataService {
   async vehiculos(object, ID_Empleado, ID_Empresa_Sesion) {
    const query = `select ID_Vehiculo, Identificador_Vehiculo, Identificador_Secundario, Marca, Modelo, Anio, Propietario, Afiliado_o_Propio, Tipo_de_Vehiculo, Uso_de_Vehiculo, Automotor, Conductor, Conductor_Secundario, Centro_de_Costo, Unidad_de_Negocio, Contrato, Sede, VIN, Serial_Motor, Estado, Kilometraje, Ultima_Fecha_Act_Kilometraje, Horas_de_Uso, Ultima_Fecha_Act_Horas, Remolques_Asignados, Tipo_de_Combustible, Empresa_Ambiente, ID_Empleado, ID_Empleado_2 
     from dbo.V_BI_VEHICULOS,
-	(select min(usuario.ID_USUARIO) as ID_Usuario from usuario, usuario_x_empleado 
+	(select min(usu_rel.ID_Usuario) as ID_Usuario from (select min(usuario.ID_USUARIO) as ID_Usuario from usuario, usuario_x_empleado 
 	where ${ID_Empleado} > 0 and usuario_x_empleado.id_empleado = ${ID_Empleado} 
    and usuario_x_empleado.id_usuario = usuario.id_usuario and usuario.activo = 1
 	union all
 	select 0 as ID_Usuario where isnull(${ID_Empleado},0) in (0, -1)
-	) as usuario_rel
+	) as usu_rel
+        ) as usuario_rel
     where ${ID_Empresa_Sesion} in (ID_Empresa_Registro, 0)
 and (V_BI_VEHICULOS.ID_Sede is null or V_BI_VEHICULOS.ID_Sede in ( 
 select esede.ID_SEDE 

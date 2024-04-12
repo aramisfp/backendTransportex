@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer';
 import { IsNegative, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class CreateNoveltyInputDto {
+export class CreateNoveltyInputDto { 
   @IsNotEmpty()
   @IsNumber()
   id_actividad_solicitud: number;

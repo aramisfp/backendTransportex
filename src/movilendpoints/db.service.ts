@@ -101,7 +101,7 @@ and config_filtro.VALOR in ('N', case usede.ADMINISTRADOR when 1 then 'S' else C
 		and uxe.ID_USUARIO = usede.ID_USUARIO
 		), 0) = 0 THEN 'S' ELSE 'N' END end)
 and emsede.ID_EMPRESA = ${ID_Empresa_Sesion}
-and usede.ID_USUARIO = usuario_rel.ID_Usuario
+and usuario_rel.ID_Usuario in (usede.ID_USUARIO,0)
 union all
 select emsede.ID_CIUDAD
 from EMPRESA as emsede, USUARIO as usede, CONFIGURACION as config_filtro
@@ -112,7 +112,7 @@ and config_filtro.VALOR in ('N', case usede.ADMINISTRADOR when 1 then 'S' else C
 		and uxe.ID_USUARIO = usede.ID_USUARIO
 		), 0) = 0 THEN 'S' ELSE 'N' END end)
 and emsede.ID_EMPRESA = ${ID_Empresa_Sesion}
-and usede.ID_USUARIO = usuario_rel.ID_Usuario
+and usuario_rel.ID_Usuario in (usede.ID_USUARIO,0)
 )
 )
 order by case when isnull(ID_Empleado,-1) = ${ID_Empleado} then 0 else 1 end asc, case when isnull(ID_Empleado_2,-1) = ${ID_Empleado} then 0 else 1 end asc, 

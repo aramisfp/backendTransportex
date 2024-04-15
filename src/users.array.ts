@@ -1,5 +1,13 @@
 export const myArray = [
   {
+    name:'COMA_MEX',
+    Server:'148.223.222.226',
+    Port:'1433',
+    Database:'DB_TRANSPORTEX',
+    UserID:'user_moviles',
+    UserPwd:'ytsB7Yc2hEuaDNC',
+  },
+  {
     name: 'DEMO',
     Server: 'ec2-3-144-160-231.us-east-2.compute.amazonaws.com',
     Port: '1433',

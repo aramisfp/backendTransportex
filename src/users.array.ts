@@ -1,7 +1,7 @@
 export const myArray = [
   {
     name:'COMA_MEX',
-    Server:'148.223.222.226',
+    Server:'172.16.3.67',
     Port:'1433',
     Database:'DB_TRANSPORTEX',
     UserID:'user_moviles',

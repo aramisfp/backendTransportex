@@ -28,7 +28,7 @@ export const myArray = [
     Server: 'ec2-3-17-135-176.us-east-2.compute.amazonaws.com',
     Port: '1433',
     Database: 'DB_TRANSPORTEX',
-    UserID: 'usr_movil2',
+    UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },  
  {

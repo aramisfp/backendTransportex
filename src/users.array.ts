@@ -16,8 +16,16 @@ export const myArray = [
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },
   {
+    name: 'EVEREST',
+    Server: 'ec2-13-58-51-60.us-east-2.compute.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX_Everest',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },  
+  {
     name: 'MADECO_MEX',
-    Server: 'madeco.cxwcckmgw667.us-east-2.rds.amazonaws.com',
+    Server: 'ec2-3-17-135-176.us-east-2.compute.amazonaws.com',
     Port: '1433',
     Database: 'DB_TRANSPORTEX',
     UserID: 'usr_movil2',

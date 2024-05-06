@@ -41,7 +41,7 @@ export const myArray = [
   },             
  {
     name: 'CPS_PAN',
-    Server: 'cps.ccysvfpsgntm.us-east-2.rds.amazonaws.com',
+    Server: 'ec2-18-220-185-41.us-east-2.compute.amazonaws.com',
     Port: '1433',
     Database: 'DB_TRANSPORTEX',
     UserID: 'usr_movil',

@@ -54,5 +54,13 @@ export const myArray = [
     Database: 'DB_TRANSPORTEX_Grafer',
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
-  },          
+  },        
+ {
+    name: 'PUROLOMO',
+    Server: 'ec2-18-191-145-182.us-east-2.compute.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },            
 ];

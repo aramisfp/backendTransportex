@@ -173,7 +173,7 @@ Identificador_Vehiculo`;
     return result;
   }
   async novedades(object, ID_Empleado, todas, ID_Empresa_Sesion) {
-    const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, case when isnull(Descripcion, '?') = '?' or rtrim(ltrim(Descripcion)) = '' then '' else Descripcion + '. ' end + 'Registrado por: ' + Empleado_Solicitud as Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Usuario_Solicitud, ID_Actividad_Grupo, Actividades_Asociadas, Archivos_Adjuntos_Cantidad, Empresa_Ambiente, Vehiculo_Modelo 
+    const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Usuario_Solicitud, ID_Actividad_Grupo, Actividades_Asociadas, Archivos_Adjuntos_Cantidad, Empresa_Ambiente, Vehiculo_Modelo 
     from dbo.F_SEL_ACTIVIDAD_SOLICITUD(0, ${ID_Empleado},1) 
     where ${ID_Empresa_Sesion} in (ID_Empresa_Registro, 0)
      order by 

@@ -82,6 +82,7 @@ export class DataService {
 	) as usu_rel
         ) as usuario_rel
     where ${ID_Empresa_Sesion} in (ID_Empresa_Registro, 0)
+and Estado = 'Activo'
 and (V_BI_VEHICULOS.ID_Sede is null or V_BI_VEHICULOS.ID_Sede in ( 
 select esede.ID_SEDE 
 from USUARIO_X_EMPLEADO as uxe, empleado as esede, USUARIO as usede, CONFIGURACION as config_filtro

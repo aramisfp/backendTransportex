@@ -86,5 +86,13 @@ export const myArray = [
     Database: 'DB_TRANSPORTEX_Logiexpress',
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
-  },            
+  },      
+ {
+    name: 'CW_PAN',
+    Server: 'ec2-3-15-39-223.us-east-2.compute.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },              
 ];

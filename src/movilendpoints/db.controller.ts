@@ -297,6 +297,19 @@ export class DataController {
     return result;
   }
 
+  @Get('repostajes')
+  async consultaRepostajes(
+    @Query('client') userName: string,
+    @Query('ID_Empleado') ID_Empleado: number,
+    @Query('ID_Empresa_Session') ID_Empresa_Session: number,
+  ) {
+    console.log(ID_Empleado);
+    console.log('ID de la empresa', ID_Empresa_Session);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.repostajes(filteredArray, ID_Empleado, ID_Empresa_Session);
+    return result;
+  }
+  
   @Get('actividadtipo')
   async consultaActividadtipo(@Query('client') userName: string) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);

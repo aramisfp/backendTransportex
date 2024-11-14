@@ -309,6 +309,24 @@ export class DataController {
     const result = this.dataService.repostajes(filteredArray, ID_Empleado, ID_Empresa_Session);
     return result;
   }
+
+   @Post('repostajestotal')
+  async consultaRepostajestotal(
+    @Query('client') userName: string,
+    @Body()
+    {
+      ID_Empleado,
+      ID_Empresa_Sesion,
+    }: { ID_Empleado: number; ID_Empresa_Sesion: number },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.repostajestotal(
+      filteredArray,
+      ID_Empleado,
+      ID_Empresa_Sesion,
+    );
+    return result;
+  }
   
   @Get('actividadtipo')
   async consultaActividadtipo(@Query('client') userName: string) {
@@ -411,4 +429,35 @@ export class DataController {
     console.groupEnd();
     return { message: 'este es un endpoint de prueba' };
   }
+
+  @Post('proveedores')
+  async consultaProveedores(
+    @Query('client') userName: string,
+    @Body() { ID_Empresa_Sesion }: { ID_Empresa_Sesion: number },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.proveedores(filteredArray, ID_Empresa_Sesion);
+    return result;
+  }
+  
+  @Get('repostajegastotipo')
+  async consultaRepostajegastotipo(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.repostajegastotipo(filteredArray);
+    return result;
+  }
+  @Get('repostajecombustibletipo')
+  async consultaRepostajecombustibletipo(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.repostajecombustibletipo(filteredArray);
+    return result;
+  }
+  @Get('repostajeformapago')
+  async consultaRepostajeformapago(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.repostajeformapago(filteredArray);
+    return result;
+  }
+
+  
 }

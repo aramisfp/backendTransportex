@@ -262,4 +262,11 @@ id_vehiculo_combustible desc`;
     const result = await this.general(object, query);
     return result;
   }	 
+
+  async repostajestotal(object, ID_Empleado, ID_Empresa_Sesion) {
+    const query = `select count(*) as TotalRepostajes
+    from dbo.F_SEL_VEHICULO_REPOSTAJE(${ID_Empleado}, ${ID_Empresa_Sesion})`;
+    const result = await this.general(object, query);
+    return result;
+  }	
 }

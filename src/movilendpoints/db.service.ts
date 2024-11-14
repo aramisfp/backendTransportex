@@ -269,4 +269,44 @@ id_vehiculo_combustible desc`;
     const result = await this.general(object, query);
     return result;
   }	
+
+  async proveedores(object, ID_Empresa_Sesion) {
+    const query = `SELECT proveedor.id_proveedor,     
+         proveedor.descripcion as proveedor_nombre,   
+         proveedor.rif as identif_fiscal,
+         proveedor.codigo 
+    FROM proveedor 
+   WHERE proveedor.activo = 1 and aplica_para in ('G', 'C')`;
+    const result = await this.general(object, query);
+    return result;
+  }		
+
+  async repostajegastotipo(object) {
+    const query = `select 'Gasto' as gasto_naturaleza_desc, 'G' as valor 
+    union all
+    select 'Reembolsable' as gasto_naturaleza_desc, 'R' as valor`;
+    const result = await this.general(object, query);
+    return result;
+  }		
+
+  async repostajecombustibletipo(object) {
+    const query = `SELECT combustible_tipo.id_combustible_tipo,
+         combustible_tipo.descripcion as combustible_tipo_desc,
+         combustible_tipo.precio_ref  
+    FROM combustible_tipo`;
+    const result = await this.general(object, query);
+    return result;
+  }			
+
+  async repostajeformapago(object) {
+    const query = `select 'Transferencia electrónica' as tipogasto_desc, 'T' as valor union all
+select 'Depósito/consignación' as tipogasto_desc, 'D' as valor union all
+select 'Cheque' as tipogasto_desc, 'C' as valor union all
+select 'Efectivo' as tipogasto_desc, 'E' as valor union all
+select 'Otros' as tipogasto_desc, 'O' as valor union all
+select 'Tarjeta Terpel' as tipogasto_desc, 'A' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR = 'BANCONAL_PAN' union all
+select 'Chip Terpel' as tipogasto_desc, 'B' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR = 'BANCONAL_PAN'`;
+    const result = await this.general(object, query);
+    return result;
+  }		
 }

@@ -430,7 +430,7 @@ export class DataController {
     return { message: 'este es un endpoint de prueba' };
   }
 
-  @Post('proveedores')
+  @Get('proveedores')
   async consultaProveedores(
     @Query('client') userName: string,
     @Body() { ID_Empresa_Sesion }: { ID_Empresa_Sesion: number },

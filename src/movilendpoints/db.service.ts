@@ -251,8 +251,8 @@ Identificador_Vehiculo`;
     return result;
   }
   async repostajes(object, ID_Empleado, ID_Empresa_Sesion) {
-   const query = `select id_vehiculo_combustible, id_vehiculo, id_proveedor, id_empleado, fecha_reposteo, Identificador_Vehiculo, cantidad_reposteo,
-cantidad_medida, costo_unitario, combustible_tipo_desc, subtotal, monto_base, monto_iva, monto_descuento, kilometraje_lectura, horas_lectura, Fecha_Reposteo_Anterior,
+   const query = `select id_vehiculo_combustible, id_vehiculo, id_proveedor, id_empleado, fecha_reposteo, Identificador_Vehiculo, cantidad_reposteo, 
+   costo_unitario, combustible_tipo_desc, subtotal, monto_base, monto_iva, monto_descuento, kilometraje_lectura, horas_lectura, Fecha_Reposteo_Anterior,
 Cantidad_Reposteo_Anterior, Kilometraje_lectura_anterior, proveedor_desc, factura, empleado_nombre, empleado_apellido, fecha_ins, fecha_mod, usuario_ins, usuario_mod,
 chofer, vehiculo_modelo, tipo_movimiento_desc, id_viaje, centro_costo_actual, unidad_negocio_actual, veh_centro_costo_desc, veh_unidad_negocio_desc,
 campo2,	campo3,	vehiculo_id_sede, forma_pago_desc
@@ -310,5 +310,36 @@ select 'Tarjeta Terpel' as tipogasto_desc, 'A' as valor from configuracion where
 select 'Chip Terpel' as tipogasto_desc, 'B' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR = 'BANCONAL_PAN'`;
     const result = await this.general(object, query);
     return result;
-  }		
+  }	
+
+  async repostajesconfig(object) {
+   const query = ` SELECT case SUBSTRING(config_und.valor, 1, 1) when 'L' then 'Litros' else 'Galones' end   as config_medida_desc, 
+case SUBSTRING(config_und.valor, 1, 1) when 'L' then 'L.' else 'gal.' end   as config_medida_abrev, 
+config_campo2_mostrar.valor as config_campo2mostrar,
+config_campo2_etiqueta.valor as config_campo2etiqueta,
+config_campo3_mostrar.valor as config_campo3mostrar,
+config_campo3_etiqueta.valor as config_campo3etiqueta,
+config_campohoras_mostrar.valor as config_campohorasmostrar,
+config_campoempleado_mostrar.valor as config_campoempleadomostrar,
+config_campodcto_mostrar.valor as config_campodctomostrar,
+config_campoidviaje_mostrar.valor as config_campoidviajemostrar
+FROM CONFIGURACION as config_und, CONFIGURACION as config_dias,
+		 CONFIGURACION as config_campo2_mostrar, CONFIGURACION as config_campo2_etiqueta,
+		 CONFIGURACION as config_campo3_mostrar, CONFIGURACION as config_campo3_etiqueta,
+		 CONFIGURACION as config_campohoras_mostrar, CONFIGURACION as config_campoempleado_mostrar,
+		 CONFIGURACION as config_campodcto_mostrar, CONFIGURACION as config_campoidviaje_mostrar
+where config_und.CAMPO = 'VIAJE_MOSTRAR_KMSAUTONOMMEDIDA'
+and config_dias.CAMPO = 'VEH_COMB_DIASANT_RETRIEVE'
+and config_campo2_mostrar.CAMPO = 'VEH_COMB_CAMPO2_MOSTRAR'
+and config_campo2_etiqueta.CAMPO = 'VEH_COMB_CAMPO2_ETIQUETA'
+and config_campo3_mostrar.CAMPO = 'VEH_COMB_CAMPO3_MOSTRAR'
+and config_campo3_etiqueta.CAMPO = 'VEH_COMB_CAMPO3_ETIQUETA'
+and config_campohoras_mostrar.CAMPO = 'VIAJE_MOSTRAR_HORASDISTANCIA'
+and config_campoempleado_mostrar.CAMPO = 'VEH_MOSTRAR_EMPLEADOCOMB'
+and config_campodcto_mostrar.campo = 'VEH_COMB_CAMPODESC_MOSTRAR'
+and config_campoidviaje_mostrar.campo = 'VEH_REPOSTGAS_IDVIAJE'`;
+    const result = await this.general(object, query);
+    return result;
+  }	 
+	
 }

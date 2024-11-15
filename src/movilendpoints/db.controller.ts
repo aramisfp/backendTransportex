@@ -458,6 +458,11 @@ export class DataController {
     const result = this.dataService.repostajeformapago(filteredArray);
     return result;
   }
-
+  @Get('repostajeconfig')
+  async consultaRepostajeconfig(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.repostajeconfig(filteredArray);
+    return result;
+  }
   
 }

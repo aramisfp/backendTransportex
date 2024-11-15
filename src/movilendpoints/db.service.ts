@@ -252,11 +252,10 @@ Identificador_Vehiculo`;
   }
   async repostajes(object, ID_Empleado, ID_Empresa_Sesion) {
    const query = `select id_vehiculo_combustible, id_vehiculo, id_proveedor, id_empleado, fecha_reposteo, Identificador_Vehiculo, cantidad_reposteo,
-cantidad_medida, costo_unitario, combustible_tipo_desc, subtotal, monto_iva, monto_descuento, kilometraje_lectura, horas_lectura, Fecha_Reposteo_Anterior,
+cantidad_medida, costo_unitario, combustible_tipo_desc, subtotal, monto_base, monto_iva, monto_descuento, kilometraje_lectura, horas_lectura, Fecha_Reposteo_Anterior,
 Cantidad_Reposteo_Anterior, Kilometraje_lectura_anterior, proveedor_desc, factura, empleado_nombre, empleado_apellido, fecha_ins, fecha_mod, usuario_ins, usuario_mod,
 chofer, vehiculo_modelo, tipo_movimiento_desc, id_viaje, centro_costo_actual, unidad_negocio_actual, veh_centro_costo_desc, veh_unidad_negocio_desc,
-campo2,	campo3,	vehiculo_id_sede, forma_pago_desc,config_campo2mostrar, config_campo2etiqueta, config_campo3mostrar, 
-config_campo3etiqueta, config_campohorasmostrar, config_campoempleadomostrar, config_campodctomostrar, config_campoidviajemostrar
+campo2,	campo3,	vehiculo_id_sede, forma_pago_desc
 from dbo.F_SEL_VEHICULO_REPOSTAJE (${ID_Empleado}, ${ID_Empresa_Sesion})
 order by fecha_reposteo desc , 
 id_vehiculo_combustible desc`;
@@ -277,7 +276,8 @@ id_vehiculo_combustible desc`;
          proveedor.rif as identif_fiscal,
          proveedor.codigo 
     FROM proveedor 
-   WHERE proveedor.activo = 1 and aplica_para in ('G', 'C')`;
+   WHERE proveedor.activo = 1 and aplica_para in ('G', 'C')
+   order by proveedor.descripcion`;
     const result = await this.general(object, query);
     return result;
   }		
@@ -294,7 +294,8 @@ id_vehiculo_combustible desc`;
     const query = `SELECT combustible_tipo.id_combustible_tipo,
          combustible_tipo.descripcion as combustible_tipo_desc,
          combustible_tipo.precio_ref  
-    FROM combustible_tipo`;
+    FROM combustible_tipo
+    order by combustible_tipo.descripcion`;
     const result = await this.general(object, query);
     return result;
   }			

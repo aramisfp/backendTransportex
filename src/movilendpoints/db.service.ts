@@ -255,7 +255,8 @@ Identificador_Vehiculo`;
 cantidad_medida, costo_unitario, combustible_tipo_desc, subtotal, monto_iva, monto_descuento, kilometraje_lectura, horas_lectura, Fecha_Reposteo_Anterior,
 Cantidad_Reposteo_Anterior, Kilometraje_lectura_anterior, proveedor_desc, factura, empleado_nombre, empleado_apellido, fecha_ins, fecha_mod, usuario_ins, usuario_mod,
 chofer, vehiculo_modelo, tipo_movimiento_desc, id_viaje, centro_costo_actual, unidad_negocio_actual, veh_centro_costo_desc, veh_unidad_negocio_desc,
-campo2,	campo3,	vehiculo_id_sede, forma_pago_desc 
+campo2,	campo3,	vehiculo_id_sede, forma_pago_desc,config_campo2mostrar, config_campo2etiqueta, config_campo3mostrar, 
+config_campo3etiqueta, config_campohorasmostrar, config_campoempleadomostrar, config_campodctomostrar, config_campoidviajemostrar
 from dbo.F_SEL_VEHICULO_REPOSTAJE (${ID_Empleado}, ${ID_Empresa_Sesion})
 order by fecha_reposteo desc , 
 id_vehiculo_combustible desc`;

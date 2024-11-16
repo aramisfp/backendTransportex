@@ -313,7 +313,7 @@ select 'Chip Terpel' as tipogasto_desc, 'B' as valor from configuracion where co
   }	
 
   async repostajesconfig(object) {
-   const query = ` SELECT case SUBSTRING(config_und.valor, 1, 1) when 'L' then 'Litros' else 'Galones' end   as config_medida_desc, 
+   const query = `SELECT case SUBSTRING(config_und.valor, 1, 1) when 'L' then 'Litros' else 'Galones' end   as config_medida_desc, 
 case SUBSTRING(config_und.valor, 1, 1) when 'L' then 'L.' else 'gal.' end   as config_medida_abrev, 
 config_campo2_mostrar.valor as config_campo2mostrar,
 config_campo2_etiqueta.valor as config_campo2etiqueta,
@@ -341,5 +341,59 @@ and config_campoidviaje_mostrar.campo = 'VEH_REPOSTGAS_IDVIAJE'`;
     const result = await this.general(object, query);
     return result;
   }	 
+
+async repostajeinput(
+    object,
+    id_vehiculo_combustible, 
+id_vehiculo,
+cantidad_reposteo,
+cantidad_reposteo_aut, 
+cantidad_reposteo_enc,
+precio_unitario,
+valor_iva,
+monto_descuento,
+id_combustible_tipo,
+tipo_movimiento,
+forma_pago,
+fecha_reposteo,
+kilometraje_lectura,
+horas_lectura,
+id_proveedor,
+id_empleado,
+id_viaje,
+factura,
+campo2,
+campo3,
+campo4,
+usuario,
+observaciones,
+  ) {
+    const query = `Exec dbo.SP_UPD_SYNC_REPOSTAJE_COMBUSTIBLE 
+    ${id_vehiculo_combustible}, 
+${id_vehiculo},
+${cantidad_reposteo},
+${cantidad_reposteo_aut}, 
+${cantidad_reposteo_enc},
+${precio_unitario},
+${valor_iva},
+${monto_descuento},
+${id_combustible_tipo},
+${tipo_movimiento},
+${forma_pago},
+${fecha_reposteo},
+${kilometraje_lectura},
+${horas_lectura},
+${id_proveedor},
+${id_empleado},
+${id_viaje},
+${factura},
+${campo2},
+${campo3},
+${campo4},
+${usuario},
+${observaciones}`;
+    const result = await this.general(object, query);
+    return result;
+  }	
 	
 }

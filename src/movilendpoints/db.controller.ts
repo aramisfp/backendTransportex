@@ -464,5 +464,90 @@ export class DataController {
     const result = this.dataService.repostajesconfig(filteredArray);
     return result;
   }
+
+@Post('repostajeinput')
+  async consultaRepostajeinput(
+    @Query('client') userName: string,
+    @Body()
+    {
+id_vehiculo_combustible, 
+id_vehiculo,
+cantidad_reposteo,
+cantidad_reposteo_aut, 
+cantidad_reposteo_enc,
+precio_unitario,
+valor_iva,
+monto_descuento,
+id_combustible_tipo,
+tipo_movimiento,
+forma_pago,
+fecha_reposteo,
+kilometraje_lectura,
+horas_lectura,
+id_proveedor,
+id_empleado,
+id_viaje,
+factura,
+campo2,
+campo3,
+campo4,
+usuario,
+observaciones,
+    }: {
+    id_vehiculo_combustible: number; 
+    id_vehiculo: number;
+    cantidad_reposteo: number;
+    cantidad_reposteo_aut: number; 
+    cantidad_reposteo_enc: number;
+    precio_unitario: number;
+    valor_iva: number;
+    monto_descuento: number;
+    id_combustible_tipo: number;
+    tipo_movimiento: string;
+    forma_pago: string;
+    fecha_reposteo: string;
+    kilometraje_lectura: number;
+    horas_lectura: number;
+    id_proveedor: number;
+    id_empleado: number;
+    id_viaje: number;
+    factura: string;
+    campo2: string;
+    campo3: string;
+    campo4: string;
+    usuario: string;
+    observaciones: string;
+    },
+  ) {
+    console.log(userName);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.repostajeinput(
+      filteredArray,
+      id_vehiculo_combustible, 
+      id_vehiculo,
+      cantidad_reposteo,
+      cantidad_reposteo_aut, 
+      cantidad_reposteo_enc,
+      precio_unitario,
+      valor_iva,
+      monto_descuento,
+      id_combustible_tipo,
+      tipo_movimiento,
+      forma_pago,
+      fecha_reposteo,
+      kilometraje_lectura,
+      horas_lectura,
+      id_proveedor,
+      id_empleado,
+      id_viaje,
+      factura,
+      campo2,
+      campo3,
+      campo4,
+      usuario,
+      observaciones,
+    );
+    return result;
+  }  
   
 }

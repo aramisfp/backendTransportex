@@ -505,7 +505,7 @@ observaciones,
     id_combustible_tipo: number;
     tipo_movimiento: string;
     forma_pago: string;
-    fecha_reposteo: string;
+    fecha_reposteo: Date;
     kilometraje_lectura: number;
     horas_lectura: number;
     id_proveedor: number;

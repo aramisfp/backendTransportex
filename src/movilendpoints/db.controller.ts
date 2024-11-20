@@ -334,13 +334,12 @@ export class DataController {
     const result = this.dataService.actividadtipo(filteredArray);
     return result;
   }
-  @Post('empleados')
+  @Get('empleados')
   async consultaEmpleados(
     @Query('client') userName: string,
     @Body() { ID_Empleado }: { ID_Empleado: number },
     @Body() { ID_Empresa_Sesion }: { ID_Empresa_Sesion: number },
   ) {
-    console.log(ID_Empleado);
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.empleados(filteredArray, ID_Empleado, ID_Empresa_Sesion);
     return result;

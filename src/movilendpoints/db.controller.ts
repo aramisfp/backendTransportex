@@ -337,8 +337,8 @@ export class DataController {
   @Get('empleados')
   async consultaEmpleados(
     @Query('client') userName: string,
-    @Body() { ID_Empleado }: { ID_Empleado: number },
-    @Body() { ID_Empresa_Sesion }: { ID_Empresa_Sesion: number },
+    @Query() { ID_Empleado }: { ID_Empleado: number },
+    @Query() { ID_Empresa_Sesion }: { ID_Empresa_Sesion: number },
   ) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.empleados(filteredArray, ID_Empleado, ID_Empresa_Sesion);

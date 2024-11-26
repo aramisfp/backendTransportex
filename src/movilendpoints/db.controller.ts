@@ -504,7 +504,7 @@ observaciones,
     id_combustible_tipo: number;
     tipo_movimiento: string;
     forma_pago: string;
-    fecha_reposteo: Date;
+    fecha_reposteo: string;
     kilometraje_lectura: number;
     horas_lectura: number;
     id_proveedor: number;
@@ -518,7 +518,11 @@ observaciones,
     observaciones: string;
     },
   ) {
+    
+   
+
     console.log(userName);
+
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.repostajeinput(
       filteredArray,
@@ -533,7 +537,7 @@ observaciones,
       id_combustible_tipo,
       tipo_movimiento,
       forma_pago,
-      fecha_reposteo,
+      `'${fecha_reposteo}'`,
       kilometraje_lectura,
       horas_lectura,
       id_proveedor,

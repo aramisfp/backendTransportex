@@ -255,7 +255,7 @@ Identificador_Vehiculo`;
    costo_unitario, combustible_tipo_desc, subtotal, monto_base, monto_iva, monto_descuento, kilometraje_lectura, horas_lectura, Fecha_Reposteo_Anterior,
 Cantidad_Reposteo_Anterior, Kilometraje_lectura_anterior, proveedor_desc, factura, empleado_nombre, empleado_apellido, fecha_ins, fecha_mod, usuario_ins, usuario_mod,
 chofer, vehiculo_modelo, tipo_movimiento_desc, id_viaje, centro_costo_actual, unidad_negocio_actual, veh_centro_costo_desc, veh_unidad_negocio_desc,
-campo2,	campo3,	vehiculo_id_sede, forma_pago_desc
+campo2,	campo3,	vehiculo_id_sede, forma_pago_desc, archivos_adjuntos_cantidad
 from dbo.F_SEL_VEHICULO_REPOSTAJE (${ID_Empleado}, ${ID_Empresa_Sesion})
 order by fecha_reposteo desc , 
 id_vehiculo_combustible desc`;
@@ -322,12 +322,14 @@ config_campo3_etiqueta.valor as config_campo3etiqueta,
 config_campohoras_mostrar.valor as config_campohorasmostrar,
 config_campoempleado_mostrar.valor as config_campoempleadomostrar,
 config_campodcto_mostrar.valor as config_campodctomostrar,
-config_campoidviaje_mostrar.valor as config_campoidviajemostrar
+config_campoidviaje_mostrar.valor as config_campoidviajemostrar,
+convert(numeric(7,4), config_iva.VALOR) as config_IVAvalor
 FROM CONFIGURACION as config_und, CONFIGURACION as config_dias,
 		 CONFIGURACION as config_campo2_mostrar, CONFIGURACION as config_campo2_etiqueta,
 		 CONFIGURACION as config_campo3_mostrar, CONFIGURACION as config_campo3_etiqueta,
 		 CONFIGURACION as config_campohoras_mostrar, CONFIGURACION as config_campoempleado_mostrar,
-		 CONFIGURACION as config_campodcto_mostrar, CONFIGURACION as config_campoidviaje_mostrar
+		 CONFIGURACION as config_campodcto_mostrar, CONFIGURACION as config_campoidviaje_mostrar,
+		 CONFIGURACION as config_iva
 where config_und.CAMPO = 'VIAJE_MOSTRAR_KMSAUTONOMMEDIDA'
 and config_dias.CAMPO = 'VEH_COMB_DIASANT_RETRIEVE'
 and config_campo2_mostrar.CAMPO = 'VEH_COMB_CAMPO2_MOSTRAR'
@@ -337,7 +339,8 @@ and config_campo3_etiqueta.CAMPO = 'VEH_COMB_CAMPO3_ETIQUETA'
 and config_campohoras_mostrar.CAMPO = 'VIAJE_MOSTRAR_HORASDISTANCIA'
 and config_campoempleado_mostrar.CAMPO = 'VEH_MOSTRAR_EMPLEADOCOMB'
 and config_campodcto_mostrar.campo = 'VEH_COMB_CAMPODESC_MOSTRAR'
-and config_campoidviaje_mostrar.campo = 'VEH_REPOSTGAS_IDVIAJE'`;
+and config_campoidviaje_mostrar.campo = 'VEH_REPOSTGAS_IDVIAJE'
+and config_iva.CAMPO = 'IVA'`;
     const result = await this.general(object, query);
     return result;
   }	 

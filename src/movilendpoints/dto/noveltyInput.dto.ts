@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNegative, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNegative, IsNotEmpty, IsNumber, IsString, ValidateIf, ValidationOptions } from 'class-validator';
 
 export class CreateNoveltyInputDto { 
   @IsNotEmpty()
@@ -70,6 +70,10 @@ export class DeleteNoveltyInputDto {
   id_empresa_sesion: number;
 }
 
+function IsNullable(validationOptions?: ValidationOptions) {
+  return ValidateIf((_object, value) => value !== null, validationOptions);
+}
+
 export class UploadedItemDto {
   @IsString()
   name: string;
@@ -77,7 +81,8 @@ export class UploadedItemDto {
   id_key_modulo: number;
   @IsString()
   usuario_str: string;
-
+  @IsNullable()
+  modulo: string | null;
   @Type(() => String)
   file: string;
 }

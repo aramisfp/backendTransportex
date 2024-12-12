@@ -355,7 +355,7 @@ export class DataController {
     const dataToSend = {
       id_archivo: 0,
       id_key_modulo: body.id_key_modulo,
-      modulo: 'ACS',
+      modulo: body.modulo ?? 'ACS',
       nombre_archivo: body.name,
       usuario_str: body.usuario_str,
     };

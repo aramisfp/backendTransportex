@@ -166,10 +166,16 @@ Identificador_Vehiculo`;
     return result;
   }
   async empleados(object, ID_Empleado, ID_Empresa_Sesion) {
-    const query = `select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario 
+    const query = `select x.ID_Empleado, x.Nombre_Empleado, x.Codigo, x.Email, x.Cargo, x.Usuario, x.ID_Usuario 
+from (
+select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario 
     from dbo.V_EMPLEADO 
     where ${ID_Empresa_Sesion} in (ID_Empresa_Registro, 0)
-    order by case when ID_Empleado = ${ID_Empleado} then 0 else 1 end asc, Nombre_Empleado asc`;
+union all
+select null as ID_Empleado, '(Ninguno)' as Nombre_Empleado, null as Codigo, null as Email, null as Cargo, null as Usuario, null as ID_Usuario 
+) as x
+order by case when x.ID_Empleado = ${ID_Empleado} then 0 else 1 end asc, 
+x.Nombre_Empleado asc`;
     const result = await this.general(object, query);
     return result;
   }
@@ -277,7 +283,12 @@ id_vehiculo_combustible desc`;
          proveedor.codigo 
     FROM proveedor 
    WHERE proveedor.activo = 1 and aplica_para in ('G', 'C')
-   order by proveedor.descripcion`;
+union all
+select null as id_proveedor,     
+'(Ninguno)' as proveedor_nombre,   
+null as identif_fiscal,
+null as codigo 
+order by 2`;
     const result = await this.general(object, query);
     return result;
   }		
@@ -305,6 +316,7 @@ id_vehiculo_combustible desc`;
 select 'Depósito/consignación' as tipogasto_desc, 'D' as valor union all
 select 'Cheque' as tipogasto_desc, 'C' as valor union all
 select 'Efectivo' as tipogasto_desc, 'E' as valor union all
+select 'Prepagado' as tipogasto_desc, 'P' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR <> 'BANCONAL_PAN' union all 
 select 'Otros' as tipogasto_desc, 'O' as valor union all
 select 'Tarjeta Terpel' as tipogasto_desc, 'A' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR = 'BANCONAL_PAN' union all
 select 'Chip Terpel' as tipogasto_desc, 'B' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR = 'BANCONAL_PAN'`;
@@ -323,13 +335,14 @@ config_campohoras_mostrar.valor as config_campohorasmostrar,
 config_campoempleado_mostrar.valor as config_campoempleadomostrar,
 config_campodcto_mostrar.valor as config_campodctomostrar,
 config_campoidviaje_mostrar.valor as config_campoidviajemostrar,
-convert(numeric(7,4), config_iva.VALOR) as config_IVAvalor
+convert(numeric(7,4), config_iva.VALOR) as config_IVAvalor,
+config_ivaactivado.valor as config_IVAactivadodef
 FROM CONFIGURACION as config_und, CONFIGURACION as config_dias,
 		 CONFIGURACION as config_campo2_mostrar, CONFIGURACION as config_campo2_etiqueta,
 		 CONFIGURACION as config_campo3_mostrar, CONFIGURACION as config_campo3_etiqueta,
 		 CONFIGURACION as config_campohoras_mostrar, CONFIGURACION as config_campoempleado_mostrar,
 		 CONFIGURACION as config_campodcto_mostrar, CONFIGURACION as config_campoidviaje_mostrar,
-		 CONFIGURACION as config_iva
+		 CONFIGURACION as config_iva, CONFIGURACION as config_ivaactivado
 where config_und.CAMPO = 'VIAJE_MOSTRAR_KMSAUTONOMMEDIDA'
 and config_dias.CAMPO = 'VEH_COMB_DIASANT_RETRIEVE'
 and config_campo2_mostrar.CAMPO = 'VEH_COMB_CAMPO2_MOSTRAR'
@@ -340,6 +353,7 @@ and config_campohoras_mostrar.CAMPO = 'VIAJE_MOSTRAR_HORASDISTANCIA'
 and config_campoempleado_mostrar.CAMPO = 'VEH_MOSTRAR_EMPLEADOCOMB'
 and config_campodcto_mostrar.campo = 'VEH_COMB_CAMPODESC_MOSTRAR'
 and config_campoidviaje_mostrar.campo = 'VEH_REPOSTGAS_IDVIAJE'
+and config_ivaactivado.campo = 'VEH_COMBUSTIBLE_IVA_ACTIVADO'
 and config_iva.CAMPO = 'IVA'`;
     const result = await this.general(object, query);
     return result;

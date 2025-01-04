@@ -174,7 +174,7 @@ select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario
 union all
 select null as ID_Empleado, '(Ninguno)' as Nombre_Empleado, null as Codigo, null as Email, null as Cargo, null as Usuario, null as ID_Usuario 
 ) as x
-order by case when x.ID_Empleado = ${ID_Empleado} then 0 else 1 end asc, 
+order by case when x.ID_Empleado = ${ID_Empleado} or x.ID_Empleado is null then 0 else 1 end asc, 
 x.Nombre_Empleado asc`;
     const result = await this.general(object, query);
     return result;

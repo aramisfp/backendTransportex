@@ -258,7 +258,7 @@ x.Nombre_Empleado asc`;
   }
   async repostajes(object, ID_Empleado, ID_Empresa_Sesion) {
    const query = `select id_vehiculo_combustible, id_vehiculo, id_proveedor, id_empleado, fecha_reposteo, Identificador_Vehiculo, cantidad_reposteo, 
-   costo_unitario, id_combustible_tipo, combustible_tipo_desc, subtotal, monto_base, monto_iva, monto_descuento, kilometraje_lectura, horas_lectura, Fecha_Reposteo_Anterior,
+   costo_unitario, id_combustible_tipo, combustible_tipo_desc, subtotal, monto_base, monto_iva, valor_iva, monto_descuento, kilometraje_lectura, horas_lectura, Fecha_Reposteo_Anterior,
 Cantidad_Reposteo_Anterior, Kilometraje_lectura_anterior, proveedor_desc, factura, empleado_nombre, empleado_apellido, fecha_ins, fecha_mod, usuario_ins, usuario_mod,
 chofer, vehiculo_modelo, tipo_movimiento, tipo_movimiento_desc, id_viaje, centro_costo_actual, unidad_negocio_actual, veh_centro_costo_desc, veh_unidad_negocio_desc,
 campo2,	campo3,	vehiculo_id_sede, forma_pago, forma_pago_desc, archivos_adjuntos_cantidad

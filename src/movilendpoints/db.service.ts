@@ -324,7 +324,7 @@ select 'Chip Terpel' as tipogasto_desc, 'B' as valor from configuracion where co
     return result;
   }	
 
-  async repostajesconfig(object) {
+  async repostajesconfig(object, ID_Empresa_Sesion) {
    const query = `SELECT case SUBSTRING(config_und.valor, 1, 1) when 'L' then 'Litros' else 'Galones' end   as config_medida_desc, 
 case SUBSTRING(config_und.valor, 1, 1) when 'L' then 'L.' else 'gal.' end   as config_medida_abrev, 
 config_campo2_mostrar.valor as config_campo2mostrar,
@@ -342,7 +342,7 @@ FROM CONFIGURACION as config_und, CONFIGURACION as config_dias,
 		 CONFIGURACION as config_campo3_mostrar, CONFIGURACION as config_campo3_etiqueta,
 		 CONFIGURACION as config_campohoras_mostrar, CONFIGURACION as config_campoempleado_mostrar,
 		 CONFIGURACION as config_campodcto_mostrar, CONFIGURACION as config_campoidviaje_mostrar,
-		 CONFIGURACION as config_iva, CONFIGURACION as config_ivaactivado
+		 CONFIGURACION_X_EMPRESA as config_iva, CONFIGURACION as config_ivaactivado
 where config_und.CAMPO = 'VIAJE_MOSTRAR_KMSAUTONOMMEDIDA'
 and config_dias.CAMPO = 'VEH_COMB_DIASANT_RETRIEVE'
 and config_campo2_mostrar.CAMPO = 'VEH_COMB_CAMPO2_MOSTRAR'
@@ -354,7 +354,8 @@ and config_campoempleado_mostrar.CAMPO = 'VEH_MOSTRAR_EMPLEADOCOMB'
 and config_campodcto_mostrar.campo = 'VEH_COMB_CAMPODESC_MOSTRAR'
 and config_campoidviaje_mostrar.campo = 'VEH_REPOSTGAS_IDVIAJE'
 and config_ivaactivado.campo = 'VEH_COMBUSTIBLE_IVA_ACTIVADO'
-and config_iva.CAMPO = 'IVA'`;
+and config_iva.CAMPO = 'IVA'
+and config_iva.ID_EMPRESA = case when ${ID_Empresa_Sesion} = 0 then (select empresa.ID_EMPRESA from EMPRESA where empresa.ACTUAL = 1 ) else ${ID_Empresa_Sesion} end`;
     const result = await this.general(object, query);
     return result;
   }	 

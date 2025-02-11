@@ -119,4 +119,12 @@ export const myArray = [
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },            
+ {
+    name: 'MESSINA_ARG',
+    Server: 'ec2-52-14-202-76.us-east-2.compute.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },              
 ];

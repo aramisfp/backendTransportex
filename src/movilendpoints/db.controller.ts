@@ -458,9 +458,12 @@ export class DataController {
     return result;
   }
   @Get('repostajesconfig')
-  async consultaRepostajesconfig(@Query('client') userName: string) {
+  async consultaRepostajesconfig(
+    @Query('client') userName: string,
+    @Query() { ID_Empresa_Sesion }: { ID_Empresa_Sesion: number },    
+    ) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.repostajesconfig(filteredArray);
+    const result = this.dataService.repostajesconfig(filteredArray, ID_Empresa_Sesion);
     return result;
   }
 

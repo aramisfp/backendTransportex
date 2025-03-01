@@ -126,5 +126,13 @@ export const myArray = [
     Database: 'DB_TRANSPORTEX',
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
-  },              
+  },   
+ {
+    name: 'TERMICON_CR',
+    Server: 'ec2-3-16-14-20.us-east-2.compute.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },               
 ];

@@ -83,7 +83,8 @@ export class DataService {
         ) as usuario_rel
     where ${ID_Empresa_Sesion} in (ID_Empresa_Registro, 0)
 and Estado = 'Activo'
-and (V_BI_VEHICULOS.ID_Sede is null or V_BI_VEHICULOS.ID_Sede in ( 
+and isnull(V_BI_VEHICULOS.ID_Sede,0) in ( 
+select 0 union all
 select esede.ID_SEDE 
 from USUARIO_X_EMPLEADO as uxe, empleado as esede, USUARIO as usede, CONFIGURACION as config_filtro
 where config_filtro.CAMPO = 'VEH_EMPSEDE_FILTRO'
@@ -115,7 +116,7 @@ and config_filtro.VALOR in ('N', case usede.ADMINISTRADOR when 1 then 'S' else C
 and emsede.ID_EMPRESA = ${ID_Empresa_Sesion}
 and usuario_rel.ID_Usuario in (usede.ID_USUARIO,0)
 )
-)
+
 order by case when isnull(ID_Empleado,-1) = ${ID_Empleado} then 0 else 1 end asc, case when isnull(ID_Empleado_2,-1) = ${ID_Empleado} then 0 else 1 end asc, 
 Identificador_Vehiculo`;
     const result = await this.general(object, query);

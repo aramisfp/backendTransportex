@@ -150,5 +150,21 @@ export const myArray = [
     Database: 'DB_TRANSPORTEX_KPD',
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
-  },         
+  },      
+ {
+    name: 'RAINCA_VEN',
+    Server: 'ec2-3-147-7-31.us-east-2.compute.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX_Rainca',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },      
+ {
+    name: 'CAXIAS_VEN',
+    Server: 'ec2-3-138-140-194.us-east-2.compute.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX_CAXIAS',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },        
 ];

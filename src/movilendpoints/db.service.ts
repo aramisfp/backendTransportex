@@ -319,8 +319,8 @@ select 'Cheque' as tipogasto_desc, 'C' as valor union all
 select 'Efectivo' as tipogasto_desc, 'E' as valor union all
 select 'Prepagado' as tipogasto_desc, 'P' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR <> 'BANCONAL_PAN' union all 
 select 'Otros' as tipogasto_desc, 'O' as valor union all
-select 'Tarjeta Terpel' as tipogasto_desc, 'A' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR = 'BANCONAL_PAN' union all
-select 'Chip Terpel' as tipogasto_desc, 'B' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR = 'BANCONAL_PAN'`;
+select 'Tarjeta' as tipogasto_desc, 'A' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR IN ('BANCONAL_PAN', 'ROBINSON_ARG') union all
+select 'Chip' as tipogasto_desc, 'B' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR = 'BANCONAL_PAN'`;
     const result = await this.general(object, query);
     return result;
   }	

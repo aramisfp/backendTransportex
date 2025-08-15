@@ -567,23 +567,16 @@ observaciones,
     return result;
   } 
 
-@Post('repostajeimpresionsec')
+ @Post('repostajeimpresionsec')
   async consultarepostajeimpresionsec(
     @Query('client') userName: string,
     @Body()
-    {
-ID_Repostaje,
-    }: {
-    ID_Repostaje: number; 
-    },
+    { ID_Repostaje }: { ID_Repostaje: number },
   ) {
-    
-    console.log(userName);
-
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.repostajeimpresionsec(
       filteredArray,
-      ID_Repostaje, 
+      ID_Repostaje,
     );
     return result;
   }  

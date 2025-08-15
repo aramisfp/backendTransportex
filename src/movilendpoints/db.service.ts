@@ -414,5 +414,115 @@ ${id_viaje},
     const result = await this.general(object, query);
     return result;
   }	
+async repostajeimpresion(object, ID_Repostaje, ID_Usuario) {
+    const query = `select x.id_vehiculo_combustible,  
+x.etiqueta_copias,
+x.empresa_principal,
+x.empresa_principal_rif,
+x.fecha_impresion,
+x.usuario_impresion,
+x.placa,
+x.vehiculo_modelo, 
+x.viaje_codigo_viaje +
+case when x.guia_campo1 is null or ltrim(x.guia_campo1) = '' then '' else '    ' + x.etiqueta_guia_nombre + ': ' + x.viaje_guia_numero end as viaje_codigo_viaje, 
+case when x.guia_campo1 is null or ltrim(x.guia_campo1) = '' then x.etiqueta_guia_nombre else x.etiqueta_campo1 end as etiqueta_campo1,
+case when x.guia_campo1 is null or ltrim(x.guia_campo1) = '' then x.viaje_guia_numero else x.guia_campo1 end as guia_campo1,
+case when  x.id_viaje is null  then '' else x.etiqueta_campo2 end as etiqueta_campo2,
+x.guia_campo2,
+x.usuario_ins,   
+x.usuario_mod  ,
+x.fecha_ins,   
+x.fecha_mod,   
+x.tipo_movimiento,
+x.proveedor_desc, 
+x.factura,   
+x.fecha_reposteo,   
+x.tipo_combustible,
+x.und_volumen,
+x.cantidad_reposteo_aut,   
+x.cantidad_reposteo,   
+x.costo_unitario,   
+x.valor_iva,   
+x.monto_iva,
+x.costo_total,
+x.empleado_nombre_apellido, 
+x.kilometraje_lectura,   
+x.horas_lectura
+from 
+(  SELECT vehiculo_combustible.id_vehiculo_combustible,  
+	case when vehiculo_combustible.cantidad_impresion_micro <= 0 then 'O R I G I N A L' else
+	'C O P I A   ' + rtrim(ltrim(STR(vehiculo_combustible.cantidad_impresion_micro))) end as etiqueta_copias,
+	empresa_principal =  empresa.nombre ,
+	empresa_principal_rif =  empresa.rif,
+	dbo.F_GETDATE() as fecha_impresion,
+	(select USUARIO.DESCRIPCION from USUARIO where USUARIO.ID_USUARIO = ${ID_Usuario} ) as usuario_impresion,
+	vehiculo.placa,
+	vehiculo_marca.descripcion  + ' ' + 
+	vehiculo_modelo.descripcion +  
+	case when isnull(vehiculo_modelo.anio, {ts '1900-01-01 00:00:00.000'}) > {ts '1970-01-01 00:00:00.000'} then 
+	' (' + convert(char(4), vehiculo_modelo.anio, 121) + ')'
+	else ''
+	end  as vehiculo_modelo,
+	vehiculo_combustible.id_viaje,
+	rtrim(ltrim(str(vehiculo_combustible.id_viaje) )) as viaje_codigo_viaje,
+	case when  vehiculo_combustible.id_viaje is null  then '' else  etiqueta_guia.nombre end as  etiqueta_guia_nombre,
+	case when viaje_guia.numero is null or ltrim(viaje_guia.numero) = ''  then  ''
+	else viaje_guia.numero end  as viaje_guia_numero, 
+	case when config_empresa.valor = 'TLI_SAL' then  config_etiq3.valor else config_etiq1.valor end + ':' 
+	as etiqueta_campo1,
+	case when config_empresa.valor = 'TLI_SAL' then  viaje_guia.campo_especial3 else viaje_guia.numero_relacion_gastos end as guia_campo1,
+	case when config_empresa.valor = 'TLI_SAL' then  config_etiq4.valor else config_etiq2.valor end + ':' 
+	as etiqueta_campo2,
+	case when config_empresa.valor = 'TLI_SAL' then  viaje_guia.campo_especial4 else viaje_guia.factura_guia end as guia_campo2,
+	vehiculo_combustible.usuario_ins,   
+	vehiculo_combustible.usuario_mod,
+	vehiculo_combustible.fecha_ins,   
+	vehiculo_combustible.fecha_mod,   
+	case vehiculo_combustible.TIPO_MOVIMIENTO when 'G' then 'Gasto' else 'Reembolsable' end as tipo_movimiento,
+	proveedor.descripcion as proveedor_desc, 
+	vehiculo_combustible.factura,
+	vehiculo_combustible.fecha_reposteo,   
+	COMBUSTIBLE_TIPO.DESCRIPCION as tipo_combustible,
+	+  case when  substring(upper(config_undvol.valor), 1, 1) = 'L'  then 'Lts.' else  'gal.' end as und_volumen,
+	vehiculo_combustible.cantidad_reposteo_aut,   
+	vehiculo_combustible.cantidad_reposteo,   
+	vehiculo_combustible.costo_unitario,   
+	vehiculo_combustible.valor_iva,   
+	vehiculo_combustible.monto_iva,
+	(vehiculo_combustible.costo_unitario *  vehiculo_combustible.cantidad_reposteo ) + 
+	(vehiculo_combustible.costo_unitario *  vehiculo_combustible.cantidad_reposteo *  (isnull(vehiculo_combustible.valor_iva,0) / 100))
+	as costo_total,
+	empleado.nombre + ' ' + empleado.apellido as empleado_nombre_apellido, 
+	vehiculo_combustible.kilometraje_lectura,   
+	vehiculo_combustible.horas_lectura 
+	FROM combustible_tipo, vehiculo_combustible left outer join viaje_guia on viaje_guia.id_viaje = vehiculo_combustible.id_viaje and viaje_guia.principal = 1
+	left outer join proveedor on  vehiculo_combustible.id_proveedor = proveedor.id_proveedor
+	left outer join empleado on vehiculo_combustible.id_empleado = empleado.id_empleado 
+	,empresa,vehiculo,vehiculo_modelo, vehiculo_marca, (select dbo.F_SESION_EMPRESA() as id_emp_valor ) as conf_empresa_actual,
+	configuracion as config_empresa, configuracion as config_etiq1, configuracion as config_etiq2, configuracion as config_etiq3, configuracion as config_etiq4,
+	configuracion as config_undvol, (select dbo.F_ETIQUETA_GUIA(0,0) as nombre)  as etiqueta_guia
+	WHERE vehiculo_combustible.id_vehiculo_combustible = ${ID_Repostaje} and
+	vehiculo_combustible.id_vehiculo = vehiculo.id_vehiculo 
+	and vehiculo_modelo.id_vehiculo_modelo = vehiculo.id_vehiculo_modelo
+	and vehiculo_modelo.id_vehiculo_marca = vehiculo_marca.id_vehiculo_marca 
+	and  empresa.id_empresa = conf_empresa_actual.id_emp_valor
+	and config_empresa.campo = 'CODIGO_EMPRESA'
+	and config_etiq1.campo = 'ETIQUETA_VIAJE_RELGASTOS'
+	and config_etiq2.campo = 'ETIQUETA_VIAJE_FACTURAGUIA'
+	and config_etiq3.campo = 'VIA_ETIQUETA_CAMPOESPECIAL3'
+	and config_etiq4.campo = 'VIA_ETIQUETA_CAMPOESPECIAL4'
+	and config_undvol.campo = 'VIAJE_MOSTRAR_KMSAUTONOMMEDIDA'
+	and vehiculo_combustible.ID_COMBUSTIBLE_TIPO = COMBUSTIBLE_TIPO.ID_COMBUSTIBLE_TIPO
+   ) as x`;
+    const result = await this.general(object, query);
+    return result;
+  }
+async repostajeimpresionsec(object, ID_Repostaje) {
+    const query = `UPDATE dbo.VEHICULO_COMBUSTIBLE
+    SET CANTIDAD_IMPRESION_MICRO = CANTIDAD_IMPRESION_MICRO + 1
+    WHERE id_vehiculo_combustible = ${ID_Repostaje}`;
+    const result = await this.general(object, query);
+    return result;
+  }	
 	
 }

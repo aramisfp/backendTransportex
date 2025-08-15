@@ -555,5 +555,37 @@ observaciones,
     );
     return result;
   }  
+
+   @Get('repostajeimpresion')
+  async consultarepostajeimpresion(
+    @Query('client') userName: string,
+    @Query() { ID_Repostaje }: { ID_Repostaje: number },
+    @Query() { ID_Usuario }: { ID_Usuario: number },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.repostajeimpresion(filteredArray, ID_Repostaje, ID_Usuario);
+    return result;
+  } 
+
+@Post('repostajeimpresionsec')
+  async consultarepostajeimpresionsec(
+    @Query('client') userName: string,
+    @Body()
+    {
+ID_Repostaje,
+    }: {
+    ID_Repostaje: number; 
+    },
+  ) {
+    
+    console.log(userName);
+
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.repostajeimpresionsec(
+      filteredArray,
+      ID_Repostaje, 
+    );
+    return result;
+  }  
   
 }

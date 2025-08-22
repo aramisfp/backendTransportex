@@ -262,8 +262,10 @@ x.Nombre_Empleado asc`;
    costo_unitario, id_combustible_tipo, combustible_tipo_desc, subtotal, monto_base, monto_iva, valor_iva, monto_descuento, kilometraje_lectura, horas_lectura, Fecha_Reposteo_Anterior,
 Cantidad_Reposteo_Anterior, Kilometraje_lectura_anterior, proveedor_desc, factura, empleado_nombre, empleado_apellido, fecha_ins, fecha_mod, usuario_ins, usuario_mod,
 chofer, vehiculo_modelo, tipo_movimiento, tipo_movimiento_desc, id_viaje, centro_costo_actual, unidad_negocio_actual, veh_centro_costo_desc, veh_unidad_negocio_desc,
-campo2,	campo3,	vehiculo_id_sede, forma_pago, forma_pago_desc, archivos_adjuntos_cantidad
-from dbo.F_SEL_VEHICULO_REPOSTAJE (${ID_Empleado}, ${ID_Empresa_Sesion})
+campo2,	campo3,	vehiculo_id_sede, forma_pago, forma_pago_desc, archivos_adjuntos_cantidad, 
+case convert(integer,config_showprint3p.VALOR) when 0 then 0 else 1 end as config_show3pformat
+from dbo.F_SEL_VEHICULO_REPOSTAJE (${ID_Empleado}, ${ID_Empresa_Sesion}) as x, configuracion as config_showprint3p
+where config_showprint3p.campo = 'IMPRESION_MOSTRAR_PDV'
 order by fecha_reposteo desc , 
 id_vehiculo_combustible desc`;
     const result = await this.general(object, query);
@@ -447,8 +449,7 @@ x.monto_iva,
 x.costo_total,
 x.empleado_nombre_apellido, 
 x.kilometraje_lectura,   
-x.horas_lectura,
-x.config_show3pformat 
+x.horas_lectura
 from 
 (  SELECT vehiculo_combustible.id_vehiculo_combustible,  
 	case when vehiculo_combustible.cantidad_impresion_micro <= 0 then 'O R I G I N A L' else
@@ -495,15 +496,13 @@ from
 	as costo_total,
 	empleado.nombre + ' ' + empleado.apellido as empleado_nombre_apellido, 
 	vehiculo_combustible.kilometraje_lectura,   
-	vehiculo_combustible.horas_lectura,
-    case convert(integer,config_showprint3p.VALOR) when 0 then 0 else 1 end as config_show3pformat
+	vehiculo_combustible.horas_lectura
 	FROM combustible_tipo, vehiculo_combustible left outer join viaje_guia on viaje_guia.id_viaje = vehiculo_combustible.id_viaje and viaje_guia.principal = 1
 	left outer join proveedor on  vehiculo_combustible.id_proveedor = proveedor.id_proveedor
 	left outer join empleado on vehiculo_combustible.id_empleado = empleado.id_empleado 
 	,empresa,vehiculo,vehiculo_modelo, vehiculo_marca, (select dbo.F_SESION_EMPRESA() as id_emp_valor ) as conf_empresa_actual,
 	configuracion as config_empresa, configuracion as config_etiq1, configuracion as config_etiq2, configuracion as config_etiq3, configuracion as config_etiq4,
-	configuracion as config_undvol, (select dbo.F_ETIQUETA_GUIA(0,0) as nombre)  as etiqueta_guia,
-    configuracion as config_showprint3p
+	configuracion as config_undvol, (select dbo.F_ETIQUETA_GUIA(0,0) as nombre)  as etiqueta_guia
 	WHERE vehiculo_combustible.id_vehiculo_combustible = ${ID_Repostaje} and
 	vehiculo_combustible.id_vehiculo = vehiculo.id_vehiculo 
 	and vehiculo_modelo.id_vehiculo_modelo = vehiculo.id_vehiculo_modelo
@@ -516,7 +515,6 @@ from
 	and config_etiq4.campo = 'VIA_ETIQUETA_CAMPOESPECIAL4'
 	and config_undvol.campo = 'VIAJE_MOSTRAR_KMSAUTONOMMEDIDA'
 	and vehiculo_combustible.ID_COMBUSTIBLE_TIPO = COMBUSTIBLE_TIPO.ID_COMBUSTIBLE_TIPO
-    and config_showprint3p.campo = 'IMPRESION_MOSTRAR_PDV'
    ) as x`;
     const result = await this.general(object, query);
     return result;

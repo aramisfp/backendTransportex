@@ -175,4 +175,12 @@ export const myArray = [
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },          
+ {
+    name: 'HERGON_SAL',
+    Server: 'ec2-3-15-184-214.us-east-2.compute.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX_Hergon',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },    
 ];

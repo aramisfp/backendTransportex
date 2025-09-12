@@ -528,5 +528,56 @@ async repostajeimpresionsec(object, ID_Repostaje) {
     const result = await this.general(object, query);
     return result;
   }	
+
+  async neumaticosespesorpresion(object, ID_Vehiculo) {
+   const query = `select id_neumatico, identificacion, neumatico_modelo_descripcion,neumatico_diseno_descripcion,neumatico_carcasa_naturaleza,
+fecha_adquisicion,kilometraje, espesor, fecha_act_espesor,ESPESOR_USUARIO_MOD,
+ESPESOR_FECHA_MOD,espesor_observaciones,PRESION,FECHA_ACT_PRESION, PRESION_USUARIO_MOD,
+PRESION_FECHA_MOD,presion_observaciones,fecha_reencauchado,  REENCAUCHADO_VECES,fecha_instalacion,   
+POSICION_EJE_TEXTO,estatus,  placa,  id_vehiculo ,  principal,tiene_tapon,ID_NEUMATICO_FALLA_TIPO,
+presion_recomendada,presion_minima,presion_maxima, orden from dbo.F_SEL_NEUMATICO_ESPESORPRESION(${ID_Vehiculo}) as x
+order by orden`;
+    const result = await this.general(object, query);
+    return result;
+  }	 
+  async neumaticostipofallas(object) {
+   const query = `select neumatico_falla_tipo.id_neumatico_falla_tipo,   
+neumatico_falla_tipo.descripcion,   
+neumatico_falla_tipo.desgaste_irregular 
+from neumatico_falla_tipo  
+where neumatico_falla_tipo.activo = 1 
+order by descripcion`;
+    const result = await this.general(object, query);
+    return result;
+  }	 
+
+async neumaticosespesorpresioninput(
+    object,
+id_neumatico, 
+espesor,
+espesor_fecha_act,
+espesor_observaciones, 
+presion,
+presion_fecha_act,
+presion_observaciones,
+tiene_tapon,
+id_neumatico_falla_tipo,
+usuario,
+  ) {
+    const query = `Exec dbo.SP_UPD_SYNC_NEUMATICO_ESPESORPRESION 
+${id_neumatico}, NULL, 
+${espesor},
+${espesor_fecha_act},
+'${espesor_observaciones}', 
+${presion},
+${presion_fecha_act},
+'${presion_observaciones}',
+${tiene_tapon},
+${id_neumatico_falla_tipo},
+'${usuario}', NULL`;
+    const result = await this.general(object, query);
+    return result;
+  }	
+	
 	
 }

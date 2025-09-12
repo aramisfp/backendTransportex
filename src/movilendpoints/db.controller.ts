@@ -522,8 +522,6 @@ observaciones,
     },
   ) {
     
-   
-
     console.log(userName);
 
     const filteredArray = myArray.filter((obj) => obj.name === userName);
@@ -577,6 +575,70 @@ observaciones,
     const result = this.dataService.repostajeimpresionsec(
       filteredArray,
       ID_Repostaje,
+    );
+    return result;
+  }  
+
+ @Get('neumaticosespesorpresion')
+  async consultaNeumaticosespesorpresion(
+    @Query('client') userName: string,
+    @Body() { ID_Vehiculo }: { ID_Vehiculo: number },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.neumaticosespesorpresion(filteredArray, ID_Vehiculo);
+    return result;
+  }  
+  @Get('neumaticostipofallas')
+  async consultaNeumaticostipofallas(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.neumaticostipofallas(filteredArray);
+    return result;
+  }  
+
+@Post('neumaticosespesorpresioninput')
+  async consultaNeumaticosespesorpresioninput(
+    @Query('client') userName: string,
+    @Body()
+    {
+id_neumatico, 
+espesor,
+espesor_fecha_act,
+espesor_observaciones, 
+presion,
+presion_fecha_act,
+presion_observaciones,
+tiene_tapon,
+id_neumatico_falla_tipo,
+usuario,
+    }: {
+    id_neumatico: number; 
+    espesor: number;
+    espesor_fecha_act: string;
+    espesor_observaciones: string;
+    presion: number; 
+    presion_fecha_act: string;
+    presion_observaciones: string;
+    tiene_tapon: number;
+    id_neumatico_falla_tipo: number;
+    usuario: string;
+    },
+  ) {
+    
+    console.log(userName);
+
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.neumaticosespesorpresioninput(
+      filteredArray,
+id_neumatico, 
+espesor,
+`'${espesor_fecha_act}'`,
+espesor_observaciones, 
+presion,
+`'${presion_fecha_act}'`,
+presion_observaciones,
+tiene_tapon,
+id_neumatico_falla_tipo,
+usuario,
     );
     return result;
   }  

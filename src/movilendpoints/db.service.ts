@@ -181,7 +181,12 @@ x.Nombre_Empleado asc`;
     return result;
   }
   async novedades(object, ID_Empleado, todas, ID_Empresa_Sesion) {
-    const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Usuario_Solicitud, ID_Actividad_Grupo, Actividades_Asociadas, Archivos_Adjuntos_Cantidad, Empresa_Ambiente, Vehiculo_Modelo 
+    const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, 
+	Antiguedad_Dias, Empleado_Asignacion, Fecha_Asignacion, Fecha_Asignacion_EnvioEmail, Fecha_Atencion, 
+ Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, ID_Hoja_Revision, Referencia, 
+ Observaciones_Cierre, Fecha_Cierre, Fecha_Creacion, Fecha_Modificacion, Usuario_Creacion, Usuario_Modificacion, 
+ ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Actividad_Grupo, 
+ Archivos_Adjuntos_Cantidad, Empresa_Ambiente, Vehiculo_Modelo 
     from dbo.F_SEL_ACTIVIDAD_SOLICITUD(0, ${ID_Empleado},1) 
     where ${ID_Empresa_Sesion} in (ID_Empresa_Registro, 0)
      order by 
@@ -259,10 +264,10 @@ x.Nombre_Empleado asc`;
   }
   async repostajes(object, ID_Empleado, ID_Empresa_Sesion) {
    const query = `select id_vehiculo_combustible, id_vehiculo, id_proveedor, id_empleado, fecha_reposteo, Identificador_Vehiculo, cantidad_reposteo, 
-   costo_unitario, id_combustible_tipo, combustible_tipo_desc, subtotal, monto_base, monto_iva, valor_iva, monto_descuento, kilometraje_lectura, horas_lectura, Fecha_Reposteo_Anterior,
-Cantidad_Reposteo_Anterior, Kilometraje_lectura_anterior, proveedor_desc, factura, empleado_nombre, empleado_apellido, fecha_ins, fecha_mod, usuario_ins, usuario_mod,
-chofer, vehiculo_modelo, tipo_movimiento, tipo_movimiento_desc, id_viaje, centro_costo_actual, unidad_negocio_actual, veh_centro_costo_desc, veh_unidad_negocio_desc,
-campo2,	campo3,	vehiculo_id_sede, forma_pago, forma_pago_desc, archivos_adjuntos_cantidad, 
+   costo_unitario, id_combustible_tipo, combustible_tipo_desc, subtotal, monto_base, monto_iva, valor_iva, monto_descuento, kilometraje_lectura, horas_lectura, 
+ proveedor_desc, factura, empleado_nombre, empleado_apellido, fecha_ins, fecha_mod, usuario_ins, usuario_mod,
+chofer, vehiculo_modelo, tipo_movimiento, tipo_movimiento_desc, id_viaje, 
+campo2,	campo3,	forma_pago, forma_pago_desc, archivos_adjuntos_cantidad, 
 case convert(integer,config_showprint3p.VALOR) when 0 then 0 else 1 end as config_show3pformat
 from dbo.F_SEL_VEHICULO_REPOSTAJE (${ID_Empleado}, ${ID_Empresa_Sesion}) as x, configuracion as config_showprint3p
 where config_showprint3p.campo = 'IMPRESION_MOSTRAR_PDV'

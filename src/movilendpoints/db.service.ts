@@ -183,9 +183,9 @@ x.Nombre_Empleado asc`;
   async novedades(object, ID_Empleado, todas, ID_Empresa_Sesion) {
     const query = `select ID_Actividad_Novedad, Vehiculo_Identificador_Primario, Empleado_Solicitud, Fecha_Solicitud, 
 	Empleado_Asignacion, Fecha_Asignacion,  
- Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Tipo, Urgente, Referencia, 
+ Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Urgente, Referencia, 
  Fecha_Creacion, Usuario_Creacion, Usuario_Modificacion, 
- ID_Vehiculo, ID_Empleado_Solicitud, ID_Empleado_Asignacion, ID_Actividad_Grupo, 
+ ID_Vehiculo, ID_Empleado_Solicitud, ID_Actividad_Grupo, 
  Archivos_Adjuntos_Cantidad, Vehiculo_Modelo 
     from dbo.F_SEL_ACTIVIDAD_SOLICITUD(0, ${ID_Empleado},1) 
     where ${ID_Empresa_Sesion} in (ID_Empresa_Registro, 0)

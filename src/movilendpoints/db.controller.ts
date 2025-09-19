@@ -642,5 +642,19 @@ usuario,
     );
     return result;
   }  
+
+
+  @Get('appbdversion')
+  async consultaAppbdversion(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.appbdversion(filteredArray);
+    return result;
+  }  
+ @Get('appbdmodulos')
+  async consultaAppbdmodulos(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.appbdmodulos(filteredArray);
+    return result;
+  }  
   
 }

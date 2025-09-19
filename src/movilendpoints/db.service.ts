@@ -551,7 +551,11 @@ neumatico_falla_tipo.descripcion,
 neumatico_falla_tipo.desgaste_irregular 
 from neumatico_falla_tipo  
 where neumatico_falla_tipo.activo = 1 
-order by descripcion`;
+union all
+select null as id_neumatico_falla_tipo,   
+'(Ninguna)' as descripcion,   
+0 as desgaste_irregular 
+order by 2`;
     const result = await this.general(object, query);
     return result;
   }	 

@@ -583,6 +583,22 @@ ${id_neumatico_falla_tipo},
     const result = await this.general(object, query);
     return result;
   }	
-	
+
+
+
+
+  async appbdversion(object) {
+   const query = `select isnull((select convert(integer, CONFIGURACION.valor)  
+from CONFIGURACION 
+where campo = 'SVER_ACT'),2) as version_en_uso`;
+    const result = await this.general(object, query);
+    return result;
+  }	 
+
+  async appbdmodulos(object) {
+   const query = `select dbo.F_PROGMODULES() as modulos_en_uso`;
+    const result = await this.general(object, query);
+    return result;
+  }		
 	
 }

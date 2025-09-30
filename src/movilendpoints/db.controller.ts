@@ -582,7 +582,7 @@ observaciones,
  @Get('neumaticosespesorpresion')
   async consultaNeumaticosespesorpresion(
     @Query('client') userName: string,
-    @Body() { ID_Vehiculo }: { ID_Vehiculo: number },
+    @Query() { ID_Vehiculo }: { ID_Vehiculo: number },
   ) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.neumaticosespesorpresion(filteredArray, ID_Vehiculo);

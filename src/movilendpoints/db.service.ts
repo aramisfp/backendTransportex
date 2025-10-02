@@ -535,7 +535,8 @@ async repostajeimpresionsec(object, ID_Repostaje) {
   }	
 
   async neumaticosespesorpresion(object, ID_Vehiculo) {
-   const query = `select id_neumatico, identificacion, dot, serial_fabricacion, semana_fabricacion, anio_fabricacion, 
+   const query = `select id_neumatico, identificacion, validar_identificacion_neu, dot, 
+   serial_fabricacion, serial_fabricacion_mostrar, semana_fabricacion, anio_fabricacion, 
    neumatico_modelo_descripcion,neumatico_diseno_descripcion,neumatico_carcasa_naturaleza,
 fecha_adquisicion, kilometraje, espesor, fecha_act_espesor, ESPESOR_USUARIO_MOD,
 ESPESOR_FECHA_MOD, espesor_observaciones, PRESION,FECHA_ACT_PRESION, PRESION_USUARIO_MOD,

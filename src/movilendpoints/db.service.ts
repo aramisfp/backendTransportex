@@ -540,7 +540,7 @@ async repostajeimpresionsec(object, ID_Repostaje) {
    neumatico_modelo_descripcion,neumatico_diseno_descripcion,neumatico_carcasa_naturaleza,
 fecha_adquisicion, kilometraje, espesor, fecha_act_espesor, ESPESOR_USUARIO_MOD,
 ESPESOR_FECHA_MOD, espesor_observaciones, PRESION,FECHA_ACT_PRESION, PRESION_USUARIO_MOD,
-PRESION_FECHA_MOD, presion_observaciones, fecha_reencauchado, REENCAUCHADO_VECES, fecha_instalacion,   
+PRESION_FECHA_MOD, presion_observaciones, fecha_reencauchado, REENCAUCHADO_VECES, fecha_instalacion, eje, posicion,  
 POSICION_EJE_TEXTO, ubicacion_global_neu_desc, estatus, id_vehiculo, placa, vehiculo_modelo_descripcion, principal, tiene_tapon, ID_NEUMATICO_FALLA_TIPO,
 presion_recomendada, presion_minima, presion_maxima, orden 
 from dbo.F_SEL_NEUMATICO_ESPESORPRESION(${ID_Vehiculo}) as x

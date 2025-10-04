@@ -644,6 +644,53 @@ usuario,
   }  
 
 
+@Post('neumaticosespesorpresionerrorinput')
+  async consultaNeumaticosespesorpresionerrorinput(
+    @Query('client') userName: string,
+    @Body()
+    {
+id_neumatico, 
+identificacion_escrita, 
+espesor,
+espesor_observaciones, 
+presion,
+presion_observaciones,
+tiene_tapon,
+id_neumatico_falla_tipo,
+usuario,
+    }: {
+    id_neumatico: number; 
+    identificacion_escrita: string;
+    espesor: number;
+    espesor_observaciones: string;
+    presion: number; 
+    presion_observaciones: string;
+    tiene_tapon: number;
+    id_neumatico_falla_tipo: number;
+    usuario: string;
+    },
+  ) {
+    
+    console.log(userName);
+
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.neumaticosespesorpresionerrorinput(
+      filteredArray,
+id_neumatico, 
+identificacion_escrita,
+espesor,
+espesor_observaciones, 
+presion,
+presion_observaciones,
+tiene_tapon,
+id_neumatico_falla_tipo,
+usuario,
+    );
+    return result;
+  }  
+
+
+  
   @Get('appbdversion')
   async consultaAppbdversion(@Query('client') userName: string) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);

@@ -592,6 +592,33 @@ ${id_neumatico_falla_tipo},
   }	
 
 
+async neumaticosespesorpresionerrorinput(
+    object,
+id_neumatico, 
+identificacion_escrita,
+espesor,
+espesor_observaciones, 
+presion,
+presion_observaciones,
+tiene_tapon,
+id_neumatico_falla_tipo,
+usuario,
+  ) {
+    const query = `Exec dbo.SP_UPD_SYNC_NEUMATICO_REG_POS 
+${id_neumatico}, 
+'${identificacion_escrita}', 
+${espesor},
+'${espesor_observaciones}', 
+${presion},
+'${presion_observaciones}',
+${tiene_tapon},
+${id_neumatico_falla_tipo},
+'${usuario}'`;
+    const result = await this.general(object, query);
+    return result;
+  }	
+
+
 
 
   async appbdversion(object) {

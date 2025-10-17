@@ -74,7 +74,7 @@ export class DataService {
   async vehiculos(object, ID_Empleado, ID_Empresa_Sesion) {
    const query = `select ID_Vehiculo, Identificador_Vehiculo, Identificador_Secundario, Marca, Modelo, Anio, Propietario, Afiliado_o_Propio, Tipo_de_Vehiculo, Uso_de_Vehiculo, Automotor, Conductor, Conductor_Secundario, Centro_de_Costo, Unidad_de_Negocio, Contrato, Sede, VIN, Serial_Motor, Estado, Kilometraje, Ultima_Fecha_Act_Kilometraje, Horas_de_Uso, Ultima_Fecha_Act_Horas, Remolques_Asignados, Tipo_de_Combustible, Empresa_Ambiente, ID_Empleado, ID_Empleado_2, ID_Tipo_de_Combustible 
     from dbo.V_BI_VEHICULOS,
-	(select min(usu_rel.ID_Usuario) as ID_Usuario from (select min(usuario.ID_USUARIO) as ID_Usuario from usuario, usuario_x_empleado 
+	(select min(usu_rel.ID_Usuario) as ID_Usuario from (select min(usuario.ID_USUARIO) as ID_Usuario from usuario WITH (NOLOCK), usuario_x_empleado WITH (NOLOCK)
 	where ${ID_Empleado} > 0 and usuario_x_empleado.id_empleado = ${ID_Empleado} 
    and usuario_x_empleado.id_usuario = usuario.id_usuario and usuario.activo = 1
 	union all
@@ -86,7 +86,7 @@ and Estado = 'Activo'
 and isnull(V_BI_VEHICULOS.ID_Sede,0) in ( 
 select 0 union all
 select esede.ID_SEDE 
-from USUARIO_X_EMPLEADO as uxe, empleado as esede, USUARIO as usede, CONFIGURACION as config_filtro
+from USUARIO_X_EMPLEADO as uxe WITH (NOLOCK), empleado as esede WITH (NOLOCK), USUARIO as usede WITH (NOLOCK), CONFIGURACION as config_filtro WITH (NOLOCK)
 where config_filtro.CAMPO = 'VEH_EMPSEDE_FILTRO'
 and config_filtro.VALOR = 'S'
 and esede.ID_EMPLEADO = uxe.ID_EMPLEADO
@@ -95,10 +95,10 @@ and uxe.ID_USUARIO = usede.ID_USUARIO
 and uxe.ID_USUARIO = usuario_rel.ID_Usuario
 union all
 select emsede.ID_CIUDAD
-from EMPRESA_SEDE as emsede, USUARIO as usede, CONFIGURACION as config_filtro
+from EMPRESA_SEDE as emsede WITH (NOLOCK), USUARIO as usede WITH (NOLOCK), CONFIGURACION as config_filtro WITH (NOLOCK)
 where config_filtro.CAMPO = 'VEH_EMPSEDE_FILTRO'
 and config_filtro.VALOR in ('N', case usede.ADMINISTRADOR when 1 then 'S' else CASE WHEN isnull(
-	  (select esede.ID_SEDE from USUARIO_X_EMPLEADO as uxe, empleado as esede where esede.ID_EMPLEADO = uxe.ID_EMPLEADO
+	  (select esede.ID_SEDE from USUARIO_X_EMPLEADO as uxe WITH (NOLOCK), empleado as esede WITH (NOLOCK) where esede.ID_EMPLEADO = uxe.ID_EMPLEADO
 		and uxe.ID_EMPRESA = emsede.ID_EMPRESA
 		and uxe.ID_USUARIO = usede.ID_USUARIO
 		), 0) = 0 THEN 'S' ELSE 'N' END end)
@@ -106,10 +106,10 @@ and emsede.ID_EMPRESA = ${ID_Empresa_Sesion}
 and usuario_rel.ID_Usuario in (usede.ID_USUARIO,0)
 union all
 select emsede.ID_CIUDAD
-from EMPRESA as emsede, USUARIO as usede, CONFIGURACION as config_filtro
+from EMPRESA as emsede WITH (NOLOCK), USUARIO as usede WITH (NOLOCK), CONFIGURACION as config_filtro WITH (NOLOCK)
 where config_filtro.CAMPO = 'VEH_EMPSEDE_FILTRO'
 and config_filtro.VALOR in ('N', case usede.ADMINISTRADOR when 1 then 'S' else CASE WHEN isnull(
-	  (select esede.ID_SEDE from USUARIO_X_EMPLEADO as uxe, empleado as esede where esede.ID_EMPLEADO = uxe.ID_EMPLEADO
+	  (select esede.ID_SEDE from USUARIO_X_EMPLEADO as uxe WITH (NOLOCK), empleado as esede WITH (NOLOCK) where esede.ID_EMPLEADO = uxe.ID_EMPLEADO
 		and uxe.ID_EMPRESA = emsede.ID_EMPRESA
 		and uxe.ID_USUARIO = usede.ID_USUARIO
 		), 0) = 0 THEN 'S' ELSE 'N' END end)
@@ -258,7 +258,7 @@ x.Nombre_Empleado asc`;
     return result;
   }
   async archivos(object, ID_Key, Modulo_Letras) {
-    const query = `select id_archivo, nombre, fecha_ins, usuario_ins from archivo where id_key_modulo = ${ID_Key} and modulo = '${Modulo_Letras}' order by fecha_ins desc`;
+    const query = `select id_archivo, nombre, fecha_ins, usuario_ins from archivo WITH (NOLOCK) where id_key_modulo = ${ID_Key} and modulo = '${Modulo_Letras}' order by fecha_ins desc`;
     const result = await this.general(object, query);
     return result;
   }
@@ -289,7 +289,7 @@ id_vehiculo_combustible desc`;
          proveedor.descripcion as proveedor_nombre,   
          proveedor.rif as identif_fiscal,
          proveedor.codigo 
-    FROM proveedor 
+    FROM proveedor WITH (NOLOCK)
    WHERE proveedor.activo = 1 and proveedor.SURTE_GASOLINA = 'S'
 union all
 select null as id_proveedor,     
@@ -313,7 +313,7 @@ order by 2`;
     const query = `SELECT combustible_tipo.id_combustible_tipo,
          combustible_tipo.descripcion as combustible_tipo_desc,
          combustible_tipo.precio_ref  
-    FROM combustible_tipo
+    FROM combustible_tipo WITH (NOLOCK)
     order by combustible_tipo.descripcion`;
     const result = await this.general(object, query);
     return result;
@@ -324,11 +324,11 @@ order by 2`;
 select 'Depósito/consignación' as tipogasto_desc, 'D' as valor union all
 select 'Cheque' as tipogasto_desc, 'C' as valor union all
 select 'Efectivo' as tipogasto_desc, 'E' as valor union all
-select 'Prepagado' as tipogasto_desc, 'P' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and 
+select 'Prepagado' as tipogasto_desc, 'P' as valor from configuracion WITH (NOLOCK) where configuracion.CAMPO = 'CODIGO_EMPRESA' and 
 configuracion.VALOR <> 'BANCONAL_PAN' and charindex(configuracion.VALOR, '_ARG') = 0 union all 
-select 'Tarjeta' as tipogasto_desc, 'A' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and 
+select 'Tarjeta' as tipogasto_desc, 'A' as valor from configuracion WITH (NOLOCK) where configuracion.CAMPO = 'CODIGO_EMPRESA' and 
 (configuracion.VALOR = 'BANCONAL_PAN' or charindex(configuracion.VALOR, '_ARG') > 0) union all
-select 'Chip' as tipogasto_desc, 'B' as valor from configuracion where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR = 'BANCONAL_PAN' union all
+select 'Chip' as tipogasto_desc, 'B' as valor from configuracion WITH (NOLOCK) where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR = 'BANCONAL_PAN' union all
 select 'Otros' as tipogasto_desc, 'O' as valor`;
     const result = await this.general(object, query);
     return result;
@@ -347,12 +347,12 @@ config_campodcto_mostrar.valor as config_campodctomostrar,
 config_campoidviaje_mostrar.valor as config_campoidviajemostrar,
 convert(numeric(7,4), config_iva.VALOR) as config_IVAvalor,
 config_ivaactivado.valor as config_IVAactivadodef
-FROM CONFIGURACION as config_und, CONFIGURACION as config_dias,
-		 CONFIGURACION as config_campo2_mostrar, CONFIGURACION as config_campo2_etiqueta,
-		 CONFIGURACION as config_campo3_mostrar, CONFIGURACION as config_campo3_etiqueta,
-		 CONFIGURACION as config_campohoras_mostrar, CONFIGURACION as config_campoempleado_mostrar,
-		 CONFIGURACION as config_campodcto_mostrar, CONFIGURACION as config_campoidviaje_mostrar,
-		 CONFIGURACION_X_EMPRESA as config_iva, CONFIGURACION as config_ivaactivado
+FROM CONFIGURACION as config_und WITH (NOLOCK), CONFIGURACION as config_dias WITH (NOLOCK),
+		 CONFIGURACION as config_campo2_mostrar WITH (NOLOCK), CONFIGURACION as config_campo2_etiqueta WITH (NOLOCK),
+		 CONFIGURACION as config_campo3_mostrar WITH (NOLOCK), CONFIGURACION as config_campo3_etiqueta WITH (NOLOCK),
+		 CONFIGURACION as config_campohoras_mostrar WITH (NOLOCK), CONFIGURACION as config_campoempleado_mostrar WITH (NOLOCK),
+		 CONFIGURACION as config_campodcto_mostrar WITH (NOLOCK), CONFIGURACION as config_campoidviaje_mostrar WITH (NOLOCK),
+		 CONFIGURACION_X_EMPRESA as config_iva WITH (NOLOCK), CONFIGURACION as config_ivaactivado WITH (NOLOCK)
 where config_und.CAMPO = 'VIAJE_MOSTRAR_KMSAUTONOMMEDIDA'
 and config_dias.CAMPO = 'VEH_COMB_DIASANT_RETRIEVE'
 and config_campo2_mostrar.CAMPO = 'VEH_COMB_CAMPO2_MOSTRAR'
@@ -365,7 +365,7 @@ and config_campodcto_mostrar.campo = 'VEH_COMB_CAMPODESC_MOSTRAR'
 and config_campoidviaje_mostrar.campo = 'VEH_REPOSTGAS_IDVIAJE'
 and config_ivaactivado.campo = 'VEH_COMBUSTIBLE_IVA_ACTIVADO'
 and config_iva.CAMPO = 'IVA'
-and config_iva.ID_EMPRESA = case when ${ID_Empresa_Sesion} = 0 then (select empresa.ID_EMPRESA from EMPRESA where empresa.ACTUAL = 1 ) else ${ID_Empresa_Sesion} end`;
+and config_iva.ID_EMPRESA = case when ${ID_Empresa_Sesion} = 0 then (select empresa.ID_EMPRESA from EMPRESA WITH (NOLOCK) where empresa.ACTUAL = 1 ) else ${ID_Empresa_Sesion} end`;
     const result = await this.general(object, query);
     return result;
   }	 
@@ -464,7 +464,7 @@ from
 	empresa_principal =  empresa.nombre ,
 	empresa_principal_rif =  empresa.rif,
 	dbo.F_GETDATE() as fecha_impresion,
-	(select USUARIO.DESCRIPCION from USUARIO where USUARIO.ID_USUARIO = ${ID_Usuario} ) as usuario_impresion,
+	(select USUARIO.DESCRIPCION from USUARIO WITH (NOLOCK) where USUARIO.ID_USUARIO = ${ID_Usuario} ) as usuario_impresion,
 	vehiculo.placa,
 	vehiculo_marca.descripcion  + ' ' + 
 	vehiculo_modelo.descripcion +  
@@ -504,12 +504,12 @@ from
 	empleado.nombre + ' ' + empleado.apellido as empleado_nombre_apellido, 
 	vehiculo_combustible.kilometraje_lectura,   
 	vehiculo_combustible.horas_lectura
-	FROM combustible_tipo, vehiculo_combustible left outer join viaje_guia on viaje_guia.id_viaje = vehiculo_combustible.id_viaje and viaje_guia.principal = 1
-	left outer join proveedor on  vehiculo_combustible.id_proveedor = proveedor.id_proveedor
-	left outer join empleado on vehiculo_combustible.id_empleado = empleado.id_empleado 
-	,empresa,vehiculo,vehiculo_modelo, vehiculo_marca, 
-	configuracion as config_empresa, configuracion as config_etiq1, configuracion as config_etiq2, configuracion as config_etiq3, configuracion as config_etiq4,
-	configuracion as config_undvol, (select dbo.F_ETIQUETA_GUIA(0,0) as nombre)  as etiqueta_guia
+	FROM combustible_tipo WITH (NOLOCK), vehiculo_combustible WITH (NOLOCK) left outer join viaje_guia on viaje_guia.id_viaje = vehiculo_combustible.id_viaje and viaje_guia.principal = 1
+	left outer join proveedor WITH (NOLOCK) on  vehiculo_combustible.id_proveedor = proveedor.id_proveedor
+	left outer join empleado WITH (NOLOCK) on vehiculo_combustible.id_empleado = empleado.id_empleado 
+	,empresa WITH (NOLOCK),vehiculo WITH (NOLOCK),vehiculo_modelo WITH (NOLOCK), vehiculo_marca WITH (NOLOCK), 
+	configuracion as config_empresa WITH (NOLOCK), configuracion as config_etiq1 WITH (NOLOCK), configuracion as config_etiq2 WITH (NOLOCK), configuracion as config_etiq3 WITH (NOLOCK), configuracion as config_etiq4 WITH (NOLOCK),
+	configuracion as config_undvol WITH (NOLOCK), (select dbo.F_ETIQUETA_GUIA(0,0) as nombre)  as etiqueta_guia
 	WHERE vehiculo_combustible.id_vehiculo_combustible = ${ID_Repostaje} and
 	vehiculo_combustible.id_vehiculo = vehiculo.id_vehiculo 
 	and vehiculo_modelo.id_vehiculo_modelo = vehiculo.id_vehiculo_modelo
@@ -552,7 +552,7 @@ order by orden`;
    const query = `select neumatico_falla_tipo.id_neumatico_falla_tipo,   
 neumatico_falla_tipo.descripcion,   
 neumatico_falla_tipo.desgaste_irregular 
-from neumatico_falla_tipo  
+from neumatico_falla_tipo  WITH (NOLOCK) 
 where neumatico_falla_tipo.activo = 1 
 union all
 select null as id_neumatico_falla_tipo,   
@@ -623,7 +623,7 @@ ${id_neumatico_falla_tipo},
 
   async appbdversion(object) {
    const query = `select isnull((select convert(integer, CONFIGURACION.valor)  
-from CONFIGURACION 
+from CONFIGURACION  WITH (NOLOCK)
 where campo = 'SVER_ACT'),2) as version_en_uso`;
     const result = await this.general(object, query);
     return result;

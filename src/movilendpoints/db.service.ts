@@ -544,7 +544,7 @@ PRESION_FECHA_MOD, presion_observaciones, fecha_reencauchado, REENCAUCHADO_VECES
 POSICION_EJE_TEXTO, ubicacion_global_neu_desc, estatus, id_vehiculo, placa, vehiculo_modelo_descripcion, principal, tiene_tapon, ID_NEUMATICO_FALLA_TIPO,
 presion_recomendada, presion_minima, presion_maxima, orden 
 from dbo.F_SEL_NEUMATICO_ESPESORPRESION(${ID_Vehiculo}) as x
-order by orden`;
+order by principal DESC, placa, orden`;
     const result = await this.general(object, query);
     return result;
   }	 

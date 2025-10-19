@@ -258,7 +258,14 @@ x.Nombre_Empleado asc`;
     return result;
   }
   async archivos(object, ID_Key, Modulo_Letras) {
-    const query = `select id_archivo, nombre, fecha_ins, usuario_ins from archivo WITH (NOLOCK) where id_key_modulo = ${ID_Key} and modulo = '${Modulo_Letras}' order by fecha_ins desc`;
+    const query = `select id_archivo, nombre, fecha_ins, usuario_ins 
+	from archivo WITH (NOLOCK) 
+	where id_key_modulo = ${ID_Key} and modulo = '${Modulo_Letras}'
+	union all
+	select id_imagen as id_archivo, nombre, null as fecha_ins, null as usuario_ins 
+	from imagen WITH (NOLOCK)
+	where id_key_tabla = ${ID_Key} and tabla = '${Modulo_Letras}'
+	order by 3 desc`;
     const result = await this.general(object, query);
     return result;
   }

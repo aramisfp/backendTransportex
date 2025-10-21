@@ -59,7 +59,7 @@ export class DataController {
     {
       idEmpresa,
       ID_Conexion,
-      Fecha_Sesion,
+      Fecha_Sesion
     }: { idEmpresa: number; ID_Conexion: number; Fecha_Sesion: string },
   ) {
     console.log(userName);
@@ -73,9 +73,9 @@ export class DataController {
     return result;
   }
   @Get('vehiculos')
-  async consultaVehiculos(@Query('client') userName: string) {
+  async consultaVehiculos(@Query('client') userName: string, @Query('Tipo_Carroceria') Tipo_Carroceria: string | null) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.vehiculos(filteredArray, 0, 0);
+    const result = this.dataService.vehiculos(filteredArray, 0, 0, Tipo_Carroceria);
     return result;
   }
   // @Post('vehiculos')
@@ -93,11 +93,12 @@ export class DataController {
     @Query('client') userName: string,
     @Query('ID_Empleado') ID_Empleado: number,
     @Query('ID_Empresa_Session') ID_Empresa_Session: number,
+    @Query('Tipo_Carroceria') Tipo_Carroceria: string | null
   ) {
     console.log(ID_Empleado);
     console.log('ID de la empresa', ID_Empresa_Session);
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.vehiculos(filteredArray, ID_Empleado, ID_Empresa_Session);
+    const result = this.dataService.vehiculos(filteredArray, ID_Empleado, ID_Empresa_Session, Tipo_Carroceria);
     return result;
   }
   @Get('usuarios')
@@ -373,6 +374,7 @@ export class DataController {
         filteredArray,
         saveData[0].ID_Archivo,
         file.buffer,
+        body.modulo
       );
       return result;
     } else {

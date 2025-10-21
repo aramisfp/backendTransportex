@@ -71,7 +71,10 @@ export class DataService {
     const result = await this.general(object, query);
     return result;
   }
-  async vehiculos(object, ID_Empleado, ID_Empresa_Sesion) {
+  async vehiculos(object, ID_Empleado, ID_Empresa_Sesion, Tipo_Carroceria) {
+
+    let tipo_carroceria_filter = Tipo_Carroceria ?? 'T';
+
    const query = `select ID_Vehiculo, Identificador_Vehiculo, Identificador_Secundario, Marca, Modelo, Anio, Propietario, Afiliado_o_Propio, Tipo_de_Vehiculo, Uso_de_Vehiculo, Automotor, Conductor, Conductor_Secundario, Centro_de_Costo, Unidad_de_Negocio, Contrato, Sede, VIN, Serial_Motor, Estado, Kilometraje, Ultima_Fecha_Act_Kilometraje, Horas_de_Uso, Ultima_Fecha_Act_Horas, Remolques_Asignados, Tipo_de_Combustible, Empresa_Ambiente, ID_Empleado, ID_Empleado_2, ID_Tipo_de_Combustible 
     from dbo.V_BI_VEHICULOS,
 	(select min(usu_rel.ID_Usuario) as ID_Usuario from (select min(usuario.ID_USUARIO) as ID_Usuario from usuario WITH (NOLOCK), usuario_x_empleado WITH (NOLOCK)
@@ -83,6 +86,7 @@ export class DataService {
         ) as usuario_rel
     where ${ID_Empresa_Sesion} in (ID_Empresa_Registro, 0)
 and Estado = 'Activo'
+and ('${tipo_carroceria_filter}' = 'T' or '${tipo_carroceria_filter}' in  (case when substring(automotor, 1, 1) = 'S' then 'C' else 'R' end))
 and isnull(V_BI_VEHICULOS.ID_Sede,0) in ( 
 select 0 union all
 select esede.ID_SEDE 
@@ -248,12 +252,21 @@ x.Nombre_Empleado asc`;
     const result = await this.general(object, query);
     return result;
   }
-  async archivoUpdate(object, id_archivo, nuevoContenido) {
-    const query = `
-    UPDATE dbo.ARCHIVO
-    SET CONTENIDO =  0x${nuevoContenido.toString('hex')}
-    WHERE id_archivo = ${id_archivo}
-  `;
+  async archivoUpdate(object, id_archivo, nuevoContenido, Modulo_Letras) {
+    let query = '';
+    if(Modulo_Letras === null || Modulo_Letras === undefined || Modulo_Letras.length <= 3) {
+      query = `
+        UPDATE dbo.ARCHIVO
+        SET CONTENIDO =  0x${nuevoContenido.toString('hex')}
+        WHERE id_archivo = ${id_archivo}
+      `;
+    } else {
+      query = `
+        UPDATE dbo.IMAGEN
+        SET CONTENIDO =  0x${nuevoContenido.toString('hex')}
+        WHERE id_imagen = ${id_archivo}
+      `;
+    }
     const result = await this.general(object, query);
     return result;
   }

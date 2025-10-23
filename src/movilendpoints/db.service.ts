@@ -86,7 +86,7 @@ export class DataService {
         ) as usuario_rel
     where ${ID_Empresa_Sesion} in (ID_Empresa_Registro, 0)
 and Estado = 'Activo'
-and ('${tipo_carroceria_filter}' = 'T' or '${tipo_carroceria_filter}' in  (case when substring(automotor, 1, 1) = 'S' then 'C' else 'R' end))
+and ('${tipo_carroceria_filter}' in ('T','C') or '${tipo_carroceria_filter}' in  (case when substring(automotor, 1, 1) = 'S' then 'C' else 'R' end))
 and isnull(V_BI_VEHICULOS.ID_Sede,0) in ( 
 select 0 union all
 select esede.ID_SEDE 

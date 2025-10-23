@@ -191,4 +191,12 @@ export const myArray = [
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },      
+ {
+    name: 'GPSERVICIOS_VEN',
+    Server: 'ec2-3-12-198-81.us-east-2.compute.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX_GPServicios',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },        
 ];

@@ -47,7 +47,7 @@ export class DataService {
   }
   async empresas(object) {
     const query =
-      "select Nombre, Tipo, Multiempresa, Activa, ID_Empresa from dbo.V_BI_EMPRESAS where substring(Multiempresa,1,1) = 'S' and substring(Activa,1,1) = 'S' order by Nombre";
+      "select Nombre, ID_Empresa from dbo.V_BI_EMPRESAS where substring(Multiempresa,1,1) = 'S' and substring(Activa,1,1) = 'S' order by Nombre";
     const result = await this.general(object, query);
     return result;
   }
@@ -171,7 +171,7 @@ Identificador_Vehiculo`;
     return result;
   }
   async empleados(object, ID_Empleado, ID_Empresa_Sesion) {
-    const query = `select x.ID_Empleado, x.Nombre_Empleado, x.Codigo, x.Email, x.Cargo, x.Usuario, x.ID_Usuario 
+    const query = `select x.ID_Empleado, x.Nombre_Empleado, x.Usuario, x.ID_Usuario 
 from (
 select ID_Empleado, Nombre_Empleado, Codigo, Email, Cargo, Usuario, ID_Usuario 
     from dbo.V_EMPLEADO 

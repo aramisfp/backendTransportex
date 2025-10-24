@@ -122,7 +122,9 @@ and usuario_rel.ID_Usuario in (usede.ID_USUARIO,0)
 )
 
 order by case when isnull(ID_Empleado,-1) = ${ID_Empleado} then 0 else 1 end asc, case when isnull(ID_Empleado_2,-1) = ${ID_Empleado} then 0 else 1 end asc, 
-Identificador_Vehiculo`;
+case substring(upper(V_BI_VEHICULOS.Automotor), 1, 1) when 'S' then 1 else 9 end,
+case when ISNUMERIC(V_BI_VEHICULOS.Identificador_Vehiculo) = 1 then convert(numeric, V_BI_VEHICULOS.Identificador_Vehiculo) else 99999999 end,
+V_BI_VEHICULOS.Identificador_Vehiculo`;
     const result = await this.general(object, query);
     return result;
   }
@@ -558,7 +560,7 @@ async repostajeimpresionsec(object, ID_Repostaje) {
    const query = `select id_neumatico, identificacion, validar_identificacion_neu, dot, 
    serial_fabricacion, serial_fabricacion_mostrar, semana_fabricacion, anio_fabricacion, 
    neumatico_modelo_descripcion,neumatico_diseno_descripcion, uso_descripcion, neumatico_carcasa_naturaleza,
-kilometraje, espesor, fecha_act_espesor, ESPESOR_USUARIO_MOD,
+kilometraje, fecha_ult_inspeccion, espesor, fecha_act_espesor, ESPESOR_USUARIO_MOD,
 ESPESOR_FECHA_MOD, espesor_observaciones, PRESION,FECHA_ACT_PRESION, PRESION_USUARIO_MOD,
 PRESION_FECHA_MOD, presion_observaciones, fecha_reencauchado, REENCAUCHADO_VECES, fecha_instalacion,   
 POSICION_EJE_TEXTO, ubicacion_global_neu_desc, estatus, id_vehiculo, placa, vehiculo_modelo_descripcion, principal, 

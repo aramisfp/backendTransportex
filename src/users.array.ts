@@ -64,14 +64,6 @@ export const myArray = [
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },  
  {
-    name: 'TTP_MEX',
-    Server: 'ec2-3-144-160-231.us-east-2.compute.amazonaws.com',
-    Port: '1433',
-    Database: 'DB_TRANSPORTEX_TTP',
-    UserID: 'usr_movil',
-    UserPwd: 'Tran5p0rt3X_2008tlf',
-  },        
- {
     name: 'OVER_ARG',
     Server: 'ec2-3-17-142-30.us-east-2.compute.amazonaws.com',
     Port: '1433',
@@ -86,15 +78,7 @@ export const myArray = [
     Database: 'DB_TRANSPORTEX_Logiexpress',
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
-  },      
- {
-    name: 'CW_PAN',
-    Server: 'ec2-3-15-39-223.us-east-2.compute.amazonaws.com',
-    Port: '1433',
-    Database: 'DB_TRANSPORTEX',
-    UserID: 'usr_movil',
-    UserPwd: 'Tran5p0rt3X_2008tlf',
-  },              
+  },                  
  {
     name: 'ROBINSON_ARG',
     Server: 'ec2-18-232-66-186.compute-1.amazonaws.com',
@@ -111,14 +95,6 @@ export const myArray = [
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },     
- {
-    name: 'MASTER_MEX',
-    Server: 'ec2-3-12-198-81.us-east-2.compute.amazonaws.com',
-    Port: '1433',
-    Database: 'DB_TRANSPORTEX_Master',
-    UserID: 'usr_movil',
-    UserPwd: 'Tran5p0rt3X_2008tlf',
-  },            
  {
     name: 'MESSINA_ARG',
     Server: 'ec2-52-14-202-76.us-east-2.compute.amazonaws.com',
@@ -143,14 +119,6 @@ export const myArray = [
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },         
- {
-    name: 'KPD_NIC',
-    Server: 'ec2-3-138-140-194.us-east-2.compute.amazonaws.com',
-    Port: '1433',
-    Database: 'DB_TRANSPORTEX_KPD',
-    UserID: 'usr_movil',
-    UserPwd: 'Tran5p0rt3X_2008tlf',
-  },      
  {
     name: 'RAINCA_VEN',
     Server: 'ec2-3-147-7-31.us-east-2.compute.amazonaws.com',

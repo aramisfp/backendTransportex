@@ -733,7 +733,6 @@ order by x.numero_guia, x.id_viaje_guia`;
 async viajeentradasalidainput(
     object,
 id_viaje,
-fecha, 
 tipo,
 observaciones,
 latitud,

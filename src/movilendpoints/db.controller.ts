@@ -705,5 +705,113 @@ usuario,
     const result = this.dataService.appbdmodulos(filteredArray);
     return result;
   }  
+
+
+   @Get('documentosvencidos')
+  async consultaDocumentosvencidos(
+    @Query('client') userName: string,
+    @Query() { ID_Empleado }: { ID_Empleado: number },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.documentosvencidos(filteredArray, ID_Empleado);
+    return result;
+  }  
+
+@Post('documentosvencidosinput')
+  async consultaDocumentosvencidosinput(
+    @Query('client') userName: string,
+    @Body()
+    {
+naturaleza,
+id_elemento, 
+id_tipo_documento,
+numero,
+fecha_emision, 
+fecha_documento,
+costo_tramite,
+observaciones,
+usuario,
+    }: {
+    naturaleza: string; 
+    id_elemento: number;
+    id_tipo_documento: number;
+    numero: string;
+    fecha_emision: string;
+    fecha_documento: string;
+    costo_tramite: number;
+    observaciones: string;
+    usuario: string;
+    },
+  ) {
+    
+    console.log(userName);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.documentosvencidosinput(
+      filteredArray,
+naturaleza,
+id_elemento, 
+id_tipo_documento,
+numero,
+fecha_emision, 
+fecha_documento,
+costo_tramite,
+observaciones,
+usuario,
+    );
+    return result;
+  }  
+
+
+  
+   @Get('viajedetalles')
+  async consultaViajedetalles(
+    @Query('client') userName: string,
+    @Query() { ID_Viaje }: { ID_Viaje: number },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajedetalles(filteredArray, ID_Viaje);
+    return result;
+  }  
+  
+
+@Post('viajeentradasalidainput')
+  async consultaViajeentradasalidainput(
+    @Query('client') userName: string,
+    @Body()
+    {
+id_viaje,
+tipo,
+observaciones,
+latitud,
+longitud,
+computador,
+usuario,
+    }: {
+    id_viaje: number;
+    tipo: string; 
+    observaciones: string;
+    latitud: string;
+    longitud: string;
+    computador: string;
+    usuario: string;
+    },
+  ) {
+    
+    console.log(userName);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajeentradasalidainput(
+      filteredArray,
+id_viaje,
+tipo,
+observaciones,
+latitud,
+longitud,
+computador,
+usuario,
+    );
+    return result;
+  }  
+
+
   
 }

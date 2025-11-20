@@ -656,5 +656,64 @@ where campo = 'SVER_ACT'),2) as version_en_uso`;
     const result = await this.general(object, query);
     return result;
   }		
+
+
+  async documentosvencidos(object, ID_Empleado) {
+   const query = `select 
+x.aplica_documento, 
+x.modulo_documento,
+x.tipo_documento,
+x.numero_documento, 
+x.fecha_vencimiento, 
+x.estado_documento,
+x.requerido,
+x.matricula_vehiculo_etiqueta,
+x.matricula_vehiculo,
+x.identif_sec_vehiculo_etiqueta,
+x.identif_sec_vehiculo,
+x.nombre_empleado,
+case x.modulo_documento 
+when 'DOC' then x.id_empleado
+when 'DOV' then x.id_vehiculo else x.id_empresa end as id_elemento,
+x.id_tipo_documento
+from dbo.F_SEL_ALARMA_DOCUMENTOS ('V') as x
+where x.id_empleado = ${ID_Empleado}
+and x.modulo_documento = 'DOC'
+order by x.aplica_documento, 
+case x.estado when 'V' then 2 when 'P' then 3 else 1 end,
+x.requerido desc, x.fecha_vencimiento,  
+x.tipo_documento`;
+    const result = await this.general(object, query);
+    return result;
+  }	 
+
+async documentosvencidosinput(
+    object,
+naturaleza,
+id_elemento, 
+id_tipo_documento,
+numero,
+fecha_emision, 
+fecha_documento,
+costo_tramite,
+observaciones,
+usuario,
+  ) {
+    const query = `Exec dbo.SP_INS_SYNC_DOCUMENTO 
+'${naturaleza}', 
+${id_elemento}, 
+${id_tipo_documento},
+'${numero}', 
+'${fecha_emision}', 
+'${fecha_documento}', 
+${costo_tramite},
+'${observaciones}',
+'${usuario}'`;
+    const result = await this.general(object, query);
+    return result;
+  }	
+
+
+
 	
 }

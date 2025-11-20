@@ -715,5 +715,45 @@ ${costo_tramite},
 
 
 
+  async viajedetalles(object, ID_Viaje) {
+   const query = `select   id_viaje,	id_viaje_guia,	id_vehiculo,id_empleado,	fecha_salida,	fecha_llegada,	guia_etiqueta, numero_guia, 	principal,
+cliente, 	cliente_despacho, ciudad_origen,	ciudad_destino,	
+placa,	cavas_asociadas,total_ejes_camion,	total_ejes_remolque,	conductor,	cargo_conductor,	cedula,	estibador,
+total_adelantos, empleado_sueldo_base,	estadia	sueldo_estadia,
+viaje_observaciones, carga_tipo, carga_peso,	carga_peso_medida,	
+empresa_principal,	empresa_principal_rif,	ciudad_actual as empresa_principal_ciudad
+from dbo.F_SEL_VIAJE_ORDEN(${ID_Viaje},0) as x
+order by x.numero_guia, x.id_viaje_guia`;
+    const result = await this.general(object, query);
+    return result;
+  }	 
+
+
+
+async viajeentradasalidainput(
+    object,
+id_viaje,
+fecha, 
+tipo,
+observaciones,
+latitud,
+longitud,
+computador,
+usuario,
+  ) {
+    const query = `Exec dbo.SP_UPD_SYNC_VIAJE_ENTRADASALIDA 
+${id_viaje}, 
+NULL,
+'${tipo}', 
+'${observaciones}', 
+'${latitud}', 
+'${longitud}', 
+'${computador}',
+'${usuario}'`;
+    const result = await this.general(object, query);
+    return result;
+  }	
+
+	
 	
 }

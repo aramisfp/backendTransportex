@@ -763,6 +763,18 @@ usuario,
 
 
   
+  
+   @Get('viajelistado')
+  async consultaViajelistado(
+    @Query('client') userName: string,
+    @Query() { ID_Empleado }: { ID_Empleado: number },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajelistado(filteredArray, ID_Empleado);
+    return result;
+  }  
+
+  
    @Get('viajedetalles')
   async consultaViajedetalles(
     @Query('client') userName: string,
@@ -774,6 +786,31 @@ usuario,
   }  
   
 
+@Post('viajepermisover')
+  async consultaViajepermisover(
+    @Query('client') userName: string,
+    @Body()
+    {
+id_viaje,
+id_empleado,
+    }: {
+    id_viaje: number;
+    id_empleado: number;
+    },
+  ) {
+    
+    console.log(userName);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajepermisover(
+      filteredArray,
+id_viaje,
+id_empleado,
+    );
+    return result;
+  }  
+
+
+  
 @Post('viajeentradasalidainput')
   async consultaViajeentradasalidainput(
     @Query('client') userName: string,

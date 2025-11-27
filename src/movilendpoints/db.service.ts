@@ -715,6 +715,22 @@ ${costo_tramite},
 
 
 
+  async viajelistado(object, ID_Empleado) {
+   const query = `select id_viaje,	id_vehiculo,	placa,	conductor,	conductor_2,	
+guia_numero_etiqueta,	guia_numero,	
+guia_campo1_etiqueta, guia_campo1_mostrar,	guia_campo1,	
+guia_campo2_etiqueta,	guia_campo2_mostrar	, guia_campo2,
+guia_campo3_etiqueta,	guia_campo3_mostrar,	guia_campo3,
+guia_campo4_etiqueta,	guia_campo4_mostrar,	guia_campo4,
+cliente,	trayecto,	fecha_salida,	remolques_asociados,
+tipo_carga_descripcion,	carga_tipo_embarque, 
+id_viaje_solicitud,	carta_oferta_desc
+from dbo.F_SEL_VIAJE_EMPLEADO(${ID_Empleado}) as x
+order by x.fecha_salida, x.id_viaje desc`;
+    const result = await this.general(object, query);
+    return result;
+  }	 
+
   async viajedetalles(object, ID_Viaje) {
    const query = `select   id_viaje,	id_viaje_guia,	id_vehiculo,id_empleado,	fecha_salida,	fecha_llegada,	guia_etiqueta, numero_guia, 	principal,
 cliente, 	cliente_despacho, ciudad_origen,	ciudad_destino,	
@@ -727,6 +743,19 @@ order by x.numero_guia, x.id_viaje_guia`;
     const result = await this.general(object, query);
     return result;
   }	 
+
+
+async viajepermisover(
+    object,
+id_viaje,
+id_empleado,
+  ) {
+    const query = `Exec dbo.SP_USUARIO_PERMISO_VIAJE 
+${id_viaje}, 
+${id_empleado}`;
+    const result = await this.general(object, query);
+    return result;
+  }	
 
 
 

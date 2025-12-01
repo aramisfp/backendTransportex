@@ -760,7 +760,7 @@ order by x.numero_guia, x.id_viaje_guia`;
   }	 
 
 
-async viajepermisover(
+async viajepermisoentsal(
     object,
 id_viaje,
 id_empleado,

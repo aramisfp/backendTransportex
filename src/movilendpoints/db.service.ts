@@ -732,7 +732,22 @@ order by x.fecha_salida, x.id_viaje desc`;
   }	 
 
   async viajedetalles(object, ID_Viaje) {
-   const query = `select   id_viaje,	id_viaje_guia,	id_vehiculo,id_empleado,	fecha_salida,	fecha_llegada,	guia_etiqueta, numero_guia, 	principal,
+   const query = `select   id_viaje,	id_viaje_guia,	id_vehiculo,id_empleado,	fecha_salida,	fecha_llegada,	guia_etiqueta, 
+  guia_numero_etiqueta, 
+numero_guia,
+guia_campo1_etiqueta, 
+ guia_campo1_mostrar,
+ guia_campo1,
+ guia_campo2_etiqueta,
+ guia_campo2_mostrar,
+guia_campo2,
+guia_campo3_etiqueta,
+ guia_campo3_mostrar,
+guia_campo3,
+ guia_campo4_etiqueta,
+ guia_campo4_mostrar,  
+guia_campo4,
+principal,
 cliente, 	cliente_despacho, ciudad_origen,	ciudad_destino,	
 placa,	cavas_asociadas,total_ejes_camion,	total_ejes_remolque,	conductor,	cargo_conductor,	cedula,	estibador,
 total_adelantos, empleado_sueldo_base,	estadia	sueldo_estadia,
@@ -750,7 +765,7 @@ async viajepermisover(
 id_viaje,
 id_empleado,
   ) {
-    const query = `Exec dbo.SP_USUARIO_PERMISO_VIAJE 
+    const query = `Exec dbo.SP_USUARIO_PERMISO_VIAJE_ES 
 ${id_viaje}, 
 ${id_empleado}`;
     const result = await this.general(object, query);

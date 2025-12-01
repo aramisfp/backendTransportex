@@ -749,7 +749,7 @@ guia_campo3,
 guia_campo4,
 principal,
 cliente, 	cliente_despacho, ciudad_origen,	ciudad_destino,	
-placa,	cavas_asociadas,total_ejes_camion,	total_ejes_remolque,	conductor,	cargo_conductor,	cedula,	estibador,
+placa,	vehiculo_modelo, cavas_asociadas,total_ejes_camion,	total_ejes_remolque,	conductor,	cargo_conductor,	cedula,	estibador,
 total_adelantos, empleado_sueldo_base,	estadia	sueldo_estadia,
 viaje_observaciones, carga_tipo, carga_peso,	carga_peso_medida,	
 empresa_principal,	empresa_principal_rif,	ciudad_actual as empresa_principal_ciudad

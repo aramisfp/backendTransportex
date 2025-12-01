@@ -786,8 +786,8 @@ usuario,
   }  
   
 
-@Post('viajepermisover')
-  async consultaViajepermisover(
+@Post('viajepermisoentsal')
+  async consultaViajepermisoentsal(
     @Query('client') userName: string,
     @Body()
     {
@@ -801,7 +801,7 @@ id_empleado,
     
     console.log(userName);
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.viajepermisover(
+    const result = this.dataService.viajepermisoentsal(
       filteredArray,
 id_viaje,
 id_empleado,

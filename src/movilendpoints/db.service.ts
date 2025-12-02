@@ -783,6 +783,11 @@ latitud,
 longitud,
 computador,
 usuario,
+latitud_escaneador,
+longitud_escaneador,
+estado_gps_conductor,
+estado_gps_escaneador,
+metros_distancia_escaneo,
   ) {
     const query = `Exec dbo.SP_UPD_SYNC_VIAJE_ENTRADASALIDA 
 ${id_viaje}, 
@@ -792,7 +797,12 @@ NULL,
 '${latitud}', 
 '${longitud}', 
 '${computador}',
-'${usuario}'`;
+'${usuario}',
+'${latitud_escaneador}', 
+'${longitud_escaneador}', 
+'${estado_gps_conductor}', 
+'${estado_gps_escaneador}', 
+${metros_distancia_escaneo}`;
     const result = await this.general(object, query);
     return result;
   }	

@@ -823,6 +823,11 @@ latitud,
 longitud,
 computador,
 usuario,
+latitud_escaneador,
+longitud_escaneador,
+estado_gps_conductor,
+estado_gps_escaneador,
+metros_distancia_escaneo,
     }: {
     id_viaje: number;
     tipo: string; 
@@ -831,9 +836,13 @@ usuario,
     longitud: string;
     computador: string;
     usuario: string;
+    latitud_escaneador: string;
+    longitud_escaneador: string;
+    estado_gps_conductor: string;
+    estado_gps_escaneador: string;
+    metros_distancia_escaneo: number;
     },
   ) {
-    
     console.log(userName);
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.viajeentradasalidainput(
@@ -845,6 +854,11 @@ latitud,
 longitud,
 computador,
 usuario,
+latitud_escaneador,
+longitud_escaneador,
+estado_gps_conductor,
+estado_gps_escaneador,
+metros_distancia_escaneo,
     );
     return result;
   }  

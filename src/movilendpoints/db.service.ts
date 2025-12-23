@@ -716,13 +716,14 @@ ${costo_tramite},
 
 
   async viajelistado(object, ID_Empleado) {
-   const query = `select id_viaje,	id_vehiculo,	placa,	conductor,	conductor_2,	
+   const query = `select id_viaje,	id_vehiculo, placa_etiqueta,	placa, vehidsec_etiqueta, identificacion as veh_identificacion,
+   conductor_etiqueta, conductor,	conductor_2,	
 guia_numero_etiqueta,	guia_numero,	
 guia_campo1_etiqueta, guia_campo1_mostrar,	guia_campo1,	
 guia_campo2_etiqueta,	guia_campo2_mostrar	, guia_campo2,
 guia_campo3_etiqueta,	guia_campo3_mostrar,	guia_campo3,
 guia_campo4_etiqueta,	guia_campo4_mostrar,	guia_campo4,
-cliente,	trayecto,	fecha_salida,	remolques_asociados,
+cliente,	trayecto,	fecha_salida,	remolques_asociados_etiqueta, remolques_asociados,
 tipo_carga_descripcion,	carga_tipo_embarque, 
 id_viaje_solicitud,	carta_oferta_desc
 from dbo.F_SEL_VIAJE_EMPLEADO(${ID_Empleado}) as x
@@ -749,7 +750,9 @@ guia_campo3,
 guia_campo4,
 principal,
 cliente, 	cliente_despacho, ciudad_origen,	ciudad_destino,	
-placa,	vehiculo_modelo, cavas_asociadas,total_ejes_camion,	total_ejes_remolque,	conductor,	cargo_conductor,	cedula,	estibador,
+placa_etiqueta, placa, vehidsec_etiqueta, identificacion as veh_identificacion,	vehiculo_modelo, total_ejes_camion,
+remolques_asociados_etiqueta,  cavas_asociadas, total_ejes_remolque, 
+cargo_conductor, conductor,	cedula_etiqueta,  cedula,	estibador,
 total_adelantos, empleado_sueldo_base,	estadia	sueldo_estadia,
 viaje_observaciones, carga_tipo, carga_peso,	carga_peso_medida,	
 empresa_principal,	empresa_principal_rif,	ciudad_actual as empresa_principal_ciudad

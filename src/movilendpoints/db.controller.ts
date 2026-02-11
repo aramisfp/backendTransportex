@@ -864,5 +864,28 @@ metros_distancia_escaneo,
   }  
 
 
+
+   
+   @Get('viajesolnueva')
+  async consultaViajesolnueva(
+    @Query('client') userName: string,
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajesolnueva(filteredArray);
+    return result;
+  }  
+
+  
+
+   @Get('viajesoledit')
+  async consultaViajesoledit(
+    @Query('client') userName: string,
+    @Query() { ID_Viaje }: { ID_Viaje_Solicitud: number },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajesoledit(filteredArray, ID_Viaje_Solicitud);
+    return result;
+  }  
+
   
 }

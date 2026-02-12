@@ -880,7 +880,7 @@ metros_distancia_escaneo,
    @Get('viajesoledit')
   async consultaViajesoledit(
     @Query('client') userName: string,
-    @Query() { ID_Viaje }: { ID_Viaje_Solicitud: number },
+    @Query() { ID_Viaje_Solicitud }: { ID_Viaje_Solicitud: number },
   ) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.viajesoledit(filteredArray, ID_Viaje_Solicitud);
@@ -1070,5 +1070,17 @@ id_empresa_registro,
   }  
 
 
+
+   @Get('viajesollistado')
+  async consultaViajesollistado(
+    @Query('client') userName: string,
+    @Query() { ID_Empleado }: { ID_Empleado: number },
+    @Query() { ID_Usuario }: { ID_Usuario: number },
+    @Query() { ID_Empresa_Sesion }: { ID_Empresa_Sesion: number },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajesollistado(filteredArray, ID_Empleado, ID_Usuario, ID_Empresa_Sesion);
+    return result;
+  }  
   
 }

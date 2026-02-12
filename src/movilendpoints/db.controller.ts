@@ -887,5 +887,188 @@ metros_distancia_escaneo,
     return result;
   }  
 
+
+  
+@Post('viajesolinput')
+  async consultaViajesolinput(
+    @Query('client') userName: string,
+    @Body()
+    {
+id_empleado,   
+id_ciudad_origen,   
+id_ciudad_destino,   
+id_vehiculo_sel,
+id_vehiculo_uso,   
+id_vehiculo_uso_cava,   
+id_vehiculo_tipo,   
+id_vehiculo_tipo_cava,   
+id_empresa,   
+id_empresa_despacho,   
+id_viaje_carga_tipo,   
+id_medida_pieza,   
+fecha_solicitud,   
+fecha_salida,   
+fecha_salida_estimada,   
+fecha_llegada_estimada,
+fecha_llegada,
+fecha_entrega,
+guia_numero,   
+numero_relacion_gastos,   
+factura_guia,   
+campo_especial3,   
+campo_especial4,   
+descripcion,   
+fecha_embarque,   
+factura_flete,
+barco_nro_viaje,
+barco_nombre,
+carga_cargado,
+fecha_factura_flete,
+fecha_factura_afiliado, 
+monto_flete_cotizado,
+pieza_cantidad,   
+peso,   
+peso_medida,   
+pasajeros,   
+largo,   
+ancho,   
+alto,   
+longitud_medida,   
+volumen,   
+volumen_medida,   
+repartos_internos,   
+repartos_externos,   
+observaciones, 
+custodia,
+marchamo,
+marchamo_serial, 
+observaciones_viaje, 
+tipo_origen,
+solicitud_referencia, 
+carga_peligrosa, 
+usuario,
+id_empresa_registro,
+    }: {
+id_empleado: number;    
+id_ciudad_origen: number;
+id_ciudad_destino: number;
+id_vehiculo_sel: number;
+id_vehiculo_uso: number;
+id_vehiculo_uso_cava: number;
+id_vehiculo_tipo: number;
+id_vehiculo_tipo_cava: number;
+id_empresa: number;
+id_empresa_despacho: number;   
+id_viaje_carga_tipo: number;
+id_medida_pieza: number;   
+fecha_solicitud: string;
+fecha_salida: string;  
+fecha_salida_estimada: string;   
+fecha_llegada_estimada: string;
+fecha_llegada: string;
+fecha_entrega: string;
+guia_numero: string;   
+numero_relacion_gastos: string;   
+factura_guia: string;   
+campo_especial3: string;
+campo_especial4: string;   
+descripcion: string;   
+fecha_embarque: string;   
+factura_flete: string;
+barco_nro_viaje: string;
+barco_nombre: string;
+carga_cargado: string;
+fecha_factura_flete: string;
+fecha_factura_afiliado: string;
+monto_flete_cotizado: number;
+pieza_cantidad: number; 
+peso: number;
+peso_medida: string;   
+pasajeros: number;   
+largo: number;   
+ancho: number;   
+alto: number;   
+longitud_medida: string;
+volumen: number;
+volumen_medida: string;   
+repartos_internos: number; 
+repartos_externos: number;   
+observaciones: string;
+custodia: string;
+marchamo: string;
+marchamo_serial: string;
+observaciones_viaje: string;
+tipo_origen: string;
+solicitud_referencia: string; 
+carga_peligrosa: string; 
+usuario: string;
+id_empresa_registro: number;      
+    },
+  ) {
+    
+    console.log(userName);
+
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajesolinput(
+      filteredArray,
+id_empleado,   
+id_ciudad_origen,   
+id_ciudad_destino,   
+id_vehiculo_sel,
+id_vehiculo_uso,   
+id_vehiculo_uso_cava,   
+id_vehiculo_tipo,   
+id_vehiculo_tipo_cava,   
+id_empresa,   
+id_empresa_despacho,   
+id_viaje_carga_tipo,   
+id_medida_pieza,   
+fecha_solicitud,   
+fecha_salida,   
+fecha_salida_estimada,   
+fecha_llegada_estimada,
+fecha_llegada,
+fecha_entrega,
+guia_numero,   
+numero_relacion_gastos,   
+factura_guia,   
+campo_especial3,   
+campo_especial4,   
+descripcion,   
+fecha_embarque,   
+factura_flete,
+barco_nro_viaje,
+barco_nombre,
+carga_cargado,
+fecha_factura_flete,
+fecha_factura_afiliado, 
+monto_flete_cotizado,
+pieza_cantidad,   
+peso,   
+peso_medida,   
+pasajeros,   
+largo,   
+ancho,   
+alto,   
+longitud_medida,   
+volumen,   
+volumen_medida,   
+repartos_internos,   
+repartos_externos,   
+observaciones, 
+custodia,
+marchamo,
+marchamo_serial, 
+observaciones_viaje, 
+tipo_origen,
+solicitud_referencia, 
+carga_peligrosa, 
+usuario,
+id_empresa_registro,
+    );
+    return result;
+  }  
+
+
   
 }

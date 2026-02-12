@@ -1100,5 +1100,64 @@ ${id_empresa_registro}`;
 
 
 
+  async viajesollistado(object, ID_Empleado, ID_Usuario, ID_Empresa_Sesion) {
+   const query = `select 
+ VIAJE_SOLICITUD.ID_VIAJE_SOLICITUD,   
+VIAJE_SOLICITUD.FECHA_SOLICITUD,  solcampo_fecha_solicitud.ACTIVO as solcampo_fecha_solicitud_act,  solcampo_fecha_solicitud.CAMPO_ORDEN as solcampo_fecha_solicitud_ord,   solcampo_fecha_solicitud.OBLIGATORIO as solcampo_fecha_solicitud_obl,   
+empleado.nombre + ' ' + empleado.apellido as id_empleado_descripcion,
+c1.descripcion as id_ciudad_origen_descripcion,
+c2.descripcion as id_ciudad_destino_descripcion,
+VIAJE_SOLICITUD.MONTO_FLETE_COTIZADO,  solcampo_monto_flete_cotizado.ACTIVO as solcampo_monto_flete_cotizado_act,  solcampo_monto_flete_cotizado.CAMPO_ORDEN as solcampo_monto_flete_cotizado_ord,  solcampo_monto_flete_cotizado.OBLIGATORIO as solcampo_monto_flete_cotizado_obl,   
+VIAJE_SOLICITUD.GUIA_NUMERO,   solcampo_guia_numero.ACTIVO as solcampo_guia_numero_act, solcampo_guia_numero.CAMPO_ORDEN as solcampo_guia_numero_ord,  solcampo_guia_numero.OBLIGATORIO as solcampo_guia_numero_obl,    
+VIAJE_SOLICITUD.NUMERO_RELACION_GASTOS,    solcampo_numero_relacion_gastos.ACTIVO as solcampo_numero_relacion_gastos_act,  solcampo_numero_relacion_gastos.CAMPO_ORDEN as solcampo_numero_relacion_gastos_ord,  solcampo_numero_relacion_gastos.OBLIGATORIO as solcampo_numero_relacion_gastos_obl,     
+VIAJE_SOLICITUD.FACTURA_GUIA,    solcampo_factura_guia.ACTIVO as solcampo_numero_factura_guia_act,   solcampo_factura_guia.CAMPO_ORDEN as solcampo_numero_factura_guia_ord,     solcampo_factura_guia.OBLIGATORIO as solcampo_numero_factura_guia_obl,  
+VIAJE_SOLICITUD.CAMPO_ESPECIAL3,    solcampo_campo_especial3.ACTIVO as solcampo_numero_campo_especial3_act,  solcampo_campo_especial3.CAMPO_ORDEN as solcampo_numero_campo_especial3_ord,  solcampo_campo_especial3.OBLIGATORIO as solcampo_numero_campo_especial3_obl,   
+VIAJE_SOLICITUD.CAMPO_ESPECIAL4,   solcampo_campo_especial4.ACTIVO as solcampo_numero_campo_especial4_act,   solcampo_campo_especial4.CAMPO_ORDEN as solcampo_numero_campo_especial4_ord,  solcampo_campo_especial4.OBLIGATORIO as solcampo_numero_campo_especial4_obl,   
+VIAJE_SOLICITUD.DESCRIPCION,   solcampo_descripcion.ACTIVO as solcampo_descripcion_act,  solcampo_descripcion.CAMPO_ORDEN as solcampo_descripcion_ord,   solcampo_descripcion.OBLIGATORIO as solcampo_descripcion_obl, 
+VIAJE_SOLICITUD.FECHA_EMBARQUE,   solcampo_fecha_embarque.ACTIVO as solcampo_fecha_embarque_act,  solcampo_fecha_embarque.CAMPO_ORDEN as solcampo_fecha_embarque_ord,  solcampo_fecha_embarque.OBLIGATORIO as solcampo_fecha_embarque_obl,  
+VIAJE_SOLICITUD.fecha_ins, 
+VIAJE_SOLICITUD.fecha_mod,  
+VIAJE_SOLICITUD.usuario_ins,
+VIAJE_SOLICITUD.usuario_mod, 
+V_VIAJE_SOLICITUD.id_VIAJE,
+VIAJE_SOLICITUD.SOLICITUD_REFERENCIA,  solcampo_solicitud_referencia.ACTIVO as solcampo_solicitud_referencia_act,  solcampo_solicitud_referencia.CAMPO_ORDEN as solcampo_solicitud_referencia_ord,   solcampo_solicitud_referencia.OBLIGATORIO as solcampo_solicitud_referencia_obl 
+
+from V_VIAJE_SOLICITUD, VIAJE_SOLICITUD   left outer join empleado on VIAJE_SOLICITUD.id_empleado = empleado.id_empleado  
+left outer join ciudad as c1 on  VIAJE_SOLICITUD.ID_CIUDAD_ORIGEN = c1.id_ciudad  
+left outer join ciudad as c2 on  VIAJE_SOLICITUD.ID_CIUDAD_DESTINO = c2.id_ciudad  ,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'fecha_solicitud') as solcampo_fecha_solicitud,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'monto_flete_cotizado') as solcampo_monto_flete_cotizado,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'guia_numero') as solcampo_guia_numero,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'numero_relacion_gastos') as solcampo_numero_relacion_gastos,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'factura_guia') as solcampo_factura_guia,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'campo_especial3') as solcampo_campo_especial3,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'campo_especial4') as solcampo_campo_especial4,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'descripcion') as solcampo_descripcion,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'fecha_embarque') as solcampo_fecha_embarque,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'solicitud_referencia') as solcampo_solicitud_referencia,
+CONFIGURACION as config_retrieve
+
+where config_retrieve.campo = 'VIAJE_DIASANTERIORES_RETRIEVE'
+and ((viaje_solicitud.fecha_solicitud >= DATEADD(dd, convert(integer, config_retrieve.VALOR) * -1, getdate()) and isnull(v_viaje_solicitud.id_VIAJE,0) > 0) or isnull(v_viaje_solicitud.id_VIAJE,0) = 0 )
+and (VIAJE_SOLICITUD.ID_EMPLEADO = ${ID_Empleado}
+and ${ID_Empleado} in (
+select USUARIO_X_EMPLEADO.ID_EMPLEADO from USUARIO_X_EMPLEADO WITH (NOLOCK) , USUARIO WITH (NOLOCK) 
+where USUARIO_X_EMPLEADO.ID_EMPLEADO = ${ID_Empleado} 
+and USUARIO_X_EMPLEADO.ID_USUARIO = usuario.ID_USUARIO
+and usuario.ADMINISTRADOR = 0
+union all 
+select ${ID_Empleado} from TABLA_DUMMY
+where ${ID_Empleado} not in (select USUARIO_X_EMPLEADO.ID_EMPLEADO from USUARIO_X_EMPLEADO  WITH (NOLOCK) 
+where USUARIO_X_EMPLEADO.ID_EMPLEADO = ${ID_Empleado})
+) )  
+OR (VIAJE_SOLICITUD.USUARIO_INS = (select USUARIO.DESCRIPCION from USUARIO   WITH (NOLOCK) 
+where USUARIO.ID_USUARIO = ${ID_Usuario})
+and VIAJE_SOLICITUD.ID_EMPRESA_REGISTRO = ${ID_Empresa_Sesion}
+)
+order by VIAJE_SOLICITUD.ID_VIAJE_SOLICITUD`;
+    const result = await this.general(object, query);
+    return result;
+  }	
+
 	
 }

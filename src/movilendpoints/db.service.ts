@@ -976,7 +976,7 @@ left outer join MEDIDA_PIEZA  on VIAJE_SOLICITUD.id_medida_pieza = MEDIDA_PIEZA.
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'observaciones') as solcampo_observaciones
 
 where V_VIAJE_SOLICITUD.id_VIAJE_SOLICITUD = VIAJE_SOLICITUD.id_VIAJE_SOLICITUD
-and VIAJE_SOLICITUD.id_empresa_registro = ${ID_Viaje_Solicitud}`;
+and VIAJE_SOLICITUD.id_VIAJE_SOLICITUD = ${ID_Viaje_Solicitud}`;
     const result = await this.general(object, query);
     return result;
   }	 

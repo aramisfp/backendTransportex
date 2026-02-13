@@ -1139,7 +1139,8 @@ CONFIGURACION as config_retrieve  WITH (NOLOCK)
 
 where config_retrieve.campo = 'VIAJE_DIASANTERIORES_RETRIEVE'
 and ((viaje_solicitud.fecha_solicitud >= DATEADD(dd, convert(integer, config_retrieve.VALOR) * -1, getdate()) and isnull(v_viaje_solicitud.id_VIAJE,0) > 0) or isnull(v_viaje_solicitud.id_VIAJE,0) = 0 )
-and (VIAJE_SOLICITUD.ID_EMPLEADO = ${ID_Empleado}
+and (
+(VIAJE_SOLICITUD.ID_EMPLEADO = ${ID_Empleado}
 and ${ID_Empleado} in (
 select USUARIO_X_EMPLEADO.ID_EMPLEADO from USUARIO_X_EMPLEADO WITH (NOLOCK) , USUARIO WITH (NOLOCK) 
 where USUARIO_X_EMPLEADO.ID_EMPLEADO = ${ID_Empleado} 
@@ -1152,9 +1153,9 @@ where USUARIO_X_EMPLEADO.ID_EMPLEADO = ${ID_Empleado})
 ) )  
 OR (VIAJE_SOLICITUD.USUARIO_INS = (select USUARIO.DESCRIPCION from USUARIO  WITH (NOLOCK) 
 where USUARIO.ID_USUARIO = ${ID_Usuario}))
-OR (1 = (select USUARIO.administrador from USUARIO  WITH (NOLOCK) 
+OR (1 = (select convert(integer,USUARIO.administrador) from USUARIO  WITH (NOLOCK) 
 where USUARIO.ID_USUARIO = ${ID_Usuario}))
-
+)
 and VIAJE_SOLICITUD.ID_EMPRESA_REGISTRO = ${ID_Empresa_Sesion}
 order by VIAJE_SOLICITUD.ID_VIAJE_SOLICITUD`;
     const result = await this.general(object, query);

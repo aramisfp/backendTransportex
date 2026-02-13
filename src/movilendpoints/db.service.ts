@@ -1150,10 +1150,12 @@ select ${ID_Empleado} from TABLA_DUMMY
 where ${ID_Empleado} not in (select USUARIO_X_EMPLEADO.ID_EMPLEADO from USUARIO_X_EMPLEADO  WITH (NOLOCK) 
 where USUARIO_X_EMPLEADO.ID_EMPLEADO = ${ID_Empleado})
 ) )  
-OR (VIAJE_SOLICITUD.USUARIO_INS = (select USUARIO.DESCRIPCION from USUARIO   WITH (NOLOCK) 
-where USUARIO.ID_USUARIO = ${ID_Usuario})
+OR (VIAJE_SOLICITUD.USUARIO_INS = (select USUARIO.DESCRIPCION from USUARIO  WITH (NOLOCK) 
+where USUARIO.ID_USUARIO = ${ID_Usuario}))
+OR (1 = (select USUARIO.administrador from USUARIO  WITH (NOLOCK) 
+where USUARIO.ID_USUARIO = ${ID_Usuario}))
+
 and VIAJE_SOLICITUD.ID_EMPRESA_REGISTRO = ${ID_Empresa_Sesion}
-)
 order by VIAJE_SOLICITUD.ID_VIAJE_SOLICITUD`;
     const result = await this.general(object, query);
     return result;

@@ -894,6 +894,7 @@ metros_distancia_escaneo,
     @Query('client') userName: string,
     @Body()
     {
+id_viaje_solicitud,   
 id_empleado,   
 id_ciudad_origen,   
 id_ciudad_destino,   
@@ -949,6 +950,7 @@ carga_peligrosa,
 usuario,
 id_empresa_registro,
     }: {
+id_viaje_solicitud: number;
 id_empleado: number;    
 id_ciudad_origen: number;
 id_ciudad_destino: number;
@@ -1011,6 +1013,7 @@ id_empresa_registro: number;
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.viajesolinput(
       filteredArray,
+id_viaje_solicitud,      
 id_empleado,   
 id_ciudad_origen,   
 id_ciudad_destino,   
@@ -1070,6 +1073,31 @@ id_empresa_registro,
   }  
 
 
+
+
+    
+@Post('viajesoldelete')
+  async consultaViajesoldelete(
+    @Query('client') userName: string,
+    @Body()
+    {
+id_viaje_solicitud,  
+    }: {
+id_viaje_solicitud: number;   
+    },
+  ) {
+    
+    console.log(userName);
+
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajesoldelete(
+      filteredArray,
+id_viaje_solicitud, 
+    );
+    return result;
+  }  
+
+  
 
    @Get('viajesollistado')
   async consultaViajesollistado(

@@ -984,6 +984,7 @@ and V_VIAJE_SOLICITUD.id_VIAJE_SOLICITUD = VIAJE_SOLICITUD.id_VIAJE_SOLICITUD`;
 
 async viajesolinput(
     object,
+id_viaje_solicitud,
 id_empleado,   
 id_ciudad_origen,   
 id_ciudad_destino,   
@@ -1040,6 +1041,7 @@ usuario,
 id_empresa_registro,	
   ) {
     const query = `Exec dbo.SP_UPD_SYNC_VIAJE_SOLICITUD  
+${id_viaje_solicitud},   
 ${id_empleado},   
 ${id_ciudad_origen},   
 ${id_ciudad_destino},   
@@ -1099,6 +1101,18 @@ ${id_empresa_registro}`;
   }	
 
 
+async viajesoldelete(
+    object,
+id_viaje_solicitud,	
+  ) {
+    const query = `Exec dbo.SP_DEL_SYNC_VIAJE_SOLICITUD  
+${id_viaje_solicitud}`;
+    const result = await this.general(object, query);
+    return result;
+  }	
+
+
+ 
 
   async viajesollistado(object, ID_Empleado, ID_Usuario, ID_Empresa_Sesion) {
    const query = `select 

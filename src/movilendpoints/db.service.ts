@@ -843,8 +843,8 @@ VIAJE_SOLICITUD.FECHA_SALIDA,    solcampo_fecha_salida.ACTIVO as solcampo_fecha_
 VIAJE_SOLICITUD.FECHA_SALIDA_ESTIMADA,  solcampo_fecha_salida_estimada.ACTIVO as solcampo_fecha_salida_estimada_act,  solcampo_fecha_salida_estimada.CAMPO_ORDEN as solcampo_fecha_salida_estimada_ord,  solcampo_fecha_salida_estimada.OBLIGATORIO as solcampo_fecha_salida_estimada_obl,      
 
 empleado.nombre + ' ' + empleado.apellido as id_empleado_descripcion,
-c1.descripcion as id_ciudad_origen_descripcion,
-c2.descripcion as id_ciudad_destino_descripcion,
+c1.descripcion as id_ciudad_origen_descripcion, 
+c2.descripcion as id_ciudad_destino_descripcion, 
 
 vucamion.descripcion as id_vehiculo_uso_descripcion,
 vuremolque.descripcion as id_vehiculo_uso_cava_descripcion,
@@ -1118,9 +1118,10 @@ ${id_viaje_solicitud}`;
    const query = `select 
  VIAJE_SOLICITUD.ID_VIAJE_SOLICITUD,   
 VIAJE_SOLICITUD.FECHA_SOLICITUD,  solcampo_fecha_solicitud.ACTIVO as solcampo_fecha_solicitud_act,  solcampo_fecha_solicitud.CAMPO_ORDEN as solcampo_fecha_solicitud_ord,   solcampo_fecha_solicitud.OBLIGATORIO as solcampo_fecha_solicitud_obl,   
-empleado.nombre + ' ' + empleado.apellido as id_empleado_descripcion,
-c1.descripcion as id_ciudad_origen_descripcion,
-c2.descripcion as id_ciudad_destino_descripcion,
+empleado.nombre + ' ' + empleado.apellido as empleado_descripcion,
+cliente.nombre as cliente_descripcion,
+c1.descripcion as ciudad_origen_descripcion,
+c2.descripcion as ciudad_destino_descripcion,
 VIAJE_SOLICITUD.MONTO_FLETE_COTIZADO,  solcampo_monto_flete_cotizado.ACTIVO as solcampo_monto_flete_cotizado_act,  solcampo_monto_flete_cotizado.CAMPO_ORDEN as solcampo_monto_flete_cotizado_ord,  solcampo_monto_flete_cotizado.OBLIGATORIO as solcampo_monto_flete_cotizado_obl,   
 VIAJE_SOLICITUD.GUIA_NUMERO,   solcampo_guia_numero.ACTIVO as solcampo_guia_numero_act, solcampo_guia_numero.CAMPO_ORDEN as solcampo_guia_numero_ord,  solcampo_guia_numero.OBLIGATORIO as solcampo_guia_numero_obl,    
 VIAJE_SOLICITUD.NUMERO_RELACION_GASTOS,    solcampo_numero_relacion_gastos.ACTIVO as solcampo_numero_relacion_gastos_act,  solcampo_numero_relacion_gastos.CAMPO_ORDEN as solcampo_numero_relacion_gastos_ord,  solcampo_numero_relacion_gastos.OBLIGATORIO as solcampo_numero_relacion_gastos_obl,     
@@ -1134,11 +1135,16 @@ VIAJE_SOLICITUD.fecha_mod,
 VIAJE_SOLICITUD.usuario_ins,
 VIAJE_SOLICITUD.usuario_mod, 
 V_VIAJE_SOLICITUD.id_VIAJE,
+viaje_carga_tipo.descripcion  as carga_tipo_descripcion, solcampo_id_viaje_carga_tipo.ACTIVO as solcampo_carga_tipo_act,   solcampo_carga_tipo.CAMPO_ORDEN as solcampo_carga_tipo_ord,  solcampo_carga_tipo.OBLIGATORIO as solcampo_id_viaje_carga_tipo_obl,    
+
+
 VIAJE_SOLICITUD.SOLICITUD_REFERENCIA,  solcampo_solicitud_referencia.ACTIVO as solcampo_solicitud_referencia_act,  solcampo_solicitud_referencia.CAMPO_ORDEN as solcampo_solicitud_referencia_ord,   solcampo_solicitud_referencia.OBLIGATORIO as solcampo_solicitud_referencia_obl 
 
 from V_VIAJE_SOLICITUD, VIAJE_SOLICITUD  WITH (NOLOCK)  left outer join empleado WITH (NOLOCK) on VIAJE_SOLICITUD.id_empleado = empleado.id_empleado  
 left outer join ciudad as c1 WITH (NOLOCK) on  VIAJE_SOLICITUD.ID_CIUDAD_ORIGEN = c1.id_ciudad  
-left outer join ciudad as c2 WITH (NOLOCK) on  VIAJE_SOLICITUD.ID_CIUDAD_DESTINO = c2.id_ciudad  ,
+left outer join ciudad as c2 WITH (NOLOCK) on  VIAJE_SOLICITUD.ID_CIUDAD_DESTINO = c2.id_ciudad  
+left outer join empresa as cliente on VIAJE_SOLICITUD.id_empresa = cliente.id_empresa
+left outer join viaje_carga_tipo  on VIAJE_SOLICITUD.id_viaje_carga_tipo = viaje_carga_tipo.id_viaje_carga_tipo,
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO WITH (NOLOCK) where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'fecha_solicitud') as solcampo_fecha_solicitud,
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO WITH (NOLOCK) where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'monto_flete_cotizado') as solcampo_monto_flete_cotizado,
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO WITH (NOLOCK) where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'guia_numero') as solcampo_guia_numero,
@@ -1149,6 +1155,7 @@ left outer join ciudad as c2 WITH (NOLOCK) on  VIAJE_SOLICITUD.ID_CIUDAD_DESTINO
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO WITH (NOLOCK) where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'descripcion') as solcampo_descripcion,
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO WITH (NOLOCK) where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'fecha_embarque') as solcampo_fecha_embarque,
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO WITH (NOLOCK) where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'solicitud_referencia') as solcampo_solicitud_referencia,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'id_viaje_carga_tipo') as solcampo_id_viaje_carga_tipo,
 CONFIGURACION as config_retrieve  WITH (NOLOCK)
 
 where config_retrieve.campo = 'VIAJE_DIASANTERIORES_RETRIEVE'

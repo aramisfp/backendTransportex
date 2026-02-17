@@ -1135,7 +1135,7 @@ VIAJE_SOLICITUD.fecha_mod,
 VIAJE_SOLICITUD.usuario_ins,
 VIAJE_SOLICITUD.usuario_mod, 
 V_VIAJE_SOLICITUD.id_VIAJE,
-viaje_carga_tipo.descripcion  as carga_tipo_descripcion, solcampo_id_viaje_carga_tipo.ACTIVO as solcampo_carga_tipo_act,   solcampo_carga_tipo.CAMPO_ORDEN as solcampo_carga_tipo_ord,  solcampo_carga_tipo.OBLIGATORIO as solcampo_id_viaje_carga_tipo_obl,    
+viaje_carga_tipo.descripcion  as carga_tipo_descripcion, solcampo_id_viaje_carga_tipo.ACTIVO as solcampo_carga_tipo_act,   solcampo_id_viaje_carga_tipo.CAMPO_ORDEN as solcampo_carga_tipo_ord,  solcampo_id_viaje_carga_tipo.OBLIGATORIO as solcampo_viaje_carga_tipo_obl,    
 
 
 VIAJE_SOLICITUD.SOLICITUD_REFERENCIA,  solcampo_solicitud_referencia.ACTIVO as solcampo_solicitud_referencia_act,  solcampo_solicitud_referencia.CAMPO_ORDEN as solcampo_solicitud_referencia_ord,   solcampo_solicitud_referencia.OBLIGATORIO as solcampo_solicitud_referencia_obl 

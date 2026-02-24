@@ -1183,5 +1183,126 @@ order by VIAJE_SOLICITUD.ID_VIAJE_SOLICITUD`;
     return result;
   }	
 
+  async ciudades(object) {
+    const query =
+      `SELECT ciudad.id_ciudad,   
+        ciudad.descripcion + ', ' + estado.descripcion  + ' (' + upper( rtrim(pais.abreviatura) ) + ')'  as descripcion
+    FROM ciudad WITH (NOLOCK),  estado WITH (NOLOCK), pais  WITH (NOLOCK)
+   WHERE  ciudad.activo = 1 and 
+estado.id_estado = ciudad.id_estado and  
+ pais.id_pais = estado.id_pais 
+ order by ciudad.descripcion`;
+    const result = await this.general(object, query);
+    return result;
+  }
+
+  async vehiculousos(object) {
+    const query =
+      `SELECT vehiculo_uso.id_vehiculo_uso,   
+       vehiculo_uso.descripcion
+    FROM vehiculo_uso WITH (NOLOCK)  
+where vehiculo_uso.aplica_en in ('T', 'C')
+order by  vehiculo_uso.descripcion`;
+    const result = await this.general(object, query);
+    return result;
+  }
+
+  async vehiculotipos(object) {
+    const query =
+      `SELECT vehiculo_tipo.id_vehiculo_tipo,   
+         vehiculo_tipo.descripcion,   
+         vehiculo_tipo.autodependiente  ,
+case vehiculo_tipo.autodependiente when 0 then 'truck16x16.png' else 'trailer16x16.png'  end as dibujo 
+    FROM vehiculo_tipo WITH (NOLOCK)  
+	order by  vehiculo_tipo.autodependiente,  vehiculo_tipo.descripcion`;
+    const result = await this.general(object, query);
+    return result;
+  }
+
+  async clientes(object) {
+    const query =
+      `SELECT empresa.id_empresa,     
+         empresa.nombre,   
+         empresa.rif,    
+          empresa.tipo
+    FROM empresa WITH (NOLOCK)
+   WHERE empresa.activo = 1 and tipo not in ('D', 'A') 
+   order by empresa.nombre`;
+    const result = await this.general(object, query);
+    return result;
+  }
+  async clientesdespacho(object) {
+    const query =
+      `SELECT empresa.id_empresa,   
+         empresa.nombre,   
+         empresa.rif,   
+          empresa.tipo
+	FROM empresa WITH (NOLOCK)
+   WHERE empresa.activo = 1`;
+    const result = await this.general(object, query);
+    return result;
+  }	
+
+  async cargatipos(object) {
+    const query =
+      `SELECT viaje_carga_tipo.id_viaje_carga_tipo,   
+         viaje_carga_tipo.descripcion 
+    FROM viaje_carga_tipo`;
+    const result = await this.general(object, query);
+    return result;
+  }
+
+  async piezasmedidas(object) {
+    const query =
+      `select medida_pieza.id_medida_pieza,   
+medida_pieza.descripcion
+from medida_pieza`;
+    const result = await this.general(object, query);
+    return result;
+  }
+
+  async embarquetipos(object) {
+    const query =
+      `select null as tipo,
+'Nacional' as descripcion union all
+select 'I' as tipo,
+'Importación' as descripcion union all
+select 'E' as tipo, 
+'Exportación' as descripcion union all
+select 'R' as tipo, 
+'Retorno' as descripcion union all
+select 'C' as tipo,
+'Carrusel IMPO FULL'  as descripcion from configuracion WITH (NOLOCK)
+where configuracion.CAMPO = 'CIUDAD_ACTUAL' and configuracion.valor = 'MEDLOG_CR'
+union all
+select 'M' as tipo, 
+'Carrusel IMPO EMPTY'  as descripcion from configuracion WITH (NOLOCK)
+where configuracion.CAMPO = 'CIUDAD_ACTUAL' and configuracion.valor = 'MEDLOG_CR'
+union all
+select 'P' as tipo, 
+'Carrusel EXPO FULL'  as descripcion from configuracion WITH (NOLOCK)
+where configuracion.CAMPO = 'CIUDAD_ACTUAL' and configuracion.valor = 'MEDLOG_CR' 
+union all
+select 'T' as tipo, 
+'Carrusel EXPO EMPTY'  as descripcion 
+from configuracion WITH (NOLOCK)
+where configuracion.CAMPO = 'CIUDAD_ACTUAL' and configuracion.valor = 'MEDLOG_CR'`;
+    const result = await this.general(object, query);
+    return result;
+  }
+
+async medidas(object, Tipo_Medida) {
+   const query = `select 'Kg.' as desripcion, 'K' as valor from TABLA_DUMMY where '${Tipo_Medida}' = 'P' union all
+select 'T.' as desripcion, 'T' as valor from TABLA_DUMMY where '${Tipo_Medida}' = 'P' union all
+select 'cm.' as desripcion, 'C' as valor from TABLA_DUMMY where '${Tipo_Medida}' = 'L' union all
+select 'm.' as desripcion, 'M' as valor from TABLA_DUMMY where '${Tipo_Medida}' = 'L' union all
+select 'Lts.' as desripcion, 'L' as valor from TABLA_DUMMY where '${Tipo_Medida}' = 'V' union all
+select 'gal.' as desripcion, 'G' as valor from TABLA_DUMMY where '${Tipo_Medida}' = 'V' union all
+select 'm³' as desripcion, 'M' as valor from TABLA_DUMMY where '${Tipo_Medida}' = 'V' union all
+select 'ms' as desripcion, 'S' as valor from TABLA_DUMMY where '${Tipo_Medida}' = 'V'`;
+    const result = await this.general(object, query);
+    return result;
+  }	 
+
 	
 }

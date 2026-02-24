@@ -1165,7 +1165,7 @@ id_viaje_solicitud,
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.embarquetipos(filteredArray);
     return result;
-    
+    }  
 
   
    @Get('medidas')

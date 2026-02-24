@@ -1110,5 +1110,73 @@ id_viaje_solicitud,
     const result = this.dataService.viajesollistado(filteredArray, ID_Empleado, ID_Usuario, ID_Empresa_Sesion);
     return result;
   }  
+
+  @Get('ciudades')
+  async getCiudades(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.ciudades(filteredArray);
+    return result;
+  }
+
+  @Get('vehiculousos')
+  async getVehiculousos(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.vehiculousos(filteredArray);
+    return result;
+  }
+  
+  @Get('vehiculotipos')
+  async getVehiculotipos(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.vehiculotipos(filteredArray);
+    return result;
+  }
+  
+  @Get('clientes')
+  async getClientes(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.clientes(filteredArray);
+    return result;
+  }
+  
+  @Get('clientesdespacho')
+  async getClientesdespacho(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.clientesdespacho(filteredArray);
+    return result;
+  }
+  
+  @Get('cargatipos')
+  async getCargatipos(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.cargatipos(filteredArray);
+    return result;
+  }
+
+  @Get('piezasmedidas')
+  async getPiezasmedidas(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.piezasmedidas(filteredArray);
+    return result;
+  }
+
+  @Get('embarquetipos')
+  async getEmbarquetipos(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.embarquetipos(filteredArray);
+    return result;
+    
+
+  
+   @Get('medidas')
+  async consultaMedidas(
+    @Query('client') userName: string,
+    @Query() { Tipo_Medida }: { Tipo_Medida: string },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.medidas(filteredArray, Tipo_Medida);
+    return result;
+  }  
+  
   
 }

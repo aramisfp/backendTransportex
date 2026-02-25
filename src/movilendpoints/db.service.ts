@@ -1159,7 +1159,9 @@ left outer join viaje_carga_tipo  on VIAJE_SOLICITUD.id_viaje_carga_tipo = viaje
 CONFIGURACION as config_retrieve  WITH (NOLOCK)
 
 where config_retrieve.campo = 'VIAJE_DIASANTERIORES_RETRIEVE'
-and ((viaje_solicitud.fecha_solicitud >= DATEADD(dd, convert(integer, config_retrieve.VALOR) * -1, getdate()) and isnull(v_viaje_solicitud.id_VIAJE,0) > 0) or isnull(v_viaje_solicitud.id_VIAJE,0) = 0 )
+and V_VIAJE_SOLICITUD.id_viaje_solicitud = VIAJE_SOLICITUD.id_viaje_solicitud 
+and ((viaje_solicitud.fecha_solicitud >= DATEADD(dd, convert(integer, config_retrieve.VALOR) * -1, getdate()) 
+and isnull(v_viaje_solicitud.id_VIAJE,0) > 0) or isnull(v_viaje_solicitud.id_VIAJE,0) = 0 )
 and (
 (VIAJE_SOLICITUD.ID_EMPLEADO = ${ID_Empleado}
 and ${ID_Empleado} in (

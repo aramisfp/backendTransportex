@@ -979,7 +979,7 @@ fecha_embarque: string;
 factura_flete: string;
 barco_nro_viaje: string;
 barco_nombre: string;
-carga_cargado: string;
+carga_cargado: number;
 fecha_factura_flete: string;
 fecha_factura_afiliado: string;
 monto_flete_cotizado: number;

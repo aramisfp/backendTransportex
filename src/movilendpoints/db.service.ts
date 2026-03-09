@@ -1195,7 +1195,7 @@ OR (1 = (select convert(integer,USUARIO.administrador) from USUARIO  WITH (NOLOC
 where USUARIO.ID_USUARIO = ${ID_Usuario}))
 )
 and VIAJE_SOLICITUD.ID_EMPRESA_REGISTRO = ${ID_Empresa_Sesion}
-order by VIAJE_SOLICITUD.ID_VIAJE_SOLICITUD`;
+order by VIAJE_SOLICITUD.ID_VIAJE_SOLICITUD desc`;
     const result = await this.general(object, query);
     return result;
   }	
@@ -1251,7 +1251,8 @@ case vehiculo_tipo.autodependiente when 0 then 'truck16x16.png' else 'trailer16x
       `SELECT empresa.id_empresa,   
          empresa.nombre
 	FROM empresa WITH (NOLOCK)
-   WHERE empresa.activo = 1`;
+   WHERE empresa.activo = 1
+   order by empresa.nombre`;
     const result = await this.general(object, query);
     return result;
   }	
@@ -1260,7 +1261,8 @@ case vehiculo_tipo.autodependiente when 0 then 'truck16x16.png' else 'trailer16x
     const query =
       `SELECT viaje_carga_tipo.id_viaje_carga_tipo,   
          viaje_carga_tipo.descripcion 
-    FROM viaje_carga_tipo`;
+    FROM viaje_carga_tipo
+	order by viaje_carga_tipo.descripcion`;
     const result = await this.general(object, query);
     return result;
   }
@@ -1269,7 +1271,8 @@ case vehiculo_tipo.autodependiente when 0 then 'truck16x16.png' else 'trailer16x
     const query =
       `select medida_pieza.id_medida_pieza,   
 medida_pieza.descripcion
-from medida_pieza`;
+from medida_pieza
+order by medida_pieza.descripcion`;
     const result = await this.general(object, query);
     return result;
   }

@@ -1095,7 +1095,22 @@ ${repartos_externos},
 '${solicitud_referencia}', 
 '${carga_peligrosa}', 
 '${usuario}',
-${id_empresa_registro}`;
+${id_empresa_registro},
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null`;
     const result = await this.general(object, query);
     return result;
   }	

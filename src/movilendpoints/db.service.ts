@@ -1239,9 +1239,7 @@ case vehiculo_tipo.autodependiente when 0 then 'truck16x16.png' else 'trailer16x
   async clientes(object) {
     const query =
       `SELECT empresa.id_empresa,     
-         empresa.nombre,   
-         empresa.rif,    
-          empresa.tipo
+         empresa.nombre
     FROM empresa WITH (NOLOCK)
    WHERE empresa.activo = 1 and tipo not in ('D', 'A') 
    order by empresa.nombre`;
@@ -1251,9 +1249,7 @@ case vehiculo_tipo.autodependiente when 0 then 'truck16x16.png' else 'trailer16x
   async clientesdespacho(object) {
     const query =
       `SELECT empresa.id_empresa,   
-         empresa.nombre,   
-         empresa.rif,   
-          empresa.tipo
+         empresa.nombre
 	FROM empresa WITH (NOLOCK)
    WHERE empresa.activo = 1`;
     const result = await this.general(object, query);

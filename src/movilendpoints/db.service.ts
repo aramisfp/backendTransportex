@@ -812,7 +812,7 @@ ${metros_distancia_escaneo}`;
 
 
   async viajesolnueva(object) {
-   const query = `select   case  campo_grupo  when 1 then 'campos de la solicitud' when 2 then 'campos del encabezado' when 3 then 'campos adicionales ' + dbo.f_etiqueta_guia(0,0) + ' principal' when 4 then 'campos de datos de carga' else 'campos desconocidos' end as grupo_descripion,
+   const query = `select   case  campo_grupo  when 1 then 'Campos de la solicitud' when 2 then 'Campos del encabezado' when 3 then 'Campos adicionales ' + dbo.f_etiqueta_guia(0,0) + ' principal' when 4 then 'Campos de datos de carga' else 'Campos desconocidos' end as grupo_descripion,
 viaje_sol_campo.descripcion_campo,   
 viaje_sol_campo.campo_layout,
 viaje_sol_campo.campo_grupo,   
@@ -826,21 +826,21 @@ order by viaje_sol_campo.campo_grupo, viaje_sol_campo.campo_orden`;
   }	
 
   async viajesoledit(object, ID_Viaje_Solicitud) {
-   const query = `SELECT VIAJE_SOLICITUD.ID_VIAJE_SOLICITUD,   
-VIAJE_SOLICITUD.ID_EMPLEADO,  solcampo_id_empleado.ACTIVO as solcampo_id_empleado_act,   solcampo_id_empleado.CAMPO_ORDEN as solcampo_id_empleado_ord,  solcampo_id_empleado.OBLIGATORIO as solcampo_id_empleado_obl,        
-VIAJE_SOLICITUD.ID_CIUDAD_ORIGEN,  solcampo_id_ciudad_origen.ACTIVO as solcampo_id_ciudad_origen_act, solcampo_id_ciudad_origen.CAMPO_ORDEN as solcampo_id_ciudad_origen_ord,  solcampo_id_ciudad_origen.OBLIGATORIO as solcampo_id_ciudad_origen_obl,         
-VIAJE_SOLICITUD.ID_CIUDAD_DESTINO,  solcampo_id_ciudad_destino.ACTIVO as solcampo_id_ciudad_destino_act,    solcampo_id_ciudad_destino.CAMPO_ORDEN as solcampo_id_ciudad_destino_ord,     solcampo_id_ciudad_destino.OBLIGATORIO as solcampo_id_ciudad_destino_obl,   
-VIAJE_SOLICITUD.ID_VEHICULO_USO,    solcampo_id_vehiculo_uso.ACTIVO as solcampo_id_vehiculo_uso_act, solcampo_id_vehiculo_uso.CAMPO_ORDEN as solcampo_id_vehiculo_uso_ord,   solcampo_id_vehiculo_uso.OBLIGATORIO as solcampo_id_vehiculo_uso_obl,   
-VIAJE_SOLICITUD.ID_VEHICULO_USO_CAVA,     solcampo_id_vehiculo_uso_cava.ACTIVO as solcampo_id_vehiculo_uso_cava_act,  solcampo_id_vehiculo_uso_cava.CAMPO_ORDEN as solcampo_id_vehiculo_uso_cava_ord,  solcampo_id_vehiculo_uso_cava.OBLIGATORIO as solcampo_id_vehiculo_uso_cava_obl,      
-VIAJE_SOLICITUD.ID_VEHICULO_TIPO, solcampo_id_vehiculo_tipo.ACTIVO as solcampo_id_vehiculo_tipo_act,  solcampo_id_vehiculo_tipo.CAMPO_ORDEN as solcampo_id_vehiculo_tipo_ord,   solcampo_id_vehiculo_tipo.OBLIGATORIO as solcampo_id_vehiculo_tipo_obl,      
-VIAJE_SOLICITUD.ID_VEHICULO_TIPO_CAVA,    solcampo_id_vehiculo_tipo_cava.ACTIVO as solcampo_id_vehiculo_tipo_cava_act,  solcampo_id_vehiculo_tipo_cava.CAMPO_ORDEN as solcampo_id_vehiculo_tipo_cava_ord,  solcampo_id_vehiculo_tipo_cava.OBLIGATORIO as solcampo_id_vehiculo_tipo_cava_obl,   
-VIAJE_SOLICITUD.ID_EMPRESA,    solcampo_id_empresa.ACTIVO as solcampo_numero_id_empresa_act,  solcampo_id_empresa.CAMPO_ORDEN as solcampo_numero_id_empresa_ord, solcampo_id_empresa.OBLIGATORIO as solcampo_numero_id_empresa_obl,      
-VIAJE_SOLICITUD.ID_EMPRESA_DESPACHO,   solcampo_id_empresa_despacho.ACTIVO as solcampo_numero_id_empresa_despacho_act,    solcampo_id_empresa_despacho.CAMPO_ORDEN as solcampo_numero_id_empresa_despacho_ord,  solcampo_id_empresa_despacho.OBLIGATORIO as solcampo_numero_id_empresa_despacho_obl,     
-VIAJE_SOLICITUD.ID_VIAJE_CARGA_TIPO,  solcampo_id_viaje_carga_tipo.ACTIVO as solcampo_id_viaje_carga_tipo_act,   solcampo_id_viaje_carga_tipo.CAMPO_ORDEN as solcampo_id_viaje_carga_tipo_ord,  solcampo_id_viaje_carga_tipo.OBLIGATORIO as solcampo_id_viaje_carga_tipo_obl,    
-VIAJE_SOLICITUD.ID_MEDIDA_PIEZA, solcampo_id_medida_pieza.ACTIVO as solcampo_id_medida_pieza_act,  solcampo_id_medida_pieza.CAMPO_ORDEN as solcampo_id_medida_pieza_ord,   solcampo_id_medida_pieza.OBLIGATORIO as solcampo_id_medida_pieza_obl,        
-VIAJE_SOLICITUD.FECHA_SOLICITUD,  solcampo_fecha_solicitud.ACTIVO as solcampo_fecha_solicitud_act,  solcampo_fecha_solicitud.CAMPO_ORDEN as solcampo_fecha_solicitud_ord,   solcampo_fecha_solicitud.OBLIGATORIO as solcampo_fecha_solicitud_obl,   
-VIAJE_SOLICITUD.FECHA_SALIDA,    solcampo_fecha_salida.ACTIVO as solcampo_fecha_salida_act,    solcampo_fecha_salida.CAMPO_ORDEN as solcampo_fecha_salida_ord,   solcampo_fecha_salida.OBLIGATORIO as solcampo_fecha_salida_obl, 
-VIAJE_SOLICITUD.FECHA_SALIDA_ESTIMADA,  solcampo_fecha_salida_estimada.ACTIVO as solcampo_fecha_salida_estimada_act,  solcampo_fecha_salida_estimada.CAMPO_ORDEN as solcampo_fecha_salida_estimada_ord,  solcampo_fecha_salida_estimada.OBLIGATORIO as solcampo_fecha_salida_estimada_obl,      
+   const query = `select viaje_solicitud.id_viaje_solicitud,   
+viaje_solicitud.id_empleado,  solcampo_id_empleado.activo as solcampo_id_empleado_act,   solcampo_id_empleado.campo_orden as solcampo_id_empleado_ord,  solcampo_id_empleado.obligatorio as solcampo_id_empleado_obl,        
+viaje_solicitud.id_ciudad_origen,  solcampo_id_ciudad_origen.activo as solcampo_id_ciudad_origen_act, solcampo_id_ciudad_origen.campo_orden as solcampo_id_ciudad_origen_ord,  solcampo_id_ciudad_origen.obligatorio as solcampo_id_ciudad_origen_obl,         
+viaje_solicitud.id_ciudad_destino,  solcampo_id_ciudad_destino.activo as solcampo_id_ciudad_destino_act,    solcampo_id_ciudad_destino.campo_orden as solcampo_id_ciudad_destino_ord,     solcampo_id_ciudad_destino.obligatorio as solcampo_id_ciudad_destino_obl,   
+viaje_solicitud.id_vehiculo_uso,    solcampo_id_vehiculo_uso.activo as solcampo_id_vehiculo_uso_act, solcampo_id_vehiculo_uso.campo_orden as solcampo_id_vehiculo_uso_ord,   solcampo_id_vehiculo_uso.obligatorio as solcampo_id_vehiculo_uso_obl,   
+viaje_solicitud.id_vehiculo_uso_cava,     solcampo_id_vehiculo_uso_cava.activo as solcampo_id_vehiculo_uso_cava_act,  solcampo_id_vehiculo_uso_cava.campo_orden as solcampo_id_vehiculo_uso_cava_ord,  solcampo_id_vehiculo_uso_cava.obligatorio as solcampo_id_vehiculo_uso_cava_obl,      
+viaje_solicitud.id_vehiculo_tipo, solcampo_id_vehiculo_tipo.activo as solcampo_id_vehiculo_tipo_act,  solcampo_id_vehiculo_tipo.campo_orden as solcampo_id_vehiculo_tipo_ord,   solcampo_id_vehiculo_tipo.obligatorio as solcampo_id_vehiculo_tipo_obl,      
+viaje_solicitud.id_vehiculo_tipo_cava,    solcampo_id_vehiculo_tipo_cava.activo as solcampo_id_vehiculo_tipo_cava_act,  solcampo_id_vehiculo_tipo_cava.campo_orden as solcampo_id_vehiculo_tipo_cava_ord,  solcampo_id_vehiculo_tipo_cava.obligatorio as solcampo_id_vehiculo_tipo_cava_obl,   
+viaje_solicitud.id_empresa,    solcampo_id_empresa.activo as solcampo_numero_id_empresa_act,  solcampo_id_empresa.campo_orden as solcampo_numero_id_empresa_ord, solcampo_id_empresa.obligatorio as solcampo_numero_id_empresa_obl,      
+viaje_solicitud.id_empresa_despacho,   solcampo_id_empresa_despacho.activo as solcampo_numero_id_empresa_despacho_act,    solcampo_id_empresa_despacho.campo_orden as solcampo_numero_id_empresa_despacho_ord,  solcampo_id_empresa_despacho.obligatorio as solcampo_numero_id_empresa_despacho_obl,     
+viaje_solicitud.id_viaje_carga_tipo,  solcampo_id_viaje_carga_tipo.activo as solcampo_id_viaje_carga_tipo_act,   solcampo_id_viaje_carga_tipo.campo_orden as solcampo_id_viaje_carga_tipo_ord,  solcampo_id_viaje_carga_tipo.obligatorio as solcampo_id_viaje_carga_tipo_obl,    
+viaje_solicitud.id_medida_pieza, solcampo_id_medida_pieza.activo as solcampo_id_medida_pieza_act,  solcampo_id_medida_pieza.campo_orden as solcampo_id_medida_pieza_ord,   solcampo_id_medida_pieza.obligatorio as solcampo_id_medida_pieza_obl,        
+viaje_solicitud.fecha_solicitud,  solcampo_fecha_solicitud.activo as solcampo_fecha_solicitud_act,  solcampo_fecha_solicitud.campo_orden as solcampo_fecha_solicitud_ord,   solcampo_fecha_solicitud.obligatorio as solcampo_fecha_solicitud_obl,   
+viaje_solicitud.fecha_salida,    solcampo_fecha_salida.activo as solcampo_fecha_salida_act,    solcampo_fecha_salida.campo_orden as solcampo_fecha_salida_ord,   solcampo_fecha_salida.obligatorio as solcampo_fecha_salida_obl, 
+viaje_solicitud.fecha_salida_estimada,  solcampo_fecha_salida_estimada.activo as solcampo_fecha_salida_estimada_act,  solcampo_fecha_salida_estimada.campo_orden as solcampo_fecha_salida_estimada_ord,  solcampo_fecha_salida_estimada.obligatorio as solcampo_fecha_salida_estimada_obl,      
 
 empleado.nombre + ' ' + empleado.apellido as id_empleado_descripcion,
 c1.descripcion as id_ciudad_origen_descripcion, 
@@ -850,66 +850,66 @@ vucamion.descripcion as id_vehiculo_uso_descripcion,
 vuremolque.descripcion as id_vehiculo_uso_cava_descripcion,
 vtcamion.descripcion as id_vehiculo_tipo_descripcion,
 vtremolque.descripcion as id_vehiculo_tipo_cava_descripcion,
-edespacho.nombre as ID_EMPRESA_DESPACHO_descripcion,
-cliente.nombre as ID_EMPRESA_descripcion,
+edespacho.nombre as id_empresa_despacho_descripcion,
+cliente.nombre as id_empresa_descripcion,
 viaje_carga_tipo.descripcion  as id_viaje_carga_tipo_descripcion, 
-MEDIDA_PIEZA.descripcion as id_medida_pieza_descripcion, 
+medida_pieza.descripcion as id_medida_pieza_descripcion, 
 
-VIAJE_SOLICITUD.FACTURA_FLETE  , solcampo_factura_flete.ACTIVO as solcampo_factura_flete_act, solcampo_factura_flete.CAMPO_ORDEN as solcampo_factura_flete_ord,  solcampo_factura_flete.OBLIGATORIO as solcampo_factura_flete_obl,  
-VIAJE_SOLICITUD.BARCO_NRO_VIAJE ,  solcampo_barco_nro_viaje.ACTIVO as solcampo_barco_nro_viaje_act,  solcampo_barco_nro_viaje.CAMPO_ORDEN as solcampo_barco_nro_viaje_ord,  solcampo_barco_nro_viaje.OBLIGATORIO as solcampo_barco_nro_viaje_obl,  
-VIAJE_SOLICITUD.BARCO_NOMBRE   ,  solcampo_barco_nombre.ACTIVO as solcampo_barco_nombre_act, solcampo_barco_nombre.CAMPO_ORDEN as solcampo_barco_nombre_ord,  solcampo_barco_nombre.OBLIGATORIO as solcampo_barco_nombre_obl,   
-VIAJE_SOLICITUD.CARGA_CARGADO    ,  solcampo_carga_cargado.ACTIVO as solcampo_carga_cargado_act, solcampo_barco_nombre.CAMPO_ORDEN as solcampo_barco_nombre_ord,  solcampo_barco_nombre.OBLIGATORIO as solcampo_barco_nombre_obl, 
-VIAJE_SOLICITUD.FECHA_LLEGADA_ESTIMADA,  solcampo_fecha_llegada_estimada.ACTIVO as solcampo_fecha_llegada_estimada_act,  solcampo_fecha_llegada_estimada.CAMPO_ORDEN as solcampo_fecha_llegada_estimada_ord,  solcampo_fecha_llegada_estimada.OBLIGATORIO as solcampo_fecha_llegada_estimada_obl,   
-VIAJE_SOLICITUD.FECHA_FACTURA_FLETE, solcampo_fecha_factura_flete.ACTIVO as solcampo_fecha_factura_flete_act,  solcampo_fecha_factura_flete.CAMPO_ORDEN as solcampo_fecha_factura_flete_ord,  solcampo_fecha_factura_flete.CAMPO_ORDEN as solcampo_fecha_factura_flete_obl,  
-VIAJE_SOLICITUD.FECHA_FACTURA_AFILIADO,
-VIAJE_SOLICITUD.MONTO_FLETE_COTIZADO,  solcampo_monto_flete_cotizado.ACTIVO as solcampo_monto_flete_cotizado_act,  solcampo_monto_flete_cotizado.CAMPO_ORDEN as solcampo_monto_flete_cotizado_ord,  solcampo_monto_flete_cotizado.OBLIGATORIO as solcampo_monto_flete_cotizado_obl,   
+viaje_solicitud.factura_flete  , solcampo_factura_flete.activo as solcampo_factura_flete_act, solcampo_factura_flete.campo_orden as solcampo_factura_flete_ord,  solcampo_factura_flete.obligatorio as solcampo_factura_flete_obl,  
+viaje_solicitud.barco_nro_viaje ,  solcampo_barco_nro_viaje.activo as solcampo_barco_nro_viaje_act,  solcampo_barco_nro_viaje.campo_orden as solcampo_barco_nro_viaje_ord,  solcampo_barco_nro_viaje.obligatorio as solcampo_barco_nro_viaje_obl,  
+viaje_solicitud.barco_nombre   ,  solcampo_barco_nombre.activo as solcampo_barco_nombre_act, solcampo_barco_nombre.campo_orden as solcampo_barco_nombre_ord,  solcampo_barco_nombre.obligatorio as solcampo_barco_nombre_obl,   
+viaje_solicitud.carga_cargado    ,  solcampo_carga_cargado.activo as solcampo_carga_cargado_act, solcampo_barco_nombre.campo_orden as solcampo_barco_nombre_ord,  solcampo_barco_nombre.obligatorio as solcampo_barco_nombre_obl, 
+viaje_solicitud.fecha_llegada_estimada,  solcampo_fecha_llegada_estimada.activo as solcampo_fecha_llegada_estimada_act,  solcampo_fecha_llegada_estimada.campo_orden as solcampo_fecha_llegada_estimada_ord,  solcampo_fecha_llegada_estimada.obligatorio as solcampo_fecha_llegada_estimada_obl,   
+viaje_solicitud.fecha_factura_flete, solcampo_fecha_factura_flete.activo as solcampo_fecha_factura_flete_act,  solcampo_fecha_factura_flete.campo_orden as solcampo_fecha_factura_flete_ord,  solcampo_fecha_factura_flete.campo_orden as solcampo_fecha_factura_flete_obl,  
+viaje_solicitud.fecha_factura_afiliado,
+viaje_solicitud.monto_flete_cotizado,  solcampo_monto_flete_cotizado.activo as solcampo_monto_flete_cotizado_act,  solcampo_monto_flete_cotizado.campo_orden as solcampo_monto_flete_cotizado_ord,  solcampo_monto_flete_cotizado.obligatorio as solcampo_monto_flete_cotizado_obl,   
 
-VIAJE_SOLICITUD.GUIA_NUMERO,   solcampo_guia_numero.ACTIVO as solcampo_guia_numero_act, solcampo_guia_numero.CAMPO_ORDEN as solcampo_guia_numero_ord,  solcampo_guia_numero.OBLIGATORIO as solcampo_guia_numero_obl,    
-VIAJE_SOLICITUD.NUMERO_RELACION_GASTOS,    solcampo_numero_relacion_gastos.ACTIVO as solcampo_numero_relacion_gastos_act,  solcampo_numero_relacion_gastos.CAMPO_ORDEN as solcampo_numero_relacion_gastos_ord,  solcampo_numero_relacion_gastos.OBLIGATORIO as solcampo_numero_relacion_gastos_obl,     
-VIAJE_SOLICITUD.FACTURA_GUIA,    solcampo_factura_guia.ACTIVO as solcampo_numero_factura_guia_act,   solcampo_factura_guia.CAMPO_ORDEN as solcampo_numero_factura_guia_ord,     solcampo_factura_guia.OBLIGATORIO as solcampo_numero_factura_guia_obl,  
-VIAJE_SOLICITUD.CAMPO_ESPECIAL3,    solcampo_campo_especial3.ACTIVO as solcampo_numero_campo_especial3_act,  solcampo_campo_especial3.CAMPO_ORDEN as solcampo_numero_campo_especial3_ord,  solcampo_campo_especial3.OBLIGATORIO as solcampo_numero_campo_especial3_obl,   
-VIAJE_SOLICITUD.CAMPO_ESPECIAL4,   solcampo_campo_especial4.ACTIVO as solcampo_numero_campo_especial4_act,   solcampo_campo_especial4.CAMPO_ORDEN as solcampo_numero_campo_especial4_ord,  solcampo_campo_especial4.OBLIGATORIO as solcampo_numero_campo_especial4_obl,   
-VIAJE_SOLICITUD.DESCRIPCION,   solcampo_descripcion.ACTIVO as solcampo_descripcion_act,  solcampo_descripcion.CAMPO_ORDEN as solcampo_descripcion_ord,   solcampo_descripcion.OBLIGATORIO as solcampo_descripcion_obl, 
-VIAJE_SOLICITUD.FECHA_EMBARQUE,   solcampo_fecha_embarque.ACTIVO as solcampo_fecha_embarque_act,  solcampo_fecha_embarque.CAMPO_ORDEN as solcampo_fecha_embarque_ord,  solcampo_fecha_embarque.OBLIGATORIO as solcampo_fecha_embarque_obl,  
-VIAJE_SOLICITUD.PIEZA_CANTIDAD,  solcampo_pieza_cantidad.ACTIVO as solcampo_pieza_cantidad_act,  solcampo_pieza_cantidad.CAMPO_ORDEN as solcampo_pieza_cantidad_ord,  solcampo_pieza_cantidad.OBLIGATORIO as solcampo_pieza_cantidad_obl,       
-VIAJE_SOLICITUD.PESO,   solcampo_peso.ACTIVO as solcampo_peso_act,  solcampo_peso.CAMPO_ORDEN as solcampo_peso_ord,  solcampo_peso.OBLIGATORIO as solcampo_peso_obl,    
-VIAJE_SOLICITUD.PESO_MEDIDA,    solcampo_peso_medida.ACTIVO as solcampo_peso_medida_act,  solcampo_peso_medida.CAMPO_ORDEN as solcampo_peso_medida_ord,  solcampo_peso_medida.OBLIGATORIO as solcampo_peso_medida_obl,     
-case VIAJE_SOLICITUD.PESO_MEDIDA when 'K' then 'Kg.' else 'T.' end  as PESO_MEDIDA_DESCRIPCION, 
-VIAJE_SOLICITUD.PASAJEROS,    solcampo_pasajeros.ACTIVO as solcampo_pasajeros_act,  solcampo_pasajeros.CAMPO_ORDEN as solcampo_pasajeros_ord,  solcampo_pasajeros.OBLIGATORIO as solcampo_pasajeros_obl,  
-VIAJE_SOLICITUD.LARGO,     solcampo_largo.ACTIVO as solcampo_largo_act,  solcampo_largo.CAMPO_ORDEN as solcampo_largo_ord,   solcampo_largo.OBLIGATORIO as solcampo_largo_obl,  
-VIAJE_SOLICITUD.ANCHO,    solcampo_ancho.ACTIVO as solcampo_ancho_act,  solcampo_ancho.CAMPO_ORDEN as solcampo_ancho_ord, solcampo_largo.OBLIGATORIO as solcampo_largo_obl, 
-VIAJE_SOLICITUD.ALTO,    solcampo_alto.ACTIVO as solcampo_alto_act,  solcampo_alto.CAMPO_ORDEN as solcampo_alto_ord,  solcampo_alto.OBLIGATORIO as solcampo_alto_obl,  
-VIAJE_SOLICITUD.LONGITUD_MEDIDA,     solcampo_longitud_medida.ACTIVO as solcampo_longitud_medida_act,  solcampo_longitud_medida.CAMPO_ORDEN as solcampo_longitud_medida_ord,   solcampo_longitud_medida.OBLIGATORIO as solcampo_longitud_medida_obl,   
-case VIAJE_SOLICITUD.LONGITUD_MEDIDA when 'C' then 'cm.' else 'm.' end  as LONGITUD_MEDIDA_DESCRIPCION,
+viaje_solicitud.guia_numero,   solcampo_guia_numero.activo as solcampo_guia_numero_act, solcampo_guia_numero.campo_orden as solcampo_guia_numero_ord,  solcampo_guia_numero.obligatorio as solcampo_guia_numero_obl,    
+viaje_solicitud.numero_relacion_gastos,    solcampo_numero_relacion_gastos.activo as solcampo_numero_relacion_gastos_act,  solcampo_numero_relacion_gastos.campo_orden as solcampo_numero_relacion_gastos_ord,  solcampo_numero_relacion_gastos.obligatorio as solcampo_numero_relacion_gastos_obl,     
+viaje_solicitud.factura_guia,    solcampo_factura_guia.activo as solcampo_numero_factura_guia_act,   solcampo_factura_guia.campo_orden as solcampo_numero_factura_guia_ord,     solcampo_factura_guia.obligatorio as solcampo_numero_factura_guia_obl,  
+viaje_solicitud.campo_especial3,    solcampo_campo_especial3.activo as solcampo_numero_campo_especial3_act,  solcampo_campo_especial3.campo_orden as solcampo_numero_campo_especial3_ord,  solcampo_campo_especial3.obligatorio as solcampo_numero_campo_especial3_obl,   
+viaje_solicitud.campo_especial4,   solcampo_campo_especial4.activo as solcampo_numero_campo_especial4_act,   solcampo_campo_especial4.campo_orden as solcampo_numero_campo_especial4_ord,  solcampo_campo_especial4.obligatorio as solcampo_numero_campo_especial4_obl,   
+viaje_solicitud.descripcion,   solcampo_descripcion.activo as solcampo_descripcion_act,  solcampo_descripcion.campo_orden as solcampo_descripcion_ord,   solcampo_descripcion.obligatorio as solcampo_descripcion_obl, 
+viaje_solicitud.fecha_embarque,   solcampo_fecha_embarque.activo as solcampo_fecha_embarque_act,  solcampo_fecha_embarque.campo_orden as solcampo_fecha_embarque_ord,  solcampo_fecha_embarque.obligatorio as solcampo_fecha_embarque_obl,  
+viaje_solicitud.pieza_cantidad,  solcampo_pieza_cantidad.activo as solcampo_pieza_cantidad_act,  solcampo_pieza_cantidad.campo_orden as solcampo_pieza_cantidad_ord,  solcampo_pieza_cantidad.obligatorio as solcampo_pieza_cantidad_obl,       
+viaje_solicitud.peso,   solcampo_peso.activo as solcampo_peso_act,  solcampo_peso.campo_orden as solcampo_peso_ord,  solcampo_peso.obligatorio as solcampo_peso_obl,    
+viaje_solicitud.peso_medida,    solcampo_peso_medida.activo as solcampo_peso_medida_act,  solcampo_peso_medida.campo_orden as solcampo_peso_medida_ord,  solcampo_peso_medida.obligatorio as solcampo_peso_medida_obl,     
+case viaje_solicitud.peso_medida when 'k' then 'kg.' else 't.' end  as peso_medida_descripcion, 
+viaje_solicitud.pasajeros,    solcampo_pasajeros.activo as solcampo_pasajeros_act,  solcampo_pasajeros.campo_orden as solcampo_pasajeros_ord,  solcampo_pasajeros.obligatorio as solcampo_pasajeros_obl,  
+viaje_solicitud.largo,     solcampo_largo.activo as solcampo_largo_act,  solcampo_largo.campo_orden as solcampo_largo_ord,   solcampo_largo.obligatorio as solcampo_largo_obl,  
+viaje_solicitud.ancho,    solcampo_ancho.activo as solcampo_ancho_act,  solcampo_ancho.campo_orden as solcampo_ancho_ord, solcampo_largo.obligatorio as solcampo_largo_obl, 
+viaje_solicitud.alto,    solcampo_alto.activo as solcampo_alto_act,  solcampo_alto.campo_orden as solcampo_alto_ord,  solcampo_alto.obligatorio as solcampo_alto_obl,  
+viaje_solicitud.longitud_medida,     solcampo_longitud_medida.activo as solcampo_longitud_medida_act,  solcampo_longitud_medida.campo_orden as solcampo_longitud_medida_ord,   solcampo_longitud_medida.obligatorio as solcampo_longitud_medida_obl,   
+case viaje_solicitud.longitud_medida when 'c' then 'cm.' else 'm.' end  as longitud_medida_descripcion,
 		 
-VIAJE_SOLICITUD.VOLUMEN,    solcampo_volumen.ACTIVO as solcampo_volumen_act,  solcampo_volumen.CAMPO_ORDEN as solcampo_volumen_ord,   solcampo_volumen.OBLIGATORIO as solcampo_volumen_obl, 
-VIAJE_SOLICITUD.VOLUMEN_MEDIDA,    solcampo_volumen_medida.ACTIVO as solcampo_volumen_medida_act,  solcampo_volumen_medida.CAMPO_ORDEN as solcampo_volumen_medida_ord,  solcampo_volumen_medida.OBLIGATORIO as solcampo_volumen_medida_obl,    
-case VIAJE_SOLICITUD.VOLUMEN_MEDIDA when 'L' then 'Lts.' when 'G' then 'gal.' when 'M' then 'm³' when 'S' then 'ms' when 'P' then 'ft³' end as VOLUMEN_MEDIDA_DESCRIPCION, 
-VIAJE_SOLICITUD.REPARTOS_INTERNOS,   solcampo_repartos_internos.ACTIVO as solcampo_repartos_internos_act,  solcampo_repartos_internos.CAMPO_ORDEN as solcampo_repartos_internos_ord,  solcampo_repartos_internos.OBLIGATORIO as solcampo_repartos_internos_obl,
-VIAJE_SOLICITUD.REPARTOS_EXTERNOS,    solcampo_repartos_externos.ACTIVO as solcampo_repartos_externos_act, solcampo_repartos_externos.CAMPO_ORDEN as solcampo_repartos_externos_ord,  solcampo_repartos_externos.OBLIGATORIO as solcampo_repartos_externos_obl,   
-VIAJE_SOLICITUD.OBSERVACIONES,  solcampo_observaciones.ACTIVO as solcampo_observaciones_act, solcampo_observaciones.CAMPO_ORDEN as solcampo_observaciones_ord, solcampo_observaciones.OBLIGATORIO as solcampo_observaciones_obl,  
-VIAJE_SOLICITUD.TIPO_ORIGEN,  solcampo_tipo_origen.ACTIVO as solcampo_tipo_origen_act,   solcampo_tipo_origen.CAMPO_ORDEN as solcampo_tipo_origen_ord,   solcampo_tipo_origen.OBLIGATORIO as solcampo_tipo_origen_obl,     
-case VIAJE_SOLICITUD.TIPO_ORIGEN when 'I' then 'Importación' when 'E' then 'Exportación' when 'R' then 'Retorno' when 'C' then 'Carrusel IMPO FULL' when 'M' then 'Carrusel IMPO EMPTY' when 'P' then 'Carrusel EXPO FULL' when 'T' then 'Carrusel EXPO EMPTY' else 'Nacional' end  as tipo_origen_descripcion,
+viaje_solicitud.volumen,    solcampo_volumen.activo as solcampo_volumen_act,  solcampo_volumen.campo_orden as solcampo_volumen_ord,   solcampo_volumen.obligatorio as solcampo_volumen_obl, 
+viaje_solicitud.volumen_medida,    solcampo_volumen_medida.activo as solcampo_volumen_medida_act,  solcampo_volumen_medida.campo_orden as solcampo_volumen_medida_ord,  solcampo_volumen_medida.obligatorio as solcampo_volumen_medida_obl,    
+case viaje_solicitud.volumen_medida when 'l' then 'lts.' when 'g' then 'gal.' when 'm' then 'm³' when 's' then 'ms' when 'p' then 'ft³' end as volumen_medida_descripcion, 
+viaje_solicitud.repartos_internos,   solcampo_repartos_internos.activo as solcampo_repartos_internos_act,  solcampo_repartos_internos.campo_orden as solcampo_repartos_internos_ord,  solcampo_repartos_internos.obligatorio as solcampo_repartos_internos_obl,
+viaje_solicitud.repartos_externos,    solcampo_repartos_externos.activo as solcampo_repartos_externos_act, solcampo_repartos_externos.campo_orden as solcampo_repartos_externos_ord,  solcampo_repartos_externos.obligatorio as solcampo_repartos_externos_obl,   
+viaje_solicitud.observaciones,  solcampo_observaciones.activo as solcampo_observaciones_act, solcampo_observaciones.campo_orden as solcampo_observaciones_ord, solcampo_observaciones.obligatorio as solcampo_observaciones_obl,  
+viaje_solicitud.tipo_origen,  solcampo_tipo_origen.activo as solcampo_tipo_origen_act,   solcampo_tipo_origen.campo_orden as solcampo_tipo_origen_ord,   solcampo_tipo_origen.obligatorio as solcampo_tipo_origen_obl,     
+case viaje_solicitud.tipo_origen when 'i' then 'importación' when 'e' then 'exportación' when 'r' then 'retorno' when 'c' then 'carrusel impo full' when 'm' then 'carrusel impo empty' when 'p' then 'carrusel expo full' when 't' then 'carrusel expo empty' else 'nacional' end  as tipo_origen_descripcion,
 
-VIAJE_SOLICITUD.FECHA_LLEGADA, solcampo_fecha_llegada.ACTIVO as solcampo_fecha_llegada_act, solcampo_fecha_llegada.CAMPO_ORDEN as solcampo_fecha_llegada_ord,  solcampo_fecha_llegada.OBLIGATORIO as solcampo_fecha_llegada_obl, 
-VIAJE_SOLICITUD.FECHA_ENTREGA, solcampo_fecha_entrega.ACTIVO as solcampo_fecha_entrega_act, solcampo_fecha_entrega.CAMPO_ORDEN as solcampo_fecha_entrega_ord, solcampo_fecha_entrega.OBLIGATORIO as solcampo_fecha_entrega_obl,   
-VIAJE_SOLICITUD.CUSTODIA,  solcampo_custodia.ACTIVO as solcampo_custodia_act, solcampo_custodia.CAMPO_ORDEN as solcampo_custodia_ord, solcampo_custodia.OBLIGATORIO as solcampo_custodia_obl,  
-VIAJE_SOLICITUD.MARCHAMO,  solcampo_marchamo.ACTIVO as solcampo_marchamo_act, solcampo_marchamo.CAMPO_ORDEN as solcampo_marchamo_ord, solcampo_marchamo.OBLIGATORIO as solcampo_marchamo_obl,  
-VIAJE_SOLICITUD.MARCHAMO_SERIAL,   solcampo_marchamo_serial.ACTIVO as solcampo_marchamo_serial_act,  solcampo_marchamo_serial.CAMPO_ORDEN as solcampo_marchamo_serial_ord, solcampo_marchamo_serial.OBLIGATORIO as solcampo_marchamo_serial_obl, 
-VIAJE_SOLICITUD.OBSERVACIONES_VIAJE ,   solcampo_observaciones_viaje.ACTIVO as solcampo_observaciones_viaje_act,  solcampo_observaciones_viaje.CAMPO_ORDEN as solcampo_observaciones_viaje_ord,  solcampo_observaciones_viaje.OBLIGATORIO as solcampo_observaciones_viaje_obl,
+viaje_solicitud.fecha_llegada, solcampo_fecha_llegada.activo as solcampo_fecha_llegada_act, solcampo_fecha_llegada.campo_orden as solcampo_fecha_llegada_ord,  solcampo_fecha_llegada.obligatorio as solcampo_fecha_llegada_obl, 
+viaje_solicitud.fecha_entrega, solcampo_fecha_entrega.activo as solcampo_fecha_entrega_act, solcampo_fecha_entrega.campo_orden as solcampo_fecha_entrega_ord, solcampo_fecha_entrega.obligatorio as solcampo_fecha_entrega_obl,   
+viaje_solicitud.custodia,  solcampo_custodia.activo as solcampo_custodia_act, solcampo_custodia.campo_orden as solcampo_custodia_ord, solcampo_custodia.obligatorio as solcampo_custodia_obl,  
+viaje_solicitud.marchamo,  solcampo_marchamo.activo as solcampo_marchamo_act, solcampo_marchamo.campo_orden as solcampo_marchamo_ord, solcampo_marchamo.obligatorio as solcampo_marchamo_obl,  
+viaje_solicitud.marchamo_serial,   solcampo_marchamo_serial.activo as solcampo_marchamo_serial_act,  solcampo_marchamo_serial.campo_orden as solcampo_marchamo_serial_ord, solcampo_marchamo_serial.obligatorio as solcampo_marchamo_serial_obl, 
+viaje_solicitud.observaciones_viaje ,   solcampo_observaciones_viaje.activo as solcampo_observaciones_viaje_act,  solcampo_observaciones_viaje.campo_orden as solcampo_observaciones_viaje_ord,  solcampo_observaciones_viaje.obligatorio as solcampo_observaciones_viaje_obl,
 
 
-VIAJE_SOLICITUD.fecha_ins, 
-VIAJE_SOLICITUD.fecha_mod,  
-VIAJE_SOLICITUD.usuario_ins,
-VIAJE_SOLICITUD.usuario_mod, 
-VIAJE_SOLICITUD.id_empresa_registro,
-V_VIAJE_SOLICITUD.id_VIAJE,
-VIAJE_SOLICITUD.SOLICITUD_REFERENCIA,  solcampo_solicitud_referencia.ACTIVO as solcampo_solicitud_referencia_act,  solcampo_solicitud_referencia.CAMPO_ORDEN as solcampo_solicitud_referencia_ord,   solcampo_solicitud_referencia.OBLIGATORIO as solcampo_solicitud_referencia_obl,    
+viaje_solicitud.fecha_ins, 
+viaje_solicitud.fecha_mod,  
+viaje_solicitud.usuario_ins,
+viaje_solicitud.usuario_mod, 
+viaje_solicitud.id_empresa_registro,
+v_viaje_solicitud.id_viaje,
+viaje_solicitud.solicitud_referencia,  solcampo_solicitud_referencia.activo as solcampo_solicitud_referencia_act,  solcampo_solicitud_referencia.campo_orden as solcampo_solicitud_referencia_ord,   solcampo_solicitud_referencia.obligatorio as solcampo_solicitud_referencia_obl,    
 
-V_VIAJE_SOLICITUD.sede_empleado_solicitud,
-V_VIAJE_SOLICITUD.sede_usuario_ins,
-VIAJE_SOLICITUD.CARGA_PELIGROSA,  solcampo_carga_peligrosa.ACTIVO as solcampo_carga_peligrosa_act,  solcampo_carga_peligrosa.CAMPO_ORDEN as solcampo_carga_peligrosa_ord,  solcampo_carga_peligrosa.OBLIGATORIO as solcampo_carga_peligrosa_obl  
+v_viaje_solicitud.sede_empleado_solicitud,
+v_viaje_solicitud.sede_usuario_ins,
+viaje_solicitud.carga_peligrosa,  solcampo_carga_peligrosa.activo as solcampo_carga_peligrosa_act,  solcampo_carga_peligrosa.campo_orden as solcampo_carga_peligrosa_ord,  solcampo_carga_peligrosa.obligatorio as solcampo_carga_peligrosa_obl  
  
 
 FROM V_VIAJE_SOLICITUD, VIAJE_SOLICITUD  WITH (NOLOCK) left outer join empleado WITH (NOLOCK) on VIAJE_SOLICITUD.id_empleado = empleado.id_empleado  
@@ -1132,7 +1132,8 @@ ${id_viaje_solicitud}`;
   async viajesollistado(object, ID_Empleado, ID_Usuario, ID_Empresa_Sesion) {
    const query = `select 
  VIAJE_SOLICITUD.ID_VIAJE_SOLICITUD,   
-VIAJE_SOLICITUD.FECHA_SOLICITUD,  solcampo_fecha_solicitud.ACTIVO as solcampo_fecha_solicitud_act,  solcampo_fecha_solicitud.CAMPO_ORDEN as solcampo_fecha_solicitud_ord,   solcampo_fecha_solicitud.OBLIGATORIO as solcampo_fecha_solicitud_obl,   
+VIAJE_SOLICITUD.FECHA_SOLICITUD,  solcampo_fecha_solicitud.ACTIVO as solcampo_fecha_solicitud_act,  solcampo_fecha_solicitud.CAMPO_ORDEN as solcampo_fecha_solicitud_ord,  
+solcampo_fecha_solicitud.OBLIGATORIO as solcampo_fecha_solicitud_obl,   
 empleado.nombre + ' ' + empleado.apellido as empleado_descripcion,
 cliente.nombre as cliente_descripcion,
 c1.descripcion as ciudad_origen_descripcion,
@@ -1153,7 +1154,14 @@ V_VIAJE_SOLICITUD.id_VIAJE,
 viaje_carga_tipo.descripcion  as carga_tipo_descripcion, solcampo_id_viaje_carga_tipo.ACTIVO as solcampo_carga_tipo_act,   solcampo_id_viaje_carga_tipo.CAMPO_ORDEN as solcampo_carga_tipo_ord,  solcampo_id_viaje_carga_tipo.OBLIGATORIO as solcampo_viaje_carga_tipo_obl,    
 
 
-VIAJE_SOLICITUD.SOLICITUD_REFERENCIA,  solcampo_solicitud_referencia.ACTIVO as solcampo_solicitud_referencia_act,  solcampo_solicitud_referencia.CAMPO_ORDEN as solcampo_solicitud_referencia_ord,   solcampo_solicitud_referencia.OBLIGATORIO as solcampo_solicitud_referencia_obl 
+VIAJE_SOLICITUD.SOLICITUD_REFERENCIA,  solcampo_solicitud_referencia.ACTIVO as solcampo_solicitud_referencia_act,  solcampo_solicitud_referencia.CAMPO_ORDEN as solcampo_solicitud_referencia_ord,   solcampo_solicitud_referencia.OBLIGATORIO as solcampo_solicitud_referencia_obl,
+
+nombre_guia.guia_nombre as guia_numero_etiqueta, 
+config_etiqueta_viaje_relgastos.valor as numero_relacion_gastos_etiqueta, 
+config_etiqueta_viaje_facturaguia.valor as factura_guia_etiqueta,
+config_via_etiqueta_campoespecial3.valor as campo_especial3_etiqueta,
+config_via_etiqueta_campoespecial4.valor as campo_especial4_etiqueta
+
 
 from V_VIAJE_SOLICITUD, VIAJE_SOLICITUD  WITH (NOLOCK)  left outer join empleado WITH (NOLOCK) on VIAJE_SOLICITUD.id_empleado = empleado.id_empleado  
 left outer join ciudad as c1 WITH (NOLOCK) on  VIAJE_SOLICITUD.ID_CIUDAD_ORIGEN = c1.id_ciudad  
@@ -1171,9 +1179,18 @@ left outer join viaje_carga_tipo  on VIAJE_SOLICITUD.id_viaje_carga_tipo = viaje
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO WITH (NOLOCK) where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'fecha_embarque') as solcampo_fecha_embarque,
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO WITH (NOLOCK) where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'solicitud_referencia') as solcampo_solicitud_referencia,
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'id_viaje_carga_tipo') as solcampo_id_viaje_carga_tipo,
-CONFIGURACION as config_retrieve  WITH (NOLOCK)
+CONFIGURACION as config_retrieve  WITH (NOLOCK),
+(select dbo.F_ETIQUETA_GUIA(0,0) as guia_nombre ) as nombre_guia
+, CONFIGURACION as config_etiqueta_viaje_relgastos WITH (NOLOCK) 
+, CONFIGURACION as config_etiqueta_viaje_facturaguia WITH (NOLOCK) 
+, CONFIGURACION as config_via_etiqueta_campoespecial3 WITH (NOLOCK) 
+, CONFIGURACION as config_via_etiqueta_campoespecial4 WITH (NOLOCK)  
 
 where config_retrieve.campo = 'VIAJE_DIASANTERIORES_RETRIEVE'
+and config_etiqueta_viaje_relgastos.CAMPO = 'ETIQUETA_VIAJE_RELGASTOS'
+and config_etiqueta_viaje_facturaguia.CAMPO = 'ETIQUETA_VIAJE_FACTURAGUIA'
+and config_via_etiqueta_campoespecial3.CAMPO = 'VIA_ETIQUETA_CAMPOESPECIAL3'
+and config_via_etiqueta_campoespecial4.CAMPO = 'VIA_ETIQUETA_CAMPOESPECIAL4'
 and V_VIAJE_SOLICITUD.id_viaje_solicitud = VIAJE_SOLICITUD.id_viaje_solicitud 
 and ((viaje_solicitud.fecha_solicitud >= DATEADD(dd, convert(integer, config_retrieve.VALOR) * -1, getdate()) 
 and isnull(v_viaje_solicitud.id_VIAJE,0) > 0) or isnull(v_viaje_solicitud.id_VIAJE,0) = 0 )

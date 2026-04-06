@@ -1241,6 +1241,18 @@ order by  vehiculo_uso.descripcion`;
     return result;
   }
 
+	async remolqueusos(object) {
+    const query =
+      `SELECT vehiculo_uso.id_vehiculo_uso,   
+       vehiculo_uso.descripcion
+    FROM vehiculo_uso WITH (NOLOCK)  
+where vehiculo_uso.aplica_en in ('T', 'C')
+order by  vehiculo_uso.descripcion`;
+    const result = await this.general(object, query);
+    return result;
+  }
+
+	
   async vehiculotipos(object) {
     const query =
       `SELECT vehiculo_tipo.id_vehiculo_tipo,   
@@ -1248,7 +1260,21 @@ order by  vehiculo_uso.descripcion`;
          vehiculo_tipo.autodependiente  ,
 case vehiculo_tipo.autodependiente when 0 then 'truck16x16.png' else 'trailer16x16.png'  end as dibujo 
     FROM vehiculo_tipo WITH (NOLOCK)  
+	where vehiculo_tipo.autodependiente = 0
 	order by  vehiculo_tipo.autodependiente,  vehiculo_tipo.descripcion`;
+    const result = await this.general(object, query);
+    return result;
+  }
+
+async remolquestipos(object) {
+    const query =
+      `SELECT vehiculo_tipo.id_vehiculo_tipo,   
+         vehiculo_tipo.descripcion,   
+         vehiculo_tipo.autodependiente  ,
+case vehiculo_tipo.autodependiente when 0 then 'truck16x16.png' else 'trailer16x16.png'  end as dibujo 
+    FROM vehiculo_tipo WITH (NOLOCK)  
+	where vehiculo_tipo.autodependiente = 1
+	order by  vehiculo_tipo.descripcion`;
     const result = await this.general(object, query);
     return result;
   }

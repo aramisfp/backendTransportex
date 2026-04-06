@@ -1124,11 +1124,23 @@ id_viaje_solicitud,
     const result = this.dataService.vehiculousos(filteredArray);
     return result;
   }
+  @Get('remolqueusos')
+  async getRemolqueusos(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.remolqueusos(filteredArray);
+    return result;
+  }
   
   @Get('vehiculotipos')
   async getVehiculotipos(@Query('client') userName: string) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
     const result = this.dataService.vehiculotipos(filteredArray);
+    return result;
+  }
+  @Get('remolquetipos')
+  async getRemolquetipos(@Query('client') userName: string) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.remolquetipos(filteredArray);
     return result;
   }
   

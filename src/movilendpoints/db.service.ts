@@ -1266,7 +1266,7 @@ case vehiculo_tipo.autodependiente when 0 then 'truck16x16.png' else 'trailer16x
     return result;
   }
 
-async remolquestipos(object) {
+async remolquetipos(object) {
     const query =
       `SELECT vehiculo_tipo.id_vehiculo_tipo,   
          vehiculo_tipo.descripcion,   

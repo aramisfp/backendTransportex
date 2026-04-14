@@ -290,8 +290,15 @@ x.Nombre_Empleado asc`;
  proveedor_desc, factura, empleado_nombre, empleado_apellido, usuario_ins, usuario_mod,
 chofer, vehiculo_modelo, tipo_movimiento, tipo_movimiento_desc, id_viaje, 
 campo2,	campo3,	forma_pago, forma_pago_desc, archivos_adjuntos_cantidad, 
-case convert(integer,config_showprint3p.VALOR) when 0 then 0 else 1 end as config_show3pformat
-from dbo.F_SEL_VEHICULO_REPOSTAJE (${ID_Empleado}, ${ID_Empresa_Sesion}) as x, configuracion as config_showprint3p
+case convert(integer,config_showprint3p.VALOR) when 0 then 0 else 1 end as config_show3pformat,
+cfg_mostrarcostos.config_mostrarcostos 
+
+from dbo.F_SEL_VEHICULO_REPOSTAJE (${ID_Empleado}, ${ID_Empresa_Sesion}) as x, configuracion as config_showprint3p,
+	(select isnull((select convert(integer, config_mostrarcosto.valor) 
+	from configuracion as config_mostrarcosto  WITH (NOLOCK)
+	where config_mostrarcosto.campo = 'VEH_COMB3PULG_SHOWCOSTOS'), 1) as config_mostrarcostos )
+	 as cfg_mostrarcostos
+ 
 where config_showprint3p.campo = 'IMPRESION_MOSTRAR_PDV'
 order by fecha_reposteo desc , 
 id_vehiculo_combustible desc`;
@@ -368,13 +375,20 @@ config_campoempleado_mostrar.valor as config_campoempleadomostrar,
 config_campodcto_mostrar.valor as config_campodctomostrar,
 config_campoidviaje_mostrar.valor as config_campoidviajemostrar,
 convert(numeric(7,4), config_iva.VALOR) as config_IVAvalor,
-config_ivaactivado.valor as config_IVAactivadodef
+config_ivaactivado.valor as config_IVAactivadodef,
+cfg_mostrarcostos.config_mostrarcostos 
+
 FROM CONFIGURACION as config_und WITH (NOLOCK), CONFIGURACION as config_dias WITH (NOLOCK),
 		 CONFIGURACION as config_campo2_mostrar WITH (NOLOCK), CONFIGURACION as config_campo2_etiqueta WITH (NOLOCK),
 		 CONFIGURACION as config_campo3_mostrar WITH (NOLOCK), CONFIGURACION as config_campo3_etiqueta WITH (NOLOCK),
 		 CONFIGURACION as config_campohoras_mostrar WITH (NOLOCK), CONFIGURACION as config_campoempleado_mostrar WITH (NOLOCK),
 		 CONFIGURACION as config_campodcto_mostrar WITH (NOLOCK), CONFIGURACION as config_campoidviaje_mostrar WITH (NOLOCK),
-		 CONFIGURACION_X_EMPRESA as config_iva WITH (NOLOCK), CONFIGURACION as config_ivaactivado WITH (NOLOCK)
+		 CONFIGURACION_X_EMPRESA as config_iva WITH (NOLOCK), CONFIGURACION as config_ivaactivado WITH (NOLOCK),
+		 (select isnull((select convert(integer, config_mostrarcosto.valor) 
+			from configuracion as config_mostrarcosto  WITH (NOLOCK)
+			where config_mostrarcosto.campo = 'VEH_COMB3PULG_SHOWCOSTOS'), 1) as config_mostrarcostos )
+			 as cfg_mostrarcostos
+
 where config_und.CAMPO = 'VIAJE_MOSTRAR_KMSAUTONOMMEDIDA'
 and config_dias.CAMPO = 'VEH_COMB_DIASANT_RETRIEVE'
 and config_campo2_mostrar.CAMPO = 'VEH_COMB_CAMPO2_MOSTRAR'

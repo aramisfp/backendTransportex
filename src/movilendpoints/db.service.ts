@@ -478,7 +478,8 @@ x.monto_iva,
 x.costo_total,
 x.empleado_nombre_apellido, 
 x.kilometraje_lectura,   
-x.horas_lectura
+x.horas_lectura,
+x.config_mostrarcostos
 from 
 (  SELECT vehiculo_combustible.id_vehiculo_combustible,  
 	case when vehiculo_combustible.cantidad_impresion_micro <= 0 then 'O R I G I N A L' else
@@ -525,7 +526,11 @@ from
 	as costo_total,
 	empleado.nombre + ' ' + empleado.apellido as empleado_nombre_apellido, 
 	vehiculo_combustible.kilometraje_lectura,   
-	vehiculo_combustible.horas_lectura
+	vehiculo_combustible.horas_lectura,
+	isnull((select convert(integer, config_mostrarcosto.valor) 
+		from configuracion as config_mostrarcosto
+		where config_mostrarcosto.campo = 'VEH_COMB3PULG_SHOWCOSTOS'), 1) as config_mostrarcostos 
+
 	FROM combustible_tipo WITH (NOLOCK), vehiculo_combustible WITH (NOLOCK) left outer join viaje_guia on viaje_guia.id_viaje = vehiculo_combustible.id_viaje and viaje_guia.principal = 1
 	left outer join proveedor WITH (NOLOCK) on  vehiculo_combustible.id_proveedor = proveedor.id_proveedor
 	left outer join empleado WITH (NOLOCK) on vehiculo_combustible.id_empleado = empleado.id_empleado 

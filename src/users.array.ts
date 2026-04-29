@@ -167,4 +167,28 @@ export const myArray = [
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },        
+   {
+    name: 'BIA_HON',
+    Server: 'ec2-3-17-135-176.us-east-2.compute.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX_BIA',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },        
+   {
+    name: 'LINCE_BOL',
+    Server: 'ec2-13-59-22-63.us-east-2.compute.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX_Lince',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },       
+   {
+    name: 'TERCALL_URU',
+    Server: 'ec2-184-73-7-215.compute-1.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX_Tercall',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },    
 ];

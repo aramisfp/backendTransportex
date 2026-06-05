@@ -207,5 +207,13 @@ export const myArray = [
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },    
+   {
+    name: 'GLOBAL_VEN',
+    Server: 'ec2-3-142-236-131.us-east-2.compute.amazonaws.com',
+    Port: '1433',
+    Database: 'DB_TRANSPORTEX_Global',
+    UserID: 'usr_movil',
+    UserPwd: 'Tran5p0rt3X_2008tlf',
+  },    
   
 ];

@@ -199,4 +199,13 @@ export const myArray = [
         UserID:'usr_movil',
         UserPwd:'Tran5p0rt3X_2008tlf',
     },     	  	    
+    {
+        name:'RIOVUELTAS_ARG',
+        Server:'ec2-184-73-7-215.compute-1.amazonaws.com',
+        Port:'1433',
+        Database:'DB_TRANSPORTEX',
+        UserID:'usr_movil',
+        UserPwd:'Tran5p0rt3X_2008tlf',
+    },     	  	    
+    
 ]

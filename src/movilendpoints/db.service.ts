@@ -772,8 +772,8 @@ cliente, 	cliente_despacho, ciudad_origen,	ciudad_destino,
 placa_etiqueta, placa, vehidsec_etiqueta, identificacion as veh_identificacion,	vehiculo_modelo, total_ejes_camion,
 camion_etiqueta, remolques_asociados_etiqueta,  cavas_asociadas, total_ejes_remolque, 
 cargo_conductor, conductor,	cedula_etiqueta,  cedula,	estibador,
-total_adelantos, empleado_sueldo_base,	estadia	sueldo_estadia,
-viaje_observaciones, carga_tipo, carga_peso,	carga_peso_medida,	
+total_adelantos, empleado_sueldo_base,	estadia,	sueldo_estadia,
+viaje_observaciones,  guia_observaciones, carga_tipo, carga_peso,	carga_peso_medida,	
 empresa_principal,	empresa_principal_rif,	ciudad_actual as empresa_principal_ciudad
 from dbo.F_SEL_VIAJE_ORDEN(${ID_Viaje},0) as x
 order by x.numero_guia, x.id_viaje_guia`;

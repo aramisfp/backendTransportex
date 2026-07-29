@@ -746,7 +746,7 @@ cliente,	trayecto,	fecha_salida,	camion_etiqueta, remolques_asociados_etiqueta, 
 tipo_carga_descripcion,	carga_tipo_embarque, 
 id_viaje_solicitud,	carta_oferta_desc
 from dbo.F_SEL_VIAJE_EMPLEADO(${ID_Empleado}) as x
-order by x.fecha_salida, x.id_viaje desc`;
+order by x.fecha_salida desc, x.id_viaje desc`;
     const result = await this.general(object, query);
     return result;
   }	 
@@ -1280,7 +1280,7 @@ order by  vehiculo_uso.descripcion`;
 case vehiculo_tipo.autodependiente when 0 then 'truck16x16.png' else 'trailer16x16.png'  end as dibujo 
     FROM vehiculo_tipo WITH (NOLOCK)  
 	where vehiculo_tipo.autodependiente = 0
-	order by  vehiculo_tipo.autodependiente,  vehiculo_tipo.descripcion`;
+	order by  vehiculo_tipo.descripcion`;
     const result = await this.general(object, query);
     return result;
   }

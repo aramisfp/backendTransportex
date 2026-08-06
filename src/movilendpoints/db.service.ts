@@ -192,9 +192,9 @@ x.Nombre_Empleado asc`;
  Descripcion, Actividad_Grupo, Estado, Estatus, Prioridad, Urgente, Referencia, 
  Fecha_Creacion, Usuario_Creacion, Usuario_Modificacion, 
  ID_Vehiculo, ID_Empleado_Solicitud, ID_Actividad_Grupo, 
- Archivos_Adjuntos_Cantidad, Vehiculo_Modelo 
-    from dbo.F_SEL_ACTIVIDAD_SOLICITUD(0, ${ID_Empleado},1) 
-    where ${ID_Empresa_Sesion} in (ID_Empresa_Registro, 0)
+ Archivos_Adjuntos_Cantidad, Vehiculo_Modelo, CONFIGURACION.valor as placa_etiqueta  
+    from dbo.F_SEL_ACTIVIDAD_SOLICITUD(0, ${ID_Empleado},1), CONFIGURACION WITH (NOLOCK)
+    where ${ID_Empresa_Sesion} in (ID_Empresa_Registro, 0) and CONFIGURACION.campo = 'ETIQUETA_VEHICULO_PLACA'
      order by 
      case Estatus when 'N' then 1 when 'Q' then 2  when 'T' then 3 when 'A' then 4 when 'C' then 5 else 99 end asc,
      case urgente when 'S' then 1 else 0 end desc,

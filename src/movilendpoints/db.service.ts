@@ -292,15 +292,15 @@ and CONFIGURACION_X_EMPRESA.ID_EMPRESA = x.id_empresa_registro
 chofer, vehiculo_modelo, tipo_movimiento, tipo_movimiento_desc, id_viaje, 
 campo2,	campo3,	forma_pago, forma_pago_desc, archivos_adjuntos_cantidad, 
 case convert(integer,config_showprint3p.VALOR) when 0 then 0 else 1 end as config_show3pformat,
-cfg_mostrarcostos.config_mostrarcostos 
+cfg_mostrarcostos.config_mostrarcostos, CONFIGURACION_X_EMPRESA.valor as placa_etiqueta   
 
-from dbo.F_SEL_VEHICULO_REPOSTAJE (${ID_Empleado}, ${ID_Empresa_Sesion}) as x, configuracion as config_showprint3p,
+from dbo.F_SEL_VEHICULO_REPOSTAJE (${ID_Empleado}, ${ID_Empresa_Sesion}) as x, configuracion as config_showprint3p, CONFIGURACION_X_EMPRESA WITH (NOLOCK),
 	(select isnull((select convert(integer, config_mostrarcosto.valor) 
 	from configuracion as config_mostrarcosto  WITH (NOLOCK)
 	where config_mostrarcosto.campo = 'VEH_COMB3PULG_SHOWCOSTOS'), 1) as config_mostrarcostos )
 	 as cfg_mostrarcostos
  
-where config_showprint3p.campo = 'IMPRESION_MOSTRAR_PDV'
+where config_showprint3p.campo = 'IMPRESION_MOSTRAR_PDV' and CONFIGURACION_X_EMPRESA.ID_EMPRESA = x.id_empresa_registro
 order by fecha_reposteo desc , 
 id_vehiculo_combustible desc`;
     const result = await this.general(object, query);

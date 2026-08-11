@@ -300,7 +300,7 @@ from dbo.F_SEL_VEHICULO_REPOSTAJE (${ID_Empleado}, ${ID_Empresa_Sesion}) as x, c
 	where config_mostrarcosto.campo = 'VEH_COMB3PULG_SHOWCOSTOS'), 1) as config_mostrarcostos )
 	 as cfg_mostrarcostos
  
-where config_showprint3p.campo = 'IMPRESION_MOSTRAR_PDV' and CONFIGURACION_X_EMPRESA.ID_EMPRESA = x.id_empresa_registro
+where config_showprint3p.campo = 'IMPRESION_MOSTRAR_PDV' and CONFIGURACION_X_EMPRESA.ID_EMPRESA = ${ID_Empresa_Sesion}
 order by fecha_reposteo desc , 
 id_vehiculo_combustible desc`;
     const result = await this.general(object, query);

@@ -819,8 +819,8 @@ id_empleado,
 id_viaje,
 tipo,
 observaciones,
-latitud,
-longitud,
+latitude,
+longitude,
 computador,
 usuario,
 latitud_escaneador,
@@ -832,8 +832,8 @@ metros_distancia_escaneo,
     id_viaje: number;
     tipo: string; 
     observaciones: string;
-    latitud: string;
-    longitud: string;
+    latitude: string;
+    longitude: string;
     computador: string;
     usuario: string;
     latitud_escaneador: string;
@@ -850,8 +850,8 @@ metros_distancia_escaneo,
 id_viaje,
 tipo,
 observaciones,
-latitud,
-longitud,
+latitude,
+longitude,
 computador,
 usuario,
 latitud_escaneador,

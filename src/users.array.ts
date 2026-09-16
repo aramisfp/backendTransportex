@@ -247,4 +247,12 @@ export const myArray = [
     UserID:'usr_movil',
     UserPwd:'Tran5p0rt3X_2008tlf',
     },     	   
+   {
+    name:'WETRA_VEN',
+    Server:'195-88-56-196.us-mi-cloud-xip.com',
+    Port:'1433',
+    Database:'DB_TRANSPORTEX_Wetra',
+    UserID:'usr_movil',
+    UserPwd:'Tran5p0rt3X_2008tlf',
+    },     	  	 
 ];

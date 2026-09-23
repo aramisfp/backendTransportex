@@ -1384,5 +1384,97 @@ select 'ms' as desripcion, 'S' as valor from TABLA_DUMMY where '${Tipo_Medida}' 
     return result;
   }	 
 
+  async viajeconfigfechas(object, ID_Usuario, ID_Empresa_Sesion) {
+   const query = `select 
+fecha_salida_mostrar = 1,
+case USUARIO.ADMINISTRADOR when 0 then 
+	case cfecha_salida.VALOR when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN 1 ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN 1 ELSE 0 END else 1 end 
+else 1 end as fecha_salida_editar,
+null as fecha_salida_catalogo_motivo,
+
+fecha_llegada_mostrar = 1,
+case USUARIO.ADMINISTRADOR when 0 then 
+	case cfecha_llegada.VALOR when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN 1 ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN 1 ELSE 0 END else 1 end
+else 1 end as fecha_llegada_editar,
+null as fecha_llegada_catalogo_motivo, 
+
+fecha_partidaconcarga_mostrar = case cfecha_partidaconcarga.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
+case USUARIO.ADMINISTRADOR when 0 then 
+	case cfecha_partidaconcarga.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
+else 1 end as fecha_partidaconcarga_editar,
+null as fecha_partidaconcarga_catalogo_motivo,
+
+fecha_arribocarga_mostrar = case cfecha_arribo.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
+case USUARIO.ADMINISTRADOR when 0 then 
+	case cfecha_arribo.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
+else 1 end as fecha_arribocarga_editar,
+'S' as fecha_arribocarga_catalogo_motivo,
+
+fecha_embarque_mostrar = case cfecha_embarque.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
+case USUARIO.ADMINISTRADOR when 0 then 
+	case cfecha_embarque.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
+else 1 end as fecha_embarque_editar,
+case when cfecha_arribo.VALOR = 'N' then 'T' else 'M' end as fecha_embarque_catalogo_motivo,
+
+fecha_entrega_mostrar = case cfecha_entrega.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
+case USUARIO.ADMINISTRADOR when 0 then 
+	case cfecha_entrega.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
+else 1 end as fecha_entrega_editar,
+'E' as fecha_entrega_catalogo_motivo,
+
+fecha_entregadocumento_mostrar = case cfecha_documenta.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
+case USUARIO.ADMINISTRADOR when 0 then 
+	case cfecha_documenta.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
+else 1 end as fecha_entregadocumento_editar,
+'D' as fecha_entregadocumento_catalogo_motivo 
+
+from USUARIO_X_EMPRESA WITH (NOLOCK) 
+inner join USUARIO WITH (NOLOCK) on USUARIO.ID_USUARIO = ${ID_Usuario} and USUARIO_X_EMPRESA.ID_EMPRESA = ${ID_Empresa_Sesion} and USUARIO_X_EMPRESA.id_usuario = USUARIO.ID_USUARIO
+left outer join USUARIO_X_EMPLEADO WITH (NOLOCK) on USUARIO_X_EMPLEADO.ID_USUARIO = USUARIO.ID_USUARIO and USUARIO_X_EMPLEADO.ID_EMPRESA = USUARIO_X_EMPRESA.ID_EMPRESA
+left outer join empleado WITH (NOLOCK) on empleado.ID_EMPLEADO = USUARIO_X_EMPLEADO.ID_EMPLEADO
+left outer join cargo on cargo.id_cargo = empleado.id_cargo,
+configuracion as cargo_conductor WITH (NOLOCK), 
+CONFIGURACION as cfecha_salida WITH (NOLOCK),
+CONFIGURACION as cfecha_llegada WITH (NOLOCK),
+CONFIGURACION as cfecha_partidaconcarga WITH (NOLOCK),
+CONFIGURACION as cfecha_arribo WITH (NOLOCK),
+CONFIGURACION as cfecha_embarque WITH (NOLOCK),
+CONFIGURACION as cfecha_entrega WITH (NOLOCK),
+CONFIGURACION as cfecha_documenta WITH (NOLOCK),
+(select case when xx.valoracion > 0 then 1 else 0 end mostrar_fecha,
+	case when  xx.valoracion >= 100 then 1 else
+		case when  xx.valoracion >= 10 then 2 else 0 end
+	end as editar_fecha
+	from (
+	select sum(valor * 
+	case USUARIO_permiso.ID_USUARIO_PERMISO_TIPO when 'SM_VIAFECHASAPPMOVIL_LECTURA' then 1 
+	when 'SM_VIAFECHASAPPMOVIL_NODIFER' then 10 else 100 end) as valoracion 
+	from USUARIO_permiso  WITH (NOLOCK)
+	where USUARIO_permiso.ID_USUARIO = ${ID_Usuario} 
+	and USUARIO_permiso.ID_USUARIO_PERMISO_TIPO in ('SM_VIAFECHASAPPMOVIL_LECTURA','SM_VIAFECHASAPPMOVIL_NODIFER', 'SM_VIAFECHASAPPMOVIL_GESTION')
+	) as xx 
+) as usuario_fecharol
+where cfecha_salida.campo = 'VIA_MOVIL_FECHASALIDAVAL'
+and cfecha_llegada.CAMPO = 'VIA_MOVIL_FECHALLEGADAVAL'
+and cfecha_partidaconcarga.CAMPO = 'VIA_MOVIL_FECHAPARTIDAVAL'
+and cfecha_arribo.campo = 'VIA_MOVIL_FECHAARRIBOVAL'
+and cfecha_embarque.campo = 'VIA_MOVIL_FECHAEMBARQUEVAL'
+and cfecha_entrega.campo = 'VIA_MOVIL_FECHAENTREGAVAL'
+and cfecha_documenta.campo = 'VIA_MOVIL_FECHADOCUMENTAVAL'
+and cargo_conductor.campo = 'ID_CARGO_CONDUCTOR'`;
+    const result = await this.general(object, query);
+    return result;
+  }
+	
+   async viajecargaretrasomotivos(object, tipo) {
+    const query = `SELECT
+descripcion,  id_viaje_carga_retraso 
+FROM VIAJE_CARGA_RETRASO WITH (NOLOCK)
+WHERE TIPO = '${tipo}'
+and VIAJE_CARGA_RETRASO.ACTIVO = 1
+order by DESCRIPCION`;
+    const result = await this.general(object, query);
+    return result;
+  }
 	
 }

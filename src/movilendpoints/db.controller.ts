@@ -1189,6 +1189,67 @@ id_viaje_solicitud,
     const result = this.dataService.medidas(filteredArray, Tipo_Medida);
     return result;
   }  
+
+   @Get('viajeconfigfechas')
+  async consultaViajeconfigfechas(
+    @Query('client') userName: string,
+    @Query() { ID_Usuario }: { ID_Usuario: string },
+    @Query() { ID_Empresa_Sesion }: { ID_Empresa_Sesion: string },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajeconfigfechas(filteredArray, ID_Usuario, ID_Empresa_Sesion);
+    return result;
+  }  
+
+   @Get('viajecargaretrasomotivos')
+  async consultaViajecargaretrasomotivos(
+    @Query('client') userName: string,
+    @Query() { tipo }: { tipo: string },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajecargaretrasomotivos(filteredArray, tipo);
+    return result;
+  }  
+
   
+@Post('viajefechasinput')
+  async consultaViajefechasinput(
+    @Query('client') userName: string,
+    @Body()
+    {
+id_viaje,
+id_viaje_carga,
+fecha_nombre,   
+fecha_valor,   
+id_viaje_retraso,   
+latitud,
+longitud,
+usuario,
+    }: {
+    id_viaje: number;
+    id_viaje_carga: number; 
+    fecha_nombre: string;
+    fecha_valor: string;
+    id_viaje_retraso: number; 
+    latitud: string;
+    longitud: string;
+    usuario: string;
+    },
+  ) {
+    console.log(userName);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajefechasinput(
+      filteredArray,
+id_viaje,
+id_viaje_carga,
+fecha_nombre,   
+fecha_valor,   
+id_viaje_retraso,   
+latitud,
+longitud,
+usuario,
+    );
+    return result;
+  }  
   
 }

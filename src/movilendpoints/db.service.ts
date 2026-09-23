@@ -1414,7 +1414,7 @@ fecha_embarque_mostrar = case cfecha_embarque.VALOR when 'N' then 0 else usuario
 case USUARIO.ADMINISTRADOR when 0 then 
 	case cfecha_embarque.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
 else 1 end as fecha_embarque_editar,
-case when cfecha_arribo.VALOR = 'N' then 'T' else 'M' end as fecha_embarque_catalogo_motivo,
+case when cfecha_embarque.VALOR = 'N' then 'T' else 'M' end as fecha_embarque_catalogo_motivo,
 
 fecha_entrega_mostrar = case cfecha_entrega.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
 case USUARIO.ADMINISTRADOR when 0 then 
@@ -1476,5 +1476,30 @@ order by DESCRIPCION`;
     const result = await this.general(object, query);
     return result;
   }
-	
+
+
+async viajefechasinput(
+    object,
+id_viaje,
+id_viaje_carga,     
+fecha_nombre,   
+fecha_valor,   
+id_viaje_retraso,   
+latitud,
+longitud,
+usuario,
+  ) {
+    const query = `Exec dbo.SP_UPD_SYNC_VIAJE_FECHAS  
+${id_viaje},   
+${id_viaje_carga},   
+'${fecha_nombre}',   
+'${fecha_valor}',   
+${id_viaje_retraso},
+'${latitud}',   
+'${longitud}',   
+'${usuario}'`;
+    const result = await this.general(object, query);
+    return result;
+  }	
+
 }

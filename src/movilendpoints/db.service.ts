@@ -1477,6 +1477,24 @@ order by DESCRIPCION`;
     return result;
   }
 
+   async viajefechasedit(object, ID_Viaje_Carga) {
+    const query = `select  
+ viaje.FECHA_SALIDA, viaje.FECHA_LLEGADA,
+ FECHA_PARTIDA_CON_CARGA,
+ FECHA_ARRIBO_CARGA, id_vcr_arribo_sitio as ID_RETRASO_FECHA_ARRIBO_CARGA,
+ FECHA_EMBARQUE,
+ case when cfecha_embarque.VALOR = 'N' then id_vcr_salida else id_vcr_carga_embarque end as ID_RETRASO_FECHA_EMBARQUE,
+ FECHA_ENTREGA, id_vcr_entrega  as ID_RETRASO_FECHA_ENTREGA,
+ FECHA_ENTREGA_DOCUMENTO, id_vcr_documentacion as ID_RETRASO_FECHA_ENTREGA_DOCUMENTO 
+from viaje WITH (NOLOCK), viaje_guia WITH (NOLOCK), viaje_carga WITH (NOLOCK),
+CONFIGURACION as cfecha_embarque WITH (NOLOCK)
+where viaje.ID_VIAJE = viaje_guia.ID_VIAJE
+and viaje_guia.ID_VIAJE_GUIA = viaje_carga.ID_VIAJE_GUIA
+and viaje_carga.ID_VIAJE_CARGA = ${ID_Viaje_Carga}
+and cfecha_embarque.campo = 'VIA_MOVIL_FECHAEMBARQUEVAL'`;
+    const result = await this.general(object, query);
+    return result;
+  }
 
 async viajefechasinput(
     object,

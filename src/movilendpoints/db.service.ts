@@ -776,7 +776,7 @@ camion_etiqueta, remolques_asociados_etiqueta,  cavas_asociadas, total_ejes_remo
 cargo_conductor, conductor,	cedula_etiqueta,  cedula,	estibador,
 total_adelantos, empleado_sueldo_base,	estadia,	sueldo_estadia,
 viaje_observaciones,  guia_observaciones, carga_tipo, carga_peso,	carga_peso_medida,	
-empresa_principal,	empresa_principal_rif,	ciudad_actual as empresa_principal_ciudad
+empresa_principal,	empresa_principal_rif,	ciudad_actual as empresa_principal_ciudad, id_viaje_carga
 from dbo.F_SEL_VIAJE_ORDEN(${ID_Viaje},0) as x
 order by x.numero_guia, x.id_viaje_guia`;
     const result = await this.general(object, query);

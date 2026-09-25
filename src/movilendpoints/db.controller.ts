@@ -1214,10 +1214,11 @@ id_viaje_solicitud,
      @Get('viajefechasedit')
   async consultaViajefechasedit(
     @Query('client') userName: string,
+    @Query() { ID_Viaje }: { ID_Viaje: number },    
     @Query() { ID_Viaje_Carga }: { ID_Viaje_Carga: number },
   ) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.viajefechasedit(filteredArray, ID_Viaje_Carga);
+    const result = this.dataService.viajefechasedit(filteredArray, ID_Viaje, ID_Viaje_Carga);
     return result;
   }  
   

@@ -1477,8 +1477,8 @@ order by DESCRIPCION`;
     return result;
   }
 
-   async viajefechasedit(object, ID_Viaje_Carga) {
-    const query = `select  
+   async viajefechasedit(object, ID_Viaje, ID_Viaje_Carga) {
+    const query = `select top 1 viaje.id_viaje, viaje_carga.id_viaje_carga, 
  viaje.FECHA_SALIDA, viaje.FECHA_LLEGADA,
  FECHA_PARTIDA_CON_CARGA,
  FECHA_ARRIBO_CARGA, id_vcr_arribo_sitio as ID_RETRASO_FECHA_ARRIBO_CARGA,
@@ -1486,12 +1486,13 @@ order by DESCRIPCION`;
  case when cfecha_embarque.VALOR = 'N' then id_vcr_salida else id_vcr_carga_embarque end as ID_RETRASO_FECHA_EMBARQUE,
  FECHA_ENTREGA, id_vcr_entrega  as ID_RETRASO_FECHA_ENTREGA,
  FECHA_ENTREGA_DOCUMENTO, id_vcr_documentacion as ID_RETRASO_FECHA_ENTREGA_DOCUMENTO 
-from viaje WITH (NOLOCK), viaje_guia WITH (NOLOCK), viaje_carga WITH (NOLOCK),
+from viaje WITH (NOLOCK), viaje_guia WITH (NOLOCK) 
+left outer join viaje_carga WITH (NOLOCK) on viaje_guia.ID_VIAJE_GUIA = viaje_carga.ID_VIAJE_GUIA and ${ID_Viaje_Carga} in (viaje_carga.ID_VIAJE_CARGA,0),
 CONFIGURACION as cfecha_embarque WITH (NOLOCK)
-where viaje.ID_VIAJE = viaje_guia.ID_VIAJE
-and viaje_guia.ID_VIAJE_GUIA = viaje_carga.ID_VIAJE_GUIA
-and viaje_carga.ID_VIAJE_CARGA = ${ID_Viaje_Carga}
-and cfecha_embarque.campo = 'VIA_MOVIL_FECHAEMBARQUEVAL'`;
+where viaje.ID_VIAJE = ${ID_Viaje}
+and viaje.ID_VIAJE = viaje_guia.ID_VIAJE
+and cfecha_embarque.campo = 'VIA_MOVIL_FECHAEMBARQUEVAL'
+order by viaje_guia.principal desc, viaje_guia.id_viaje_guia asc`;
     const result = await this.general(object, query);
     return result;
   }

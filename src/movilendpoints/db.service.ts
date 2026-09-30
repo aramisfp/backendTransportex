@@ -1386,15 +1386,15 @@ select 'ms' as desripcion, 'S' as valor from TABLA_DUMMY where '${Tipo_Medida}' 
 
   async viajeconfigfechas(object, ID_Usuario, ID_Empresa_Sesion) {
    const query = `select 
-fecha_salida_mostrar = 1,
+fecha_salida_mostrar = case cfecha_salida.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
 case USUARIO.ADMINISTRADOR when 0 then 
-	case cfecha_salida.VALOR when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN 1 ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN 1 ELSE 0 END else 1 end 
+	case cfecha_salida.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end 
 else 1 end as fecha_salida_editar,
 null as fecha_salida_catalogo_motivo,
 
-fecha_llegada_mostrar = 1,
+fecha_llegada_mostrar = case cfecha_llegada.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
 case USUARIO.ADMINISTRADOR when 0 then 
-	case cfecha_llegada.VALOR when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN 1 ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN 1 ELSE 0 END else 1 end
+	case cfecha_llegada.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
 else 1 end as fecha_llegada_editar,
 null as fecha_llegada_catalogo_motivo, 
 

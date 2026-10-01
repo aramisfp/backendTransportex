@@ -1387,45 +1387,39 @@ select 'ms' as desripcion, 'S' as valor from TABLA_DUMMY where '${Tipo_Medida}' 
   async viajeconfigfechas(object, ID_Usuario, ID_Empresa_Sesion) {
    const query = `select 
 fecha_salida_mostrar = case cfecha_salida.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
-case USUARIO.ADMINISTRADOR when 0 then 
+ 
 	case cfecha_salida.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end 
-else 1 end as fecha_salida_editar,
+	as fecha_salida_editar,
 null as fecha_salida_catalogo_motivo,
 
 fecha_llegada_mostrar = case cfecha_llegada.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
-case USUARIO.ADMINISTRADOR when 0 then 
 	case cfecha_llegada.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
-else 1 end as fecha_llegada_editar,
+as fecha_llegada_editar,
 null as fecha_llegada_catalogo_motivo, 
 
 fecha_partidaconcarga_mostrar = case cfecha_partidaconcarga.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
-case USUARIO.ADMINISTRADOR when 0 then 
 	case cfecha_partidaconcarga.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
-else 1 end as fecha_partidaconcarga_editar,
+as fecha_partidaconcarga_editar,
 null as fecha_partidaconcarga_catalogo_motivo,
 
 fecha_arribocarga_mostrar = case cfecha_arribo.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
-case USUARIO.ADMINISTRADOR when 0 then 
 	case cfecha_arribo.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
-else 1 end as fecha_arribocarga_editar,
+as fecha_arribocarga_editar,
 'S' as fecha_arribocarga_catalogo_motivo,
 
 fecha_embarque_mostrar = case cfecha_embarque.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
-case USUARIO.ADMINISTRADOR when 0 then 
 	case cfecha_embarque.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
-else 1 end as fecha_embarque_editar,
+as fecha_embarque_editar,
 case when cfecha_embarque.VALOR = 'N' then 'T' else 'M' end as fecha_embarque_catalogo_motivo,
 
 fecha_entrega_mostrar = case cfecha_entrega.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
-case USUARIO.ADMINISTRADOR when 0 then 
 	case cfecha_entrega.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
-else 1 end as fecha_entrega_editar,
+as fecha_entrega_editar,
 'E' as fecha_entrega_catalogo_motivo,
 
 fecha_entregadocumento_mostrar = case cfecha_documenta.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
-case USUARIO.ADMINISTRADOR when 0 then 
 	case cfecha_documenta.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
-else 1 end as fecha_entregadocumento_editar,
+as fecha_entregadocumento_editar,
 'D' as fecha_entregadocumento_catalogo_motivo 
 
 from USUARIO_X_EMPRESA WITH (NOLOCK) 

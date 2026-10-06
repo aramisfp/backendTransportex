@@ -776,7 +776,7 @@ camion_etiqueta, remolques_asociados_etiqueta,  cavas_asociadas, total_ejes_remo
 cargo_conductor, conductor,	cedula_etiqueta,  cedula,	estibador,
 total_adelantos, empleado_sueldo_base,	estadia,	sueldo_estadia,
 viaje_observaciones,  guia_observaciones, carga_tipo, carga_peso,	carga_peso_medida,	
-empresa_principal,	empresa_principal_rif,	ciudad_actual as empresa_principal_ciudad, id_viaje_carga
+empresa_principal,	empresa_principal_rif,	ciudad_actual as empresa_principal_ciudad, isnull(id_viaje_carga, id_viaje_guia * -1) as id_viaje_carga
 from dbo.F_SEL_VIAJE_ORDEN(${ID_Viaje},0) as x
 order by x.numero_guia, x.id_viaje_guia`;
     const result = await this.general(object, query);
@@ -1472,7 +1472,7 @@ order by DESCRIPCION`;
   }
 
    async viajefechasedit(object, ID_Viaje, ID_Viaje_Carga) {
-    const query = `select top 1 viaje.id_viaje, viaje_carga.id_viaje_carga, 
+    const query = `select viaje.id_viaje, viaje_carga.id_viaje_carga, 
  viaje.FECHA_SALIDA, viaje.FECHA_LLEGADA,
  FECHA_PARTIDA_CON_CARGA,
  FECHA_ARRIBO_CARGA, id_vcr_arribo_sitio as ID_RETRASO_FECHA_ARRIBO_CARGA,
@@ -1480,13 +1480,28 @@ order by DESCRIPCION`;
  case when cfecha_embarque.VALOR = 'N' then id_vcr_salida else id_vcr_carga_embarque end as ID_RETRASO_FECHA_EMBARQUE,
  FECHA_ENTREGA, id_vcr_entrega  as ID_RETRASO_FECHA_ENTREGA,
  FECHA_ENTREGA_DOCUMENTO, id_vcr_documentacion as ID_RETRASO_FECHA_ENTREGA_DOCUMENTO 
-from viaje WITH (NOLOCK), viaje_guia WITH (NOLOCK) 
-left outer join viaje_carga WITH (NOLOCK) on viaje_guia.ID_VIAJE_GUIA = viaje_carga.ID_VIAJE_GUIA and ${ID_Viaje_Carga} in (viaje_carga.ID_VIAJE_CARGA,0),
+from viaje WITH (NOLOCK), viaje_guia WITH (NOLOCK), viaje_carga WITH (NOLOCK),
 CONFIGURACION as cfecha_embarque WITH (NOLOCK)
 where viaje.ID_VIAJE = ${ID_Viaje}
 and viaje.ID_VIAJE = viaje_guia.ID_VIAJE
 and cfecha_embarque.campo = 'VIA_MOVIL_FECHAEMBARQUEVAL'
-order by viaje_guia.principal desc, viaje_guia.id_viaje_guia asc`;
+and viaje_guia.ID_VIAJE_GUIA = viaje_carga.ID_VIAJE_GUIA 
+and ${ID_Viaje_Carga} = viaje_carga.ID_VIAJE_CARGA
+and ${ID_Viaje_Carga} > 0
+UNION ALL
+select viaje.id_viaje, viaje_guia.id_viaje_guia * -1 as id_viaje_carga, 
+ viaje.FECHA_SALIDA, viaje.FECHA_LLEGADA,
+ null as FECHA_PARTIDA_CON_CARGA,
+ null as FECHA_ARRIBO_CARGA, null as ID_RETRASO_FECHA_ARRIBO_CARGA,
+ null as FECHA_EMBARQUE,
+ null as ID_RETRASO_FECHA_EMBARQUE,
+ null as FECHA_ENTREGA, null as ID_RETRASO_FECHA_ENTREGA,
+ null as FECHA_ENTREGA_DOCUMENTO, null as ID_RETRASO_FECHA_ENTREGA_DOCUMENTO 
+from viaje WITH (NOLOCK), viaje_guia WITH (NOLOCK)
+where viaje.ID_VIAJE = ${ID_Viaje}
+and viaje.ID_VIAJE = viaje_guia.ID_VIAJE
+and viaje_guia.ID_VIAJE_GUIA = abs(${ID_Viaje_Carga})
+and ${ID_Viaje_Carga} < 0`;
     const result = await this.general(object, query);
     return result;
   }

@@ -1410,7 +1410,7 @@ as fecha_arribocarga_editar,
 fecha_embarque_mostrar = case cfecha_embarque.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
 	case cfecha_embarque.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end
 as fecha_embarque_editar,
-case when cfecha_embarque.VALOR = 'N' then 'T' else 'M' end as fecha_embarque_catalogo_motivo,
+case when cfecha_arribo.VALOR = 'N' then 'T' else 'M' end as fecha_embarque_catalogo_motivo,
 
 fecha_entrega_mostrar = case cfecha_entrega.VALOR when 'N' then 0 else usuario_fecharol.mostrar_fecha end,
 	case cfecha_entrega.VALOR when 'N' then 0 when 'L' then 0 when 'C' then CASE WHEN convert(numeric,cargo_conductor.valor) = isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END when 'D' then CASE WHEN convert(numeric,cargo_conductor.valor) <> isnull(empleado.ID_CARGO,-1) THEN usuario_fecharol.editar_fecha ELSE 0 END else usuario_fecharol.editar_fecha end

@@ -1261,5 +1261,38 @@ usuario,
     );
     return result;
   }  
-  
+
+
+   @Get('viajegastosdetalles')
+  async consultaViajegastosdetalles(
+    @Query('client') userName: string,
+    @Query() { ID_Viaje }: { ID_Viaje: number },
+    @Query() { ID_Empleado }: { ID_Empleado: number },    
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajegastosdetalles(filteredArray, ID_Viaje, ID_Empleado);
+    return result;
+  }  
+
+     @Get('viajegastosdetallesitem')
+  async consultaViajegastosdetallesitem(
+    @Query('client') userName: string,
+    @Query() { ID_Viaje }: { ID_Viaje: number },
+    @Query() { ID_Viaje_Gasto_Concepto }: { ID_Viaje_Gasto_Concepto: number },
+    @Query() { ID_Empleado }: { ID_Empleado: number },  
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajegastosdetallesitem(filteredArray,  ID_Viaje, ID_Viaje_Gasto_Concepto, ID_Empleado);
+    return result;
+  }  
+
+     @Get('proveedorviajesgastos')
+  async consultaProveedorviajesgastos(
+    @Query('client') userName: string,
+    @Query() { tipo }: { tipo: string },
+  ) {
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.proveedorviajesgastos(filteredArray, tipo);
+    return result;
+  }  
 }

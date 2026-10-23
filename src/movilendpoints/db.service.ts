@@ -1662,6 +1662,7 @@ order by  5`;
          viaje_gasto_detalles_item.id_viaje,   
          viaje_gasto_detalles_item.id_viaje_gasto_concepto,   
          viaje_gasto_detalles_item.id_proveedor,   
+         VIAJE_GASTO_CONCEPTO.CATEGORIA as provedor_categoria_filtro,
          viaje_gasto_detalles_item.id_actividad,   
          viaje_gasto_detalles_item.descripcion_libre,   
          viaje_gasto_detalles_item.fecha_item,
@@ -1675,14 +1676,98 @@ order by  5`;
          (select count(*) from archivo WITH (NOLOCK) 
          where archivo.id_archivo = viaje_gasto_detalles_item.id_viaje_gasto_detalles_item
          and archivo.modulo = 'VGI'
-         ) as archivos_cantidad
+         ) as archivos_cantidad,
+         viaje_gasto_detalles_item.usuario_mod 
  
-    from viaje_gasto_detalles_item  WITH (NOLOCK) 
+    from viaje_gasto_detalles_item  WITH (NOLOCK), VIAJE_GASTO_CONCEPTO WITH (NOLOCK)
 where viaje_gasto_detalles_item.id_viaje =  ${ID_Viaje}
+and VIAJE_GASTO_CONCEPTO.id_VIAJE_GASTO_CONCEPTO = viaje_gasto_detalles_item.id_viaje_gasto_concepto
 and viaje_gasto_detalles_item.id_viaje_gasto_concepto =  ${ID_Viaje_Gasto_Concepto}
 and viaje_gasto_detalles_item.coductor_principal = 
     (select case when ${ID_Empleado} = viaje.id_empleado then 1 else 0 end
     from viaje WITH (NOLOCK) where viaje.id_viaje = viaje_gasto_detalles_item.id_viaje)`;
+    const result = await this.general(object, query);
+    return result;
+  }	
+
+
+  async proveedorviajesgastos(object, tipo) {
+   const query = `SELECT proveedor.id_proveedor,   
+proveedor.id_ciudad,   
+proveedor.descripcion,   
+proveedor.rif,
+proveedor.codigo,
+proveedor.activo 
+FROM proveedor WITH  (NOLOCK)
+where aplica_para in ('G', 'V')
+and surte_todoconceptogastos = 'S'   
+       
+union 
+
+SELECT proveedor.id_proveedor,   
+proveedor.id_ciudad,   
+proveedor.descripcion,   
+proveedor.rif,
+proveedor.codigo,
+proveedor.activo 
+FROM proveedor WITH  (NOLOCK)
+where isnull(${tipo}, '-') = 'C'
+and aplica_para in ('G', 'V')
+and SURTE_CARGADESCARGA = 'S'   
+
+union 
+
+SELECT proveedor.id_proveedor,   
+proveedor.id_ciudad,   
+proveedor.descripcion,   
+proveedor.rif,
+proveedor.codigo,
+proveedor.activo 
+FROM proveedor WITH  (NOLOCK)
+where isnull(${tipo}, '-')  = 'P'
+and aplica_para in ('G', 'V')
+and SURTE_PEAJE = 'S'   
+
+union 
+
+SELECT proveedor.id_proveedor,   
+proveedor.id_ciudad,   
+proveedor.descripcion,   
+proveedor.rif,
+proveedor.codigo,
+proveedor.activo 
+FROM proveedor WITH  (NOLOCK)
+where isnull(${tipo}, '-')  = 'H'
+and aplica_para in ('G', 'V')
+and SURTE_HOSPEDAJE = 'S'   
+
+union 
+
+SELECT proveedor.id_proveedor,   
+proveedor.id_ciudad,   
+proveedor.descripcion,   
+proveedor.rif,
+proveedor.codigo,
+proveedor.activo 
+FROM proveedor WITH  (NOLOCK)
+where isnull(${tipo}, '-')  = 'A'
+and aplica_para in ('G', 'V')
+and SURTE_ALIMENTACION = 'S'   
+
+union 
+
+SELECT proveedor.id_proveedor,   
+proveedor.id_ciudad,   
+proveedor.descripcion,   
+proveedor.rif,
+proveedor.codigo,
+proveedor.activo 
+FROM proveedor WITH  (NOLOCK)
+where isnull(${tipo}, '-')  = 'G'
+and aplica_para in ('G', 'V')
+and SURTE_GASOLINA = 'S'   
+
+order by 3`;
     const result = await this.general(object, query);
     return result;
   }	

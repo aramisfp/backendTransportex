@@ -1709,5 +1709,44 @@ order by 3`;
     const result = await this.general(object, query);
     return result;
   }	
+
+
+async viajegastosdetallesiteminput(
+    object,
+id_viaje_gasto_detalles_item,
+id_viaje,     
+id_viaje_gasto_concepto,
+id_empleado,
+id_proveedor,
+id_actividad,
+descripcion_libre,
+fecha_item,   
+nro_documento,   
+nro_factura,
+forma_pago,
+cantidad,
+precio,
+valor_iva,
+usuario,
+  ) {
+    const query = `Exec dbo.SP_UPD_SYNC_VIAJE_GASTOS  
+${id_viaje_gasto_detalles_item},   
+${id_viaje},   
+${id_viaje_gasto_concepto},  
+${id_empleado}, 
+${id_proveedor}, 
+${id_actividad}, 
+'${descripcion_libre}', 
+'${fecha_item}',   
+'${nro_documento}',   
+'${nro_factura}',   
+'${forma_pago}',  
+${cantidad}, 
+${precio}, 
+${valor_iva}, 
+'${usuario}'`;
+    const result = await this.general(object, query);
+    return result;
+  }	
 	
 }

@@ -1295,4 +1295,68 @@ usuario,
     const result = this.dataService.proveedorviajesgastos(filteredArray, tipo);
     return result;
   }  
+
+
+  
+@Post('viajegastosdetallesiteminput')
+  async consultaViajegastosdetallesiteminput(
+    @Query('client') userName: string,
+    @Body()
+    {
+id_viaje_gasto_detalles_item,
+id_viaje,     
+id_viaje_gasto_concepto,
+id_empleado,
+id_proveedor,
+id_actividad,
+descripcion_libre,
+fecha_item,   
+nro_documento,   
+nro_factura,
+forma_pago,
+cantidad,
+precio,
+valor_iva,
+usuario,
+    }: {
+    id_viaje_gasto_detalles_item: number;
+    id_viaje: number;
+    id_viaje_gasto_concepto: number; 
+    id_empleado: number; 
+    id_proveedor: number; 
+    id_actividad: number; 
+    descripcion_libre: string;
+    fecha_item: string;
+    nro_documento: string;
+    nro_factura: string;
+    forma_pago: string;
+    cantidad: number; 
+    precio: number;
+    valor_iva: number;
+    usuario: string;
+    },
+  ) {
+    console.log(userName);
+    const filteredArray = myArray.filter((obj) => obj.name === userName);
+    const result = this.dataService.viajegastosdetallesiteminput(
+      filteredArray,
+id_viaje_gasto_detalles_item,
+id_viaje,     
+id_viaje_gasto_concepto,
+id_empleado,
+id_proveedor,
+id_actividad,
+descripcion_libre,
+fecha_item,   
+nro_documento,   
+nro_factura,
+forma_pago,
+cantidad,
+precio,
+valor_iva,
+usuario,
+    );
+    return result;
+  }  
+  
 }

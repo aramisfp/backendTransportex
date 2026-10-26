@@ -1599,7 +1599,7 @@ order by vgc.egreso, 5`;
          viaje_gasto_detalles_item.id_viaje,   
          viaje_gasto_detalles_item.id_viaje_gasto_concepto,   
          viaje_gasto_detalles_item.id_proveedor,   
-         VIAJE_GASTO_CONCEPTO.CATEGORIA as provedor_categoria_filtro,
+         isnull(VIAJE_GASTO_CONCEPTO.CATEGORIA, '-') as provedor_categoria_filtro,
          viaje_gasto_detalles_item.id_actividad,   
          viaje_gasto_detalles_item.descripcion_libre,   
          viaje_gasto_detalles_item.fecha_item,
@@ -1649,7 +1649,7 @@ proveedor.rif,
 proveedor.codigo,
 proveedor.activo 
 FROM proveedor WITH  (NOLOCK)
-where isnull(${tipo}, '-') = 'C'
+where isnull('${tipo}', '-') = 'C'
 and aplica_para in ('G', 'V')
 and SURTE_CARGADESCARGA = 'S'   
 
@@ -1662,7 +1662,7 @@ proveedor.rif,
 proveedor.codigo,
 proveedor.activo 
 FROM proveedor WITH  (NOLOCK)
-where isnull(${tipo}, '-')  = 'P'
+where isnull('${tipo}', '-')  = 'P'
 and aplica_para in ('G', 'V')
 and SURTE_PEAJE = 'S'   
 
@@ -1675,7 +1675,7 @@ proveedor.rif,
 proveedor.codigo,
 proveedor.activo 
 FROM proveedor WITH  (NOLOCK)
-where isnull(${tipo}, '-')  = 'H'
+where isnull('${tipo}', '-')  = 'H'
 and aplica_para in ('G', 'V')
 and SURTE_HOSPEDAJE = 'S'   
 
@@ -1688,7 +1688,7 @@ proveedor.rif,
 proveedor.codigo,
 proveedor.activo 
 FROM proveedor WITH  (NOLOCK)
-where isnull(${tipo}, '-')  = 'A'
+where isnull('${tipo}', '-')  = 'A'
 and aplica_para in ('G', 'V')
 and SURTE_ALIMENTACION = 'S'   
 
@@ -1701,7 +1701,7 @@ proveedor.rif,
 proveedor.codigo,
 proveedor.activo 
 FROM proveedor WITH  (NOLOCK)
-where isnull(${tipo}, '-')  = 'G'
+where isnull('${tipo}', '-')  = 'G'
 and aplica_para in ('G', 'V')
 and SURTE_GASOLINA = 'S'   
 

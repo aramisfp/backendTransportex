@@ -1533,7 +1533,7 @@ ${id_viaje_retraso},
 
 
 
-  async viajegastosdetalles(object, ID_Viaje, ID_Empleado) {
+  async viajegastosdetalles(object, ID_Viaje, ID_Empleado, ID_Usuario) {
    const query = `SELECT distinct id_viaje = viaje_gasto_detalles.id_viaje,   		
 id_viaje_gasto_concepto = viaje_gasto_detalles.id_viaje_gasto_concepto ,   
 case egreso when 1 then 'Gastos del conductor' when 2 then 'Gastos directos' else 'Adelantos del conductor' end as clasificacion, 
@@ -1549,12 +1549,11 @@ orden = isnull(
 	),
 	vgc.orden),
 
-monto_referencia = case when ${ID_Empleado} = viaje.id_empleado then viaje_gasto_detalles.monto_referencia else viaje_gasto_detalles.monto_referencia_2 end,   
-monto = case when ${ID_Empleado} = viaje.id_empleado then viaje_gasto_detalles.monto else viaje_gasto_detalles.monto_2 end,   
-   
-observaciones = case when ${ID_Empleado} = viaje.id_empleado then viaje_gasto_detalles.observaciones else viaje_gasto_detalles.observaciones_2 end,
-fecha = case when ${ID_Empleado} = viaje.id_empleado then viaje_gasto_detalles.fecha else viaje_gasto_detalles.fecha_2 end,
-numero_referencia = case when ${ID_Empleado} = viaje.id_empleado then viaje_gasto_detalles.numero_referencia else  viaje_gasto_detalles.numero_referencia_2 end,
+monto_referencia = case when ${ID_Empleado} = viaje.id_empleado_2  then viaje_gasto_detalles.monto_referencia_2 else viaje_gasto_detalles.monto_referencia end,   
+monto = case when ${ID_Empleado} = viaje.id_empleado_2   then viaje_gasto_detalles.monto_2 else viaje_gasto_detalles.monto end,      
+observaciones = case when ${ID_Empleado} = viaje.id_empleado_2  then viaje_gasto_detalles.observaciones_2 else viaje_gasto_detalles.observaciones end,
+fecha = case when ${ID_Empleado} = viaje.id_empleado_2 then viaje_gasto_detalles.fecha_2 else viaje_gasto_detalles.fecha end,
+numero_referencia = case when ${ID_Empleado} = viaje.id_empleado_2 then viaje_gasto_detalles.numero_referencia_2 else  viaje_gasto_detalles.numero_referencia end,
 tipo_monto = coalesce(vg.tipo,
 	(select max(vg1.tipo) from
 	viaje_gasto as vg1, viaje_gasto_concepto as vgc1
@@ -1563,7 +1562,6 @@ tipo_monto = coalesce(vg.tipo,
 	and vg1.id_empresa = viaje_guia.id_empresa 
 	and vg1.id_distancia = isnull(viaje_guia.id_distancia, vg.id_distancia)
 	and vgc1.tipo = 'S'),
-
 	vgc.tipo_monto),
 tipo = vgc.tipo,
 egreso = vgc.egreso,
@@ -1575,7 +1573,7 @@ from VIAJE_GASTO_DETALLES_ITEM where VIAJE_GASTO_DETALLES_ITEM.id_viaje = viaje_
 and VIAJE_GASTO_DETALLES_ITEM.id_viaje_gasto_concepto = viaje_gasto_detalles.ID_VIAJE_GASTO_CONCEPTO and 
 VIAJE_GASTO_DETALLES_ITEM.coductor_principal = 1),0)  as det_filas_items 
 
-FROM viaje WITH (NOLOCK), viaje_gasto_concepto as vgc  WITH (NOLOCK),
+FROM  usuario WITH (NOLOCK), viaje WITH (NOLOCK), viaje_gasto_concepto as vgc  WITH (NOLOCK),
 viaje_guia  WITH (NOLOCK) inner join viaje_gasto_detalles on  viaje_guia.id_viaje = viaje_gasto_detalles.id_viaje 
 and viaje_guia.principal = 1
 	
@@ -1584,18 +1582,19 @@ viaje_guia.id_empresa = vg.id_empresa
 and vg.id_viaje_gasto_concepto = viaje_gasto_detalles.id_viaje_gasto_concepto				
 and vg.id_distancia = isnull(viaje_guia.id_distancia, dbo.F_DISTANCIA_CODIGO(viaje_guia.id_ciudad_origen, viaje_guia.id_ciudad_destino, viaje_guia.id_empresa, 1)) 
  
-WHERE  viaje_gasto_detalles.id_viaje =   ${ID_Viaje}
+WHERE  viaje_gasto_detalles.id_viaje = ${ID_Viaje}
 and viaje_gasto_detalles.id_viaje = viaje.id_viaje 
-and ${ID_Empleado} in (viaje.id_empleado, viaje.id_empleado_2) 
+and (${ID_Empleado} in (viaje.id_empleado, viaje.id_empleado_2) or usuario.ADMINISTRADOR = 1 or usuario.DESCRIPCION in (viaje.usuario_ins, viaje.usuario_mod, viaje_gasto_detalles.usuario_ins, viaje_gasto_detalles.usuario_mod) ) 
 and vgc.id_viaje_gasto_concepto = viaje_gasto_detalles.id_viaje_gasto_concepto
+and usuario.ID_USUARIO = ${ID_Usuario}
 and vgc.egreso > 0
-order by  5`;
+order by vgc.egreso, 5`;
     const result = await this.general(object, query);
     return result;
   }	
 
 
-  async viajegastosdetallesitem(object, ID_Viaje, ID_Viaje_Gasto_Concepto, ID_Empleado) {
+  async viajegastosdetallesitem(object, ID_Viaje, ID_Viaje_Gasto_Concepto, ID_Empleado, ID_Usuario) {
    const query = `select viaje_gasto_detalles_item.id_viaje_gasto_detalles_item,   
          viaje_gasto_detalles_item.id_viaje,   
          viaje_gasto_detalles_item.id_viaje_gasto_concepto,   
@@ -1617,12 +1616,13 @@ order by  5`;
          ) as archivos_cantidad,
          viaje_gasto_detalles_item.usuario_mod 
  
-    from viaje_gasto_detalles_item  WITH (NOLOCK), VIAJE_GASTO_CONCEPTO WITH (NOLOCK)
+    from viaje_gasto_detalles_item  WITH (NOLOCK), VIAJE_GASTO_CONCEPTO WITH (NOLOCK), usuario WITH (NOLOCK)
 where viaje_gasto_detalles_item.id_viaje =  ${ID_Viaje}
 and VIAJE_GASTO_CONCEPTO.id_VIAJE_GASTO_CONCEPTO = viaje_gasto_detalles_item.id_viaje_gasto_concepto
 and viaje_gasto_detalles_item.id_viaje_gasto_concepto =  ${ID_Viaje_Gasto_Concepto}
+and usuario.ID_USUARIO = ${ID_Usuario}
 and viaje_gasto_detalles_item.coductor_principal = 
-    (select case when ${ID_Empleado} = viaje.id_empleado then 1 else 0 end
+    (select case when ${ID_Empleado} = viaje.id_empleado_2 then 0 else 1 end
     from viaje WITH (NOLOCK) where viaje.id_viaje = viaje_gasto_detalles_item.id_viaje)`;
     const result = await this.general(object, query);
     return result;

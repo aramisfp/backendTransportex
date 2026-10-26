@@ -1268,9 +1268,10 @@ usuario,
     @Query('client') userName: string,
     @Query() { ID_Viaje }: { ID_Viaje: number },
     @Query() { ID_Empleado }: { ID_Empleado: number },    
+    @Query() { ID_Usuario }: { ID_Usuario: number },    
   ) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.viajegastosdetalles(filteredArray, ID_Viaje, ID_Empleado);
+    const result = this.dataService.viajegastosdetalles(filteredArray, ID_Viaje, ID_Empleado, ID_Usuario);
     return result;
   }  
 
@@ -1280,9 +1281,10 @@ usuario,
     @Query() { ID_Viaje }: { ID_Viaje: number },
     @Query() { ID_Viaje_Gasto_Concepto }: { ID_Viaje_Gasto_Concepto: number },
     @Query() { ID_Empleado }: { ID_Empleado: number },  
+    @Query() { ID_Usuario }: { ID_Usuario: number },        
   ) {
     const filteredArray = myArray.filter((obj) => obj.name === userName);
-    const result = this.dataService.viajegastosdetallesitem(filteredArray,  ID_Viaje, ID_Viaje_Gasto_Concepto, ID_Empleado);
+    const result = this.dataService.viajegastosdetallesitem(filteredArray,  ID_Viaje, ID_Viaje_Gasto_Concepto, ID_Empleado, ID_Usuario);
     return result;
   }  
 

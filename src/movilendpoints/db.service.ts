@@ -1548,9 +1548,17 @@ orden = isnull(
 	and vg2.id_distancia = isnull(viaje_guia.id_distancia, vg.id_distancia)
 	),
 	vgc.orden),
-
+configuracion.valor as monto_referencia_mostrar,
 monto_referencia = case when ${ID_Empleado} = viaje.id_empleado_2  then viaje_gasto_detalles.monto_referencia_2 else viaje_gasto_detalles.monto_referencia end,   
-monto = case when ${ID_Empleado} = viaje.id_empleado_2   then viaje_gasto_detalles.monto_2 else viaje_gasto_detalles.monto end,      
+monto = case when ${ID_Empleado} = viaje.id_empleado_2   then viaje_gasto_detalles.monto_2 else viaje_gasto_detalles.monto end,    
+
+(select sum(MONTO_COMPUTE + MONTO_IVA_COMPUTE) 
+from VIAJE_GASTO_DETALLES_ITEM 
+where VIAJE_GASTO_DETALLES_ITEM.id_viaje = viaje_gasto_detalles.id_viaje
+and VIAJE_GASTO_DETALLES_ITEM.ID_VIAJE_GASTO_CONCEPTO = viaje_gasto_detalles.id_viaje_gasto_concepto
+and VIAJE_GASTO_DETALLES_ITEM.FECHA_ITEM is not null
+and VIAJE_GASTO_DETALLES_ITEM.CODUCTOR_PRINCIPAL = case when ${ID_Empleado} = viaje.id_empleado_2 then 0 else 1 end) as monto_editado,
+
 observaciones = case when ${ID_Empleado} = viaje.id_empleado_2  then viaje_gasto_detalles.observaciones_2 else viaje_gasto_detalles.observaciones end,
 fecha = case when ${ID_Empleado} = viaje.id_empleado_2 then viaje_gasto_detalles.fecha_2 else viaje_gasto_detalles.fecha end,
 numero_referencia = case when ${ID_Empleado} = viaje.id_empleado_2 then viaje_gasto_detalles.numero_referencia_2 else  viaje_gasto_detalles.numero_referencia end,
@@ -1565,15 +1573,18 @@ tipo_monto = coalesce(vg.tipo,
 	vgc.tipo_monto),
 tipo = vgc.tipo,
 egreso = vgc.egreso,
-editable = vgc.editable, 
-reeditable_guardado = vgc.reeditable_guardado,
+editable = case vgc.editable when 0 then 0 else 
+case usuario.ADMINISTRADOR when 1 then 1 else (select USUARIO_PERMISO.valor from USUARIO_PERMISO
+					where USUARIO_PERMISO.ID_USUARIO = ${ID_Usuario}
+					and USUARIO_PERMISO.ID_USUARIO_PERMISO_TIPO = 'SM_VIAGASTOSAPPMOVIL_GESTION') end
+end, 
 
 isnull((select count(VIAJE_GASTO_DETALLES_ITEM.ID_VIAJE_GASTO_DETALLES_ITEM) 
 from VIAJE_GASTO_DETALLES_ITEM where VIAJE_GASTO_DETALLES_ITEM.id_viaje = viaje_gasto_detalles.id_viaje 
 and VIAJE_GASTO_DETALLES_ITEM.id_viaje_gasto_concepto = viaje_gasto_detalles.ID_VIAJE_GASTO_CONCEPTO and 
 VIAJE_GASTO_DETALLES_ITEM.coductor_principal = 1),0)  as det_filas_items 
 
-FROM  usuario WITH (NOLOCK), viaje WITH (NOLOCK), viaje_gasto_concepto as vgc  WITH (NOLOCK),
+FROM  configuracion WITH (NOLOCK), usuario WITH (NOLOCK), viaje WITH (NOLOCK), viaje_gasto_concepto as vgc  WITH (NOLOCK),
 viaje_guia  WITH (NOLOCK) inner join viaje_gasto_detalles on  viaje_guia.id_viaje = viaje_gasto_detalles.id_viaje 
 and viaje_guia.principal = 1
 	
@@ -1584,6 +1595,7 @@ and vg.id_distancia = isnull(viaje_guia.id_distancia, dbo.F_DISTANCIA_CODIGO(via
  
 WHERE  viaje_gasto_detalles.id_viaje = ${ID_Viaje}
 and viaje_gasto_detalles.id_viaje = viaje.id_viaje 
+and configuracion.campo = 'VIA_MONTOREF_SHOWAPPMOVIL'
 and (${ID_Empleado} in (viaje.id_empleado, viaje.id_empleado_2) or usuario.ADMINISTRADOR = 1 or usuario.DESCRIPCION in (viaje.usuario_ins, viaje.usuario_mod, viaje_gasto_detalles.usuario_ins, viaje_gasto_detalles.usuario_mod) ) 
 and vgc.id_viaje_gasto_concepto = viaje_gasto_detalles.id_viaje_gasto_concepto
 and usuario.ID_USUARIO = ${ID_Usuario}

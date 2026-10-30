@@ -1582,7 +1582,8 @@ end,
 isnull((select count(VIAJE_GASTO_DETALLES_ITEM.ID_VIAJE_GASTO_DETALLES_ITEM) 
 from VIAJE_GASTO_DETALLES_ITEM where VIAJE_GASTO_DETALLES_ITEM.id_viaje = viaje_gasto_detalles.id_viaje 
 and VIAJE_GASTO_DETALLES_ITEM.id_viaje_gasto_concepto = viaje_gasto_detalles.ID_VIAJE_GASTO_CONCEPTO and 
-VIAJE_GASTO_DETALLES_ITEM.coductor_principal = 1),0)  as det_filas_items 
+VIAJE_GASTO_DETALLES_ITEM.coductor_principal = 1),0)  as det_filas_items,
+isnull(vgc.CATEGORIA, '-') as provedor_categoria_filtro
 
 FROM  configuracion WITH (NOLOCK), usuario WITH (NOLOCK), viaje WITH (NOLOCK), viaje_gasto_concepto as vgc  WITH (NOLOCK),
 viaje_guia  WITH (NOLOCK) inner join viaje_gasto_detalles on  viaje_guia.id_viaje = viaje_gasto_detalles.id_viaje 
@@ -1623,7 +1624,7 @@ order by vgc.egreso, 5`;
          viaje_gasto_detalles_item.precio_unitario,   
          viaje_gasto_detalles_item.valor_iva,
          (select count(*) from archivo WITH (NOLOCK) 
-         where archivo.id_archivo = viaje_gasto_detalles_item.id_viaje_gasto_detalles_item
+         where archivo.ID_KEY_MODULO = viaje_gasto_detalles_item.id_viaje_gasto_detalles_item
          and archivo.modulo = 'VGI'
          ) as archivos_cantidad,
          viaje_gasto_detalles_item.usuario_mod 

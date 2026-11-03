@@ -1600,7 +1600,7 @@ and configuracion.campo = 'VIA_MONTOREF_SHOWAPPMOVIL'
 and (${ID_Empleado} in (viaje.id_empleado, viaje.id_empleado_2) or usuario.ADMINISTRADOR = 1 or usuario.DESCRIPCION in (viaje.usuario_ins, viaje.usuario_mod, viaje_gasto_detalles.usuario_ins, viaje_gasto_detalles.usuario_mod) ) 
 and vgc.id_viaje_gasto_concepto = viaje_gasto_detalles.id_viaje_gasto_concepto
 and usuario.ID_USUARIO = ${ID_Usuario}
-and vgc.egreso > 0
+and vgc.egreso = 1
 order by vgc.egreso, 5`;
     const result = await this.general(object, query);
     return result;

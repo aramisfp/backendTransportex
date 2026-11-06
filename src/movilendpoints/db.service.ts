@@ -355,8 +355,7 @@ order by 2`;
 select 'Depósito/consignación' as tipogasto_desc, 'D' as valor union all
 select 'Cheque' as tipogasto_desc, 'C' as valor union all
 select 'Efectivo' as tipogasto_desc, 'E' as valor union all
-select 'Prepagado' as tipogasto_desc, 'P' as valor from configuracion WITH (NOLOCK) where configuracion.CAMPO = 'CODIGO_EMPRESA' and 
-configuracion.VALOR <> 'BANCONAL_PAN' and charindex(configuracion.VALOR, '_ARG') = 0 union all 
+select 'Prepagado' as tipogasto_desc, 'P' as valor union all 
 select 'Tarjeta' as tipogasto_desc, 'A' as valor from configuracion WITH (NOLOCK) where configuracion.CAMPO = 'CODIGO_EMPRESA' and 
 (configuracion.VALOR = 'BANCONAL_PAN' or charindex(configuracion.VALOR, '_ARG') > 0) union all
 select 'Chip' as tipogasto_desc, 'B' as valor from configuracion WITH (NOLOCK) where configuracion.CAMPO = 'CODIGO_EMPRESA' and configuracion.VALOR = 'BANCONAL_PAN' union all

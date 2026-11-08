@@ -1583,12 +1583,11 @@ from VIAJE_GASTO_DETALLES_ITEM where VIAJE_GASTO_DETALLES_ITEM.id_viaje = viaje_
 and VIAJE_GASTO_DETALLES_ITEM.id_viaje_gasto_concepto = viaje_gasto_detalles.ID_VIAJE_GASTO_CONCEPTO and 
 VIAJE_GASTO_DETALLES_ITEM.coductor_principal = 1),0)  as det_filas_items,
 isnull(vgc.CATEGORIA, '-') as provedor_categoria_filtro,
-case when viaje_gasto_concepto.iva_predet = 1 then convert(numeric(8,4), CONFIGURACION_X_EMPRESA.valor) else 0 end as porc_iva_predeteminado
+case when vgc.iva_predet = 1 then convert(numeric(8,4), CONFIGURACION_X_EMPRESA.valor) else 0 end as porc_iva_predeteminado
 
 FROM  CONFIGURACION_X_EMPRESA WITH (NOLOCK), configuracion WITH (NOLOCK), usuario WITH (NOLOCK), viaje WITH (NOLOCK), viaje_gasto_concepto as vgc  WITH (NOLOCK),
 viaje_guia  WITH (NOLOCK) inner join viaje_gasto_detalles on  viaje_guia.id_viaje = viaje_gasto_detalles.id_viaje 
-and viaje_guia.principal = 1, 
-	
+and viaje_guia.principal = 1	
 left outer join viaje_gasto as vg  WITH (NOLOCK)  on	
 viaje_guia.id_empresa = vg.id_empresa
 and vg.id_viaje_gasto_concepto = viaje_gasto_detalles.id_viaje_gasto_concepto				

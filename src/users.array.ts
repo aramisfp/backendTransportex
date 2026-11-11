@@ -217,9 +217,9 @@ export const myArray = [
   },    
    {
     name:'RIOVUELTAS_ARG',
-    Server:'ec2-184-73-7-215.compute-1.amazonaws.com',
+    Server:'195-88-56-196.us-mi-cloud-xip.com',
     Port:'1433',
-    Database:'DB_TRANSPORTEX',
+    Database:'DB_TRANSPORTEX_RioVueltas',
     UserID:'usr_movil',
     UserPwd:'Tran5p0rt3X_2008tlf',
     },     	  	   

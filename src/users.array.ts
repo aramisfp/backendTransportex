@@ -49,7 +49,7 @@ export const myArray = [
   },             
  {
     name: 'GRAFER_ARG',
-    Server: 'ec2-3-17-142-30.us-east-2.compute.amazonaws.com',
+    Server: '195-88-56-196.us-mi-cloud-xip.com',
     Port: '1433',
     Database: 'DB_TRANSPORTEX_Grafer',
     UserID: 'usr_movil',
@@ -65,7 +65,7 @@ export const myArray = [
   },  
  {
     name: 'OVER_ARG',
-    Server: 'ec2-3-17-142-30.us-east-2.compute.amazonaws.com',
+    Server: '195-88-56-196.us-mi-cloud-xip.com',
     Port: '1433',
     Database: 'DB_TRANSPORTEX_Over',
     UserID: 'usr_movil',

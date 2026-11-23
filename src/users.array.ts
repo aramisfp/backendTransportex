@@ -113,9 +113,9 @@ export const myArray = [
   },       
  {
     name: 'TRESUR_CHI',
-    Server: 'ec2-13-59-22-63.us-east-2.compute.amazonaws.com',
+    Server: '195-88-56-196.us-mi-cloud-xip.com',
     Port: '1433',
-    Database: 'DB_TRANSPORTEX',
+    Database: 'DB_TRANSPORTEX_Tresur',
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },         
@@ -177,7 +177,7 @@ export const myArray = [
   },        
    {
     name: 'LINCE_BOL',
-    Server: 'ec2-13-59-22-63.us-east-2.compute.amazonaws.com',
+    Server: '195-88-56-196.us-mi-cloud-xip.com',
     Port: '1433',
     Database: 'DB_TRANSPORTEX_Lince',
     UserID: 'usr_movil',

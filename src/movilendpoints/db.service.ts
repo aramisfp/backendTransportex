@@ -929,7 +929,11 @@ viaje_solicitud.solicitud_referencia,  solcampo_solicitud_referencia.activo as s
 
 v_viaje_solicitud.sede_empleado_solicitud,
 v_viaje_solicitud.sede_usuario_ins,
-viaje_solicitud.carga_peligrosa,  solcampo_carga_peligrosa.activo as solcampo_carga_peligrosa_act,  solcampo_carga_peligrosa.campo_orden as solcampo_carga_peligrosa_ord,  solcampo_carga_peligrosa.obligatorio as solcampo_carga_peligrosa_obl  
+viaje_solicitud.carga_peligrosa,  solcampo_carga_peligrosa.activo as solcampo_carga_peligrosa_act,  solcampo_carga_peligrosa.campo_orden as solcampo_carga_peligrosa_ord,  solcampo_carga_peligrosa.obligatorio as solcampo_carga_peligrosa_obl,
+
+viaje_solicitud.id_proveedor,  solcampo_id_proveedor.activo as solcampo_id_proveedor_act,   solcampo_id_proveedor.campo_orden as solcampo_id_proveedor_ord,  solcampo_id_proveedor.obligatorio as solcampo_id_proveedor_obl,        
+viaje_solicitud.id_empleado_aut,  solcampo_id_empleado_aut.activo as solcampo_id_empleado_aut_act,   solcampo_id_empleado_aut.campo_orden as solcampo_id_empleado_aut_ord,  solcampo_id_empleado_aut.obligatorio as solcampo_id_empleado_aut_obl        
+
  
 
 FROM V_VIAJE_SOLICITUD, VIAJE_SOLICITUD  WITH (NOLOCK) left outer join empleado WITH (NOLOCK) on VIAJE_SOLICITUD.id_empleado = empleado.id_empleado  
@@ -946,6 +950,8 @@ left outer join MEDIDA_PIEZA  on VIAJE_SOLICITUD.id_medida_pieza = MEDIDA_PIEZA.
 
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'fecha_solicitud') as solcampo_fecha_solicitud,
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'id_empleado') as solcampo_id_empleado,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'id_proveedor') as solcampo_id_proveedor,
+(SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'id_empleado_aut') as solcampo_id_empleado_aut,
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'solicitud_referencia') as solcampo_solicitud_referencia,
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'id_ciudad_origen') as solcampo_id_ciudad_origen,
 (SELECT VIAJE_SOL_CAMPO.activo, VIAJE_SOL_CAMPO.CAMPO_ORDEN, VIAJE_SOL_CAMPO.OBLIGATORIO FROM VIAJE_SOL_CAMPO where VIAJE_SOL_CAMPO.CAMPO_LAYOUT = 'id_ciudad_destino') as solcampo_id_ciudad_destino,
@@ -1058,7 +1064,9 @@ tipo_origen,
 solicitud_referencia, 
 carga_peligrosa, 
 usuario,
-id_empresa_registro,	
+id_empresa_registro,
+id_proveedor,
+id_empleado_aut
   ) {
     const query = `Exec dbo.SP_UPD_SYNC_VIAJE_SOLICITUD  
 ${id_viaje_solicitud},   
@@ -1121,8 +1129,8 @@ null,
 null,
 null,
 null,
-null,
-null,
+${id_proveedor},
+${id_empleado_aut},
 null,
 null,
 null,
@@ -1653,7 +1661,19 @@ proveedor.activo
 FROM proveedor WITH  (NOLOCK)
 where aplica_para in ('G', 'V')
 and surte_todoconceptogastos = 'S'   
-       
+
+union 
+
+SELECT proveedor.id_proveedor,   
+proveedor.id_ciudad,   
+proveedor.descripcion,   
+proveedor.rif,
+proveedor.codigo,
+proveedor.activo 
+FROM proveedor WITH  (NOLOCK)
+where isnull('${tipo}', '-') = 'V'
+and aplica_para in ('G', 'V')
+
 union 
 
 SELECT proveedor.id_proveedor,   

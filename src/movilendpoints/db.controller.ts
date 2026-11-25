@@ -949,6 +949,8 @@ solicitud_referencia,
 carga_peligrosa, 
 usuario,
 id_empresa_registro,
+id_proveedor,
+id_empleado_aut,
     }: {
 id_viaje_solicitud: number;
 id_empleado: number;    
@@ -1004,10 +1006,14 @@ tipo_origen: string;
 solicitud_referencia: string; 
 carga_peligrosa: string; 
 usuario: string;
-id_empresa_registro: number;      
+id_empresa_registro: number;     
+id_proveedor: number;    
+id_empleado_aut: number;    
     },
   ) {
-    
+    const defaultValue = 0;
+    const id_proveedor = defaultValue;
+    const id_empleado_aut = defaultValue;  
     console.log(userName);
 
     const filteredArray = myArray.filter((obj) => obj.name === userName);
@@ -1068,11 +1074,11 @@ solicitud_referencia,
 carga_peligrosa, 
 usuario,
 id_empresa_registro,
+id_proveedor,
+id_empleado_aut,
     );
     return result;
   }  
-
-
 
 
     

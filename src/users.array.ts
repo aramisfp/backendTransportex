@@ -41,9 +41,9 @@ export const myArray = [
   },  
  {
     name: 'EMDOM_VEN',
-    Server: 'ec2-3-138-157-245.us-east-2.compute.amazonaws.com',
+    Server: '195-88-56-196.us-mi-cloud-xip.com',
     Port: '1433',
-    Database: 'DB_TRANSPORTEX',
+    Database: 'DB_TRANSPORTEX_Emdom',
     UserID: 'usr_movil',
     UserPwd: 'Tran5p0rt3X_2008tlf',
   },             
@@ -153,7 +153,7 @@ export const myArray = [
   },    
  {
     name: 'MENSERCA',
-    Server: 'ec2-3-138-157-245.us-east-2.compute.amazonaws.com',
+    Server: '195-88-56-196.us-mi-cloud-xip.com',
     Port: '1433',
     Database: 'DB_TRANSPORTEX_Menserca',
     UserID: 'usr_movil',
